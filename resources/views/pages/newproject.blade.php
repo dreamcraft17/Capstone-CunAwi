@@ -14,6 +14,12 @@
             margin-right: 10px;
             margin-bottom: 10px;
         }
+
+        .remarks-container {
+            border: 2px solid #cbcbcb;
+            border-radius: 2px;
+            padding: 10px;
+        }
     </style>
 @endsection
 
@@ -42,7 +48,7 @@
                                 <div class="row">
                                     <div class="col">
                                         <label>Product ID <span class="text-danger">*</span></label>
-                                        <input type="text" class="form-control" id="projId"
+                                        <input type="text" class="form-control" id="proId"
                                             placeholder="Click Here to Enter" />
                                     </div>
 
@@ -170,7 +176,6 @@
                                         placeholder="Enter Description">
                                 </div>
 
-
                                 <div style="text-align: right;" class="mt-4">
                                     <input type="button" id="saveDraftButton" class="btn btn-secondary rubik-font"
                                         value="Draft" />
@@ -186,14 +191,14 @@
         </fieldset>
 
         <fieldset style="display: none;">
-            <!-- Add your form fields here -->
+            <!-- Add your form fields here -->s
             <div class="row">
                 <div class="card mt-4">
 
-                    <div id="displayData"></div>
-
-                    {{-- <div class="text-center mt-4">
-                        <span class="text-bold ml-2 mr-2" style="font-size: 24px;">Toy Name</span>
+                    <div class="text-center mt-4">
+                        <span class="text-bold ml-2 mr-2" style="font-size: 24px;">
+                            <h5>Toy</h5>
+                        </span>
                     </div>
 
                     <div class="row p-4">
@@ -225,19 +230,25 @@
                                                 <div class="col rubik-font">
                                                     <a style="text-align: left;">
                                                         <h6 style="opacity: 0.8;">PROJECT ID</h6>
-                                                        <p></p>
-
-                                                        <h6 style="opacity: 0.8;">PRODUCT ID</h6>
-                                                        <p></p>
+                                                        <p id=""></p>
 
                                                         <h6 style="opacity: 0.8;">PRODUCT DESCRIPTION</h6>
-                                                        <p></p>
+                                                        <p id="displayProductDescription"></p>
 
-                                                        <h6 style="opacity: 0.8;">START DATE</h6>
-                                                        <p></p>
+                                                    </a>
+                                                </div>
 
-                                                        <h6 style="opacity: 0.8;">STATUS</h6>
-                                                        <p></p>
+                                                <div class="col rubik-font">
+                                                    <a style="text-align: left;">
+
+                                                        <h6 style="opacity: 0.8;">PRODUCT ID</h6>
+                                                        <p id="displayProductID"></p>
+
+                                                        <h6 style="opacity: 0.8;">PRODUCT ENGINEER</h6>
+                                                        <p id="displayProductEngineering"></p>
+
+                                                        <h6 style="opacity: 0.8;">PRODUCT DESIGN</h6>
+                                                        <p id="displayProductDesign"></p>
                                                     </a>
                                                 </div>
                                             </div>
@@ -256,22 +267,33 @@
                                     style="vertical-align: middle;">
                                     <thead class="table-primary">
                                         <tr>
+                                            <th class="pl-2 rubik-font" style="color: #5e72e4;">Meeting Date</th>
                                             <th class="pl-2 rubik-font" style="color: #5e72e4;">Start Date</th>
                                             <th class="pl-2 rubik-font" style="color: #5e72e4;">Finish Date CMT</th>
-                                            <th class="pl-2 rubik-font" style="color: #5e72e4;">Finish Date ACT</th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         <tr class="text-dark activity-row">
-                                            <td class="rubik-font activity-name"></td>
-                                            <td class="rubik-font"></td>
-                                            <td class="rubik-font"></td>
-                                        </tr>
+                                            <td class="rubik-font">
+                                                <p id="displayMeetingDate"></p>
+                                            </td>
+                                            <td class="rubik-font">
+                                                <p id="displayStartDate"></p>
+                                            </td>
+                                            <td class="rubik-font">
+                                                <p id="displayFinishDateCMT"></p>
+                                            </td>
                                         <tr>
+                                        </tr>
                                         </tr>
                                     </tbody>
                                 </table>
                             </div>
+                        </div>
+
+                        <h3><b style="color: #5e72e4;">Remarks</b></h3>
+                        <div class="card-body p-3 rubik-font toy-note remarks-container">
+                            <p class="rubik-font mt-2" style="white-space: pre-line;" id="displayRemarks"></p>
                         </div>
 
 
@@ -284,7 +306,7 @@
                                 value="Submit" />
                         </div>
 
-                    </div> --}}
+                    </div>
                 </div>
         </fieldset>
 
@@ -407,6 +429,44 @@
         });
     </script>
 
+    <script>
+        $(document).ready(function() {
+            // Function to display the uploaded image
+            function displayUploadedImage(input) {
+                if (input.files && input.files[0]) {
+                    var reader = new FileReader();
+
+                    reader.onload = function(e) {
+                        $('#uploadedImage').attr('src', e.target.result);
+                    }
+
+                    reader.readAsDataURL(input.files[0]);
+                } else {
+                    // If no image is selected, display the default image and log a message
+                    $('#uploadedImage').attr('src',
+                        'https://cdn3d.iconscout.com/3d/premium/thumb/no-photo-5590994-4652997.png');
+                    console.log('No image selected. Displaying default image.');
+                }
+            }
+
+            // Trigger the displayUploadedImage function when a file is selected
+            $('#input_image').change(function() {
+                displayUploadedImage(this);
+            });
+
+            // Function to display filled data
+            function displayFilledData() {
+                // You can include other form data processing here
+                // For now, let's just display the uploaded image
+                displayUploadedImage($('#input_image')[0]);
+            }
+
+            // Attach the displayFilledData function to the click event of the "Next Step" button
+            $('#nextButton').click(function() {
+                displayFilledData();
+            });
+        });
+    </script>
 
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 
@@ -496,10 +556,26 @@
                 }
             });
 
+            $('#kodate').change(function() {
+                updateDay('kodate', 'koday');
+            });
+
+            $('#startdate').change(function() {
+                updateDay('startdate', 'startday');
+            });
+        });
+    </script>
+
+    <script>
+        $(document).ready(function() {
+            // Declare formData variable
+            var formData = {};
+
             // Function to display filled data
             function displayFilledData() {
-                var formData = {
-                    'Product ID': $('#projId').val(),
+                // Populate formData with form values
+                formData = {
+                    'Product ID': $('#proId').val(),
                     'Project Name': $('#projname').val(),
                     'Product Engineering': $('#pe_staff').val(),
                     'Product Design': $('#pd_staff').val(),
@@ -516,12 +592,46 @@
                 // You can also display the data in a modal, alert, or any other way you prefer
             }
 
-            // Attach the displayFilledData function to the click event of the "Next Step" button
+            // Function to display form data
+            function displayFormData() {
+                // Function to format date as MM-DD-YYYY
+                function formatDate(inputDate) {
+                    var dateObj = new Date(inputDate);
+                    var month = (dateObj.getMonth() + 1).toString().padStart(2, '0');
+                    var day = dateObj.getDate().toString().padStart(2, '0');
+                    var year = dateObj.getFullYear();
+                    return month + '-' + day + '-' + year;
+                }
+
+                // Check if remarks is empty and display accordingly
+                var remarks = formData['Remarks'] || '<i>No remarks...</i>';
+                $('#displayRemarks').html(remarks);
+
+
+                // Display form data in respective placeholders
+                $('#displayProductID').text(formData['Product ID']);
+                $('#displayProjectName').text(formData['Project Name'] || '--');
+                $('#displayProductEngineering').text(formData['Product Engineering'] || '--');
+                $('#displayProductDesign').text(formData['Product Design'] || '--');
+                $('#displayCategoryMaterial').text(formData['Category Material'] || '--');
+                $('#displayProductDescription').text(formData['Product Description'] || '--');
+                $('#displayMeetingDate').text(formatDate(formData['Meeting Date']) || '--');
+                $('#displayStartDate').text(formatDate(formData['Start Date']) || '--');
+                $('#displayFinishDateCMT').text(formatDate(formData['Finish Date (CMT)']) || '--');
+            }
+
+            // Attach the displayFilledData and displayFormData functions to the click event of the "Next Step" button
             $('#nextButton').click(function() {
-                displayFilledData();
+                displayFilledData(); // Display the filled data
+                displayFormData(); // Display the form data
             });
+
+            // Call displayFormData initially to populate the form data
+            displayFormData();
         });
     </script>
+
+
 
 
 
