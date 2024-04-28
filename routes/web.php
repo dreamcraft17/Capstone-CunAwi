@@ -34,6 +34,10 @@ Route::middleware('auth')->group(function () {
     Route::get('/calendar', [CalendarController::class, 'index'])->name('calendar');
     Route::get('/dss', [DssController::class, 'index'])->name('dss');
     Route::post('logout', [UserController::class, 'logout'])->name('logout');
+    Route::get('/profile/edit', [UserController::class, 'edit_profile'])->name('edit_profile');
+    Route::post('/profile/update', [UserController::class, 'update_profile'])->name('update_profile');
+    Route::delete('/users/{id}', [UserController::class, 'delete'])->name('delete_user');
+
 });
 
 

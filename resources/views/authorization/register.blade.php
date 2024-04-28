@@ -33,16 +33,37 @@
                             <form method="POST" action="{{ route('register.action') }}">
                                 @csrf
                                 <div class="form-group mb-4">
-                                    <label for="email">Name</label>
+                                    <label for="name">Name</label>
                                     <div class="input-group">
-                                        <input type="text" class="form-control" placeholder="Input Name" name="name" onkeyup="capitalizeFirstLetter(this)">
+                                        <input type="text" class="form-control" placeholder="Input Name" name="name" value="{{ old('name') }}"> <!-- Tambahkan 'value="{{ old('name') }}"' untuk mempertahankan nilai saat validasi gagal -->
                                     </div>
                                 </div>
-
+                                <div class="form-group mb-4">
+                                    <label for="username">Username</label>
+                                    <div class="input-group">
+                                        <input type="text" class="form-control" placeholder="Input username" name="username" value="{{ old('username') }}"> <!-- Tambahkan 'value="{{ old('username') }}"' untuk mempertahankan nilai saat validasi gagal -->
+                                    </div>
+                                </div>
+                                <div class="form-group mb-4">
+                                    <label for="role">Role</label>
+                                    <select class="form-control" name="role">
+                                        <option value="admin">Admin</option>
+                                        <option value="manager">Manager</option>
+                                        <option value="staff">Staff</option>
+                                    </select>
+                                </div>
+                                <div class="form-group mb-4">
+                                    <label for="division">Division</label>
+                                    <select class="form-control" name="division">
+                                        <option value="ADMIN">Admin</option>
+                                        <option value="PRODUCT ENGINEERING">Product Engineering</option>
+                                        <option value="PRODUCT DESIGN">Product Design</option>
+                                    </select>
+                                </div>
                                 <div class="form-group mb-4">
                                     <label for="email">Email</label>
                                     <div class="input-group">
-                                        <input type="email" class="form-control" placeholder="Input Email" name="email">
+                                        <input type="email" class="form-control" placeholder="Input Email" name="email" value="{{ old('email') }}"> <!-- Tambahkan 'value="{{ old('email') }}"' untuk mempertahankan nilai saat validasi gagal -->
                                     </div>
                                 </div>
                                 <div class="form-group">
@@ -54,7 +75,7 @@
                                 <div class="form-group">
                                     <label for="password_confirm">Confirm Password</label>
                                     <div class="input-group">
-                                        <input type="password" class="form-control" placeholder="Confirm Password" name="password_confirm">
+                                        <input type="password" class="form-control" placeholder="Confirm Password" name="password_confirmation"> <!-- Ubah nama input menjadi 'password_confirmation' untuk memenuhi aturan 'confirmed' -->
                                     </div>
                                 </div>
 
@@ -63,6 +84,8 @@
                                     <p class="mt-1 text-secondary" style="font-size: 14px;">Already have an account? <a href="{{ route('login') }}" class="text-info">Login</a></p>
                                 </div>
                             </form>
+
+
                         </div>
                     </div>
                 </div>
@@ -81,4 +104,3 @@
         input.value = words.join(' ');
     }
 </script>
-
