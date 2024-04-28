@@ -37,6 +37,12 @@ Route::middleware('auth')->group(function () {
     Route::get('/profile/edit', [UserController::class, 'edit_profile'])->name('edit_profile');
     Route::post('/profile/update', [UserController::class, 'update_profile'])->name('update_profile');
     Route::delete('/users/{id}', [UserController::class, 'delete'])->name('delete_user');
+    Route::delete('/projects/{project}', [ProjectListController::class, 'delete'])->name('delete.project');
+
+
+
+
+    
 
 });
 

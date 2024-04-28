@@ -7,15 +7,15 @@
 
 <style>
     .badge {
-    display: inline-block;
-    padding: 0.25em 0.5em;
-    font-size: 75%;
-    font-weight: 700;
-    line-height: 1;
-    text-align: center;
-    white-space: nowrap;
-    vertical-align: baseline;
-    border-radius: 0.25rem;
+        display: inline-block;
+        padding: 0.25em 0.5em;
+        font-size: 75%;
+        font-weight: 700;
+        line-height: 1;
+        text-align: center;
+        white-space: nowrap;
+        vertical-align: baseline;
+        border-radius: 0.25rem;
     }
 
     .badge-warning {
@@ -25,7 +25,7 @@
 
     .badge-soft-warning {
         color: #f1b44c;
-        background-color: rgba(241,180,76,.18);
+        background-color: rgba(241, 180, 76, .18);
     }
 
     .badge-success {
@@ -35,7 +35,7 @@
 
     .badge-soft-success {
         color: #34c38f;
-        background-color: rgba(52,195,143,.18);
+        background-color: rgba(52, 195, 143, .18);
     }
 
     .badge-warn-subtle {
@@ -70,7 +70,6 @@
     .d-inline {
         display: inline;
     }
-
 </style>
 @endsection
 
@@ -84,9 +83,9 @@
             <div class="row">
                 <div class="col m-4">
                     <CENTER>
-                      <h2 class="mt-2" style="color: #1d275f;"> Project List </h2>
-                      <a href="{{ route('newproject') }}" class="btn btn-primary rubik-font ml-2"> + Add New </a>
-                      <a href="{{ route('draft') }}" class="btn btn-secondary rubik-font ml-2"> Draft Project </a>
+                        <h2 class="mt-2" style="color: #1d275f;"> Project List </h2>
+                        <a href="{{ route('newproject') }}" class="btn btn-primary rubik-font ml-2"> + Add New </a>
+                        <a href="{{ route('draft') }}" class="btn btn-secondary rubik-font ml-2"> Draft Project </a>
                     </CENTER>
                 </div>
             </div>
@@ -117,62 +116,31 @@
                     <!-- Your table content here -->
                     <thead>
                         <tr>
-                            <th scope="col">Task Name</th>
-                            <th scope="col">Staff</th>
+                            <th scope="col">Tracking ID</th>
+                            <th scope="col">Product</th>
+                            <th scope="col">Staff Name</th>
                             <th scope="col">Start Date</th>
-                            <th scope="col">Status</th>
                             <th scope="col">Progress</th>
+                            <th scope="col">Category</th>
+                            <th scope="col">Status</th>
+                            <th scope="col">Action</th>
                         </tr>
                     </thead>
                     <tbody>
+                        @foreach($projects as $project)
                         <tr>
-                            <td scope="row">DSP Finish HWT28</td>
-                            <td>A</td>
-                            <td>10/07/23</td>
-                            <td>Completed</td>
-                            <td>
-                                100%
-                                <div style="width: 100px; height: 10px; margin-top: 5px; position: relative;">
-                                    <div style="background-color: #4CAF50; height: 100%; width: 100%; border-radius: 3px;"></div>
-                                </div>
+                            <td class="text-center">{{ $project->projectID }}</td>
+                            <td class="text-center">{{ $project->productID }}</td>
+                            <td class="text-center">{{ $project->designer }}</td>
+                            <td class="text-center">{{ $project->start_date }}</td>
+                            <td class="text-center">{{ $project->adherence }}</td>
+                            <td class="text-center">{{ $project->category }}</td>
+                            <td class="text-center">{{ $project->status }}</td>
+                            <td class="text-center">
+                               <button class="btn btn-danger">delete</button>
                             </td>
                         </tr>
-                        <tr>
-                            <td scope="row">RG FR Submit HWP46</td>
-                            <td>A</td>
-                            <td>10/07/23</td>
-                            <td>On Going</td>
-                            <td>
-                                75%
-                                <div style="width: 100px; height: 10px; margin-top: 5px; position: relative;">
-                                    <div style="background-color: #4CAF50; height: 100%; width: 75%; border-radius: 3px;"></div>
-                                </div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td scope="row">PL 2222 HRM78</td>
-                            <td>A</td>
-                            <td>10/07/23</td>
-                            <td>On Going</td>
-                            <td>
-                                52%
-                                <div style="width: 100px; height: 10px; margin-top: 5px; position: relative;">
-                                    <div style="background-color: #4CAF50; height: 100%; width: 52%; border-radius: 3px;"></div>
-                                </div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td scope="row">CR Send Out HRG85</td>
-                            <td>A</td>
-                            <td>10/07/23</td>
-                            <td>Drop</td>
-                            <td>
-                                -%
-                                <div style="width: 100px; height: 10px; margin-top: 5px; position: relative;">
-                                    <div style="background-color: #4CAF50; height: 100%; width: 0%; border-radius: 3px;"></div>
-                                </div>
-                            </td>
-                        </tr>
+                        @endforeach
                     </tbody>
                 </table>
             </div>
