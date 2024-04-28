@@ -1,19 +1,19 @@
 @extends('layouts.sidenav')
 
 @section('head')
-{{-- style, script, manggil library script cdn --}}
-<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.min.js"></script>
-<link rel="stylesheet" href="argon/assets/css/argon-dashboard.css">
+    {{-- style, script, manggil library script cdn --}}
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="argon/assets/css/argon-dashboard.css">
 
-<style>
+    <style>
 
 
-</style>
+    </style>
 @endsection
 
 @section('content')
-@include('layouts.topnav', ['title' => 'Profile'])
+    @include('layouts.topnav', ['title' => 'Profile'])
 
 {{-- Di sini baru ngoding, buatla apa gitu --}}
 <div class="container">
@@ -168,12 +168,22 @@
         @include('layouts.footer')
     </div>
     {{-- Nambahin footer dari layout || footer di akhir --}}
+        @include('layouts.footer')
+    </div>
+    {{-- Nambahin footer dari layout || footer di akhir --}}
 
 
+    {{-- Modal harus di luar div --}}
     {{-- Modal harus di luar div --}}
 
 
 
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const editButton = document.getElementById("editButton");
+            const cancelButton = document.getElementById("cancelButton"); // Get the cancel button
+            const saveButton = document.getElementById("saveChangesButton");
+            const inputs = document.querySelectorAll("input[readonly]");
     <script>
         document.addEventListener("DOMContentLoaded", function() {
             const editButton = document.getElementById("editButton");
@@ -190,7 +200,20 @@
                 cancelButton.style.display = readonly ? "none" :
                     "inline-block"; // Show cancel button if inputs are editable
             }
+            // Toggle between readonly and editable mode for inputs
+            function toggleInputs(readonly) {
+                inputs.forEach(input => {
+                    input.readOnly = readonly;
+                });
+                saveButton.disabled = readonly;
+                cancelButton.style.display = readonly ? "none" :
+                    "inline-block"; // Show cancel button if inputs are editable
+            }
 
+            // Event listener for Edit button click
+            editButton.addEventListener("click", function() {
+                toggleInputs(false); // Enable editing
+            });
             // Event listener for Edit button click
             editButton.addEventListener("click", function() {
                 toggleInputs(false); // Enable editing
@@ -200,12 +223,28 @@
             saveButton.addEventListener("click", function() {
                 toggleInputs(true); // Disable editing
             });
+            // Event listener for Save button click
+            saveButton.addEventListener("click", function() {
+                toggleInputs(true); // Disable editing
+            });
 
             // Event listener for Cancel button click
             cancelButton.addEventListener("click", function() {
                 toggleInputs(true); // Revert changes
             });
+            // Event listener for Cancel button click
+            cancelButton.addEventListener("click", function() {
+                toggleInputs(true); // Revert changes
+            });
 
+            // Event listener for input changes
+            inputs.forEach(input => {
+                input.addEventListener("input", function() {
+                    saveButton.disabled = false; // Enable save button when any input changes
+                });
+            });
+        });
+    </script>
             // Event listener for input changes
             inputs.forEach(input => {
                 input.addEventListener("input", function() {
