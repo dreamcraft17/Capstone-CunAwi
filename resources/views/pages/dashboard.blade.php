@@ -21,7 +21,7 @@
             <div class="bg-soft">
                 <div class="row">
                     <div class="col m-4">
-                        <h2 style="color: black;"> Hello, [Name]! </h1>
+                    <h2 style="color: black;"> Hello, {{ $name }}! </h1>
                             <h6 class="card-title">Always make sure to update your project progress.</h5>
                     </div>
                 </div>

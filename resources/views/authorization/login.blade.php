@@ -31,21 +31,23 @@
                             <h5 class="mt-1 text-primary">LOGIN</h5>
                         </div>
                         <div class="card-body">
+                            <form method="POST" action="{{ route('login.action') }}">
+                                @csrf
                                 <div class="form-group mb-4">
                                     <label for="email">Email</label>
                                     <div class="input-group">
-                                        <input type="email" class="form-control" placeholder="Input Email" name="email" />
+                                        <input type="email" class="form-control" placeholder="Input Email" name="email">
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label for="password">Password</label>
                                     <div class="input-group">
-                                        <input type="password" class="form-control" placeholder="Input Password">
+                                        <input type="password" class="form-control" placeholder="Input Password" name="password">
                                     </div>
                                     {{-- @if ($errors->has('password'))<div class="invalid-feedback">{{ $errors->first('password') }}</div>@endif --}}
-                                </div>
+                                    </div>
                                 <div class="text-center">
-                                    <button type="submit" name="submit" class="btn btn-primary w-100 my-4 mb-2" id="login-btn">Login</button>
+                                    <button type="submit" class="btn btn-primary w-100 my-4 mb-2" id="login-btn">Login</button>
                                     <p class="mt-1 text-secondary" style="font-size: 14px;">Don't have an account? <a href="{{ route('register') }}" class="text-info">Register</a></p>
                                 </div>
                             </form>
@@ -55,5 +57,5 @@
             </div>
         </div>
     </main>
-
 </body>
+

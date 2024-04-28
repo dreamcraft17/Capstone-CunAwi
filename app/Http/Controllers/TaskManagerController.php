@@ -1,14 +1,14 @@
 <?php
 
 namespace App\Http\Controllers;
+
 use Illuminate\Http\Request;
-use App\Http\Controllers\DashboardController;
-use App\Http\Controllers\ProjectListController;
-use App\Http\Controllers\TaskManagerController;
 
 class TaskManagerController extends Controller
 {
-    public function taskmanager(){
-        return view("pages.taskmanager");
+    public function index()
+    {
+        // Your logic for the Task Manager page goes here
+        return view('pages.taskmanager'); // Assuming 'pages.taskmanager' is the view file
     }
 }
