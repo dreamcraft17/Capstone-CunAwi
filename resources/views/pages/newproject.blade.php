@@ -53,7 +53,7 @@
                                     </div>
 
                                     <div class="col">
-                                        <label>Project Name <span class="text-danger">*</span></label>
+                                        <label>Toy Name <span class="text-danger">*</span></label>
                                         <input type="text" class="form-control" id="projname"
                                             placeholder="Click Here to Enter">
                                     </div>
@@ -197,7 +197,7 @@
 
                     <div class="text-center mt-4">
                         <span class="text-bold ml-2 mr-2" style="font-size: 24px;">
-                            <h5>Toy</h5>
+                            <h5>Toy Name</h5>
                         </span>
                     </div>
 
