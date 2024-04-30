@@ -11,7 +11,7 @@
     <style>
         .calendar {
             width: 300px;
-            border: 1px solid #ccc; 
+            border: 1px solid #ccc;
             padding: 10px;
         }
 
