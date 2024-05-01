@@ -32,6 +32,5 @@ class Data extends Model
         'description',
     ];
 
-    // Jika Anda tidak ingin menggunakan timestamps (created_at dan updated_at), Anda dapat menonaktifkannya
-    public $timestamps = false;
+
 }

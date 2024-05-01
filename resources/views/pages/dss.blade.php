@@ -27,7 +27,7 @@
                                 <div class="numbers">
                                     <p class="text-sm mb-0 text-uppercase font-weight-bold">Total Production</p>
                                     <h5 class="font-weight-bolder">
-                                        112
+                                    {{ $totalproduction }}
                                     </h5>
                                     <p class="mb-0">
                                         <span class="text-success text-sm font-weight-bolder">+13</span>
@@ -52,7 +52,7 @@
                                 <div class="numbers">
                                     <p class="text-sm mb-0 text-uppercase font-weight-bold">Adherence</p>
                                     <h5 class="font-weight-bolder">
-                                        61,2%
+                                    {{ number_format($averageAdherence, 2) }}%
                                     </h5>
                                     <p class="mb-0">
                                         <span class="text-success text-sm font-weight-bolder">+3%</span>
@@ -77,7 +77,7 @@
                                 <div class="numbers">
                                     <p class="text-sm mb-0 text-uppercase font-weight-bold">Lead Time</p>
                                     <h5 class="font-weight-bolder">
-                                        32.7 Weeks
+                                    {{ number_format($averageLead, 2) }} Weeks
                                     </h5>
                                     <p class="mb-0">
                                         <span class="text-danger text-sm font-weight-bolder">-2%</span>
@@ -102,7 +102,7 @@
                                 <div class="numbers">
                                     <p class="text-sm mb-0 text-uppercase font-weight-bold">Cost</p>
                                     <h5 class="font-weight-bolder">
-                                        $1,203
+                                        $  {{ number_format($averageCost, 2) }}
                                     </h5>
                                     <p class="mb-0">
                                         <span class="text-success text-sm font-weight-bolder">+5%</span> than last month
@@ -121,27 +121,27 @@
         </div>
 
         <div class="row mt-4">
-            <div class="col-lg-12 mb-lg-0 mb-4">
-                <div class="card z-index-2 h-100">
-                    <div class="card-header pb-0 pt-3 bg-transparent">
-                        <h6 class="text-capitalize">Production Overview by Months</h6>
-                        <p class="text-sm mb-0">
-                            <i class="fa fa-arrow-up text-success"></i>
-                            <span class="font-weight-bold">4% more</span> in 2024
-                        </p>
-                    </div>
-                    <div class="card-body p-3">
-                        {{-- ISI BAR CHART--}}
-                        <div class="chart">
-                            <canvas id="chart-line" class="chart-canvas" height="300"></canvas>
-                        </div>
+        <div class="col-lg-12 mb-lg-0 mb-4">
+            <div class="card z-index-2 h-100">
+                <div class="card-header pb-0 pt-3 bg-transparent">
+                    <h6 class="text-capitalize">Production Overview by Months</h6>
+                    <p class="text-sm mb-0">
+                        <i class="fa fa-arrow-up text-success"></i>
+                        <span class="font-weight-bold">4% more</span> in 2024
+                    </p>
+                </div>
+                <div class="card-body p-3">
+                    {{-- Bar Chart --}}
+                    <div class="chart">
+                        <canvas id="chart-line" class="chart-canvas" height="300"></canvas>
                     </div>
                 </div>
             </div>
-            <div class="col-lg-5">
-
-            </div>
         </div>
+        <div class="col-lg-5">
+
+        </div>
+    </div>
 
         <div class="row mt-4">
             <div class="col-lg-7 mb-lg-0 mb-4">
@@ -303,116 +303,136 @@
 {{-- Nambahin footer dari layout || footer di akhir --}}
     <script src="./assets/js/plugins/chartjs.min.js"></script>
     <script>
-        var ctx1 = document.getElementById("chart-line").getContext("2d");
+    var productionData = <?php echo json_encode($productionByMonth); ?>;
 
-        var gradientStroke1 = ctx1.createLinearGradient(0, 230, 0, 50);
+// Inisialisasi label bulan dan jumlah produksi
+var months = [];
+var productions = [];
 
-        gradientStroke1.addColorStop(1, 'rgba(0, 119, 182, 0.2)'); // Matching border color
-        gradientStroke1.addColorStop(0.6, 'rgba(0, 119, 182, 0.0)'); // Adjusted stop
-        gradientStroke1.addColorStop(0, 'rgba(0, 119, 182, 0)'); // Matching border color
-        new Chart(ctx1, {
-            type: "line",
-            data: {
-                labels: ["Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
-                datasets: [{
-                    label: "Product",
-                    tension: 0.4,
-                    borderWidth: 0,
-                    pointRadius: 0,
-                    borderColor: "#0077b6",
-                    backgroundColor: gradientStroke1,
-                    borderWidth: 3,
-                    fill: true,
-                    data: [50, 40, 300, 220, 500, 250, 400, 230, 500],
-                    maxBarThickness: 6
+// Loop untuk mengisi data bulan dan produksi
+productionData.forEach(function(item) {
+    months.push(item.month);
+    productions.push({x: item.month, y: item.total, total: item.total});
+});
 
-                }],
+var ctx1 = document.getElementById("chart-line").getContext("2d");
+
+var gradientStroke1 = ctx1.createLinearGradient(0, 230, 0, 50);
+
+gradientStroke1.addColorStop(1, 'rgba(0, 119, 182, 0.2)'); // Matching border color
+gradientStroke1.addColorStop(0.6, 'rgba(0, 119, 182, 0.0)'); // Adjusted stop
+gradientStroke1.addColorStop(0, 'rgba(0, 119, 182, 0)'); // Matching border color
+new Chart(ctx1, {
+    type: "line",
+    data: {
+        labels: months,
+        datasets: [{
+            label: "Product",
+            tension: 0, // Set tension to 0
+            borderWidth: 3,
+            borderColor: "#0077b6",
+            backgroundColor: gradientStroke1,
+            fill: true,
+            data: productions,
+            maxBarThickness: 6
+        }],
+    },
+    options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+            legend: {
+                display: false,
+            }
+        },
+        interaction: {
+            intersect: false,
+            mode: 'index',
+        },
+        scales: {
+            y: {
+                grid: {
+                    drawBorder: false,
+                    display: true,
+                    drawOnChartArea: true,
+                    drawTicks: false,
+                    borderDash: [5, 5]
+                },
+                ticks: {
+                    display: true,
+                    padding: 10,
+                    color: '#fbfbfb',
+                    font: {
+                        size: 11,
+                        family: "Open Sans",
+                        style: 'normal',
+                        lineHeight: 2
+                    },
+                }
             },
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                plugins: {
-                    legend: {
-                        display: false,
+            x: {
+                grid: {
+                    drawBorder: false,
+                    display: false,
+                    drawOnChartArea: false,
+                    drawTicks: false,
+                    borderDash: [5, 5]
+                },
+                ticks: {
+                    display: true,
+                    color: '#ccc',
+                    padding: 20,
+                    font: {
+                        size: 11,
+                        family: "Open Sans",
+                        style: 'normal',
+                        lineHeight: 2
+                    },
+                }
+            },
+        },
+        plugins: {
+            tooltip: {
+                callbacks: {
+                    label: function(context) {
+                        return 'Total: ' + context.parsed.y;
                     }
-                },
-                interaction: {
-                    intersect: false,
-                    mode: 'index',
-                },
-                scales: {
-                    y: {
-                        grid: {
-                            drawBorder: false,
-                            display: true,
-                            drawOnChartArea: true,
-                            drawTicks: false,
-                            borderDash: [5, 5]
-                        },
-                        ticks: {
-                            display: true,
-                            padding: 10,
-                            color: '#fbfbfb',
-                            font: {
-                                size: 11,
-                                family: "Open Sans",
-                                style: 'normal',
-                                lineHeight: 2
-                            },
-                        }
-                    },
-                    x: {
-                        grid: {
-                            drawBorder: false,
-                            display: false,
-                            drawOnChartArea: false,
-                            drawTicks: false,
-                            borderDash: [5, 5]
-                        },
-                        ticks: {
-                            display: true,
-                            color: '#ccc',
-                            padding: 20,
-                            font: {
-                                size: 11,
-                                family: "Open Sans",
-                                style: 'normal',
-                                lineHeight: 2
-                            },
-                        }
-                    },
-                },
-            },
-        });
-    </script>
+                }
+            }
+        },
+    },
+});
+</script>
 
 {{-- Modal harus di luar div --}}
 <script>
-        // JavaScript code to create the pie chart
-        document.addEventListener('DOMContentLoaded', function () {
-            // Get the canvas element
-            var ctx = document.getElementById('myPieChart').getContext('2d');
+    
+    var statusLabels = <?php echo json_encode($statusLabels); ?>;
+    var statusData = <?php echo json_encode($statusData); ?>;
+    var statusColors = <?php echo json_encode($statusColors); ?>;
 
-            // Define the data for the pie chart
-            var data = {
-                labels: ['Finish', 'On Going', 'Drop'],
-                datasets: [{
-                    data: [24, 31, 3], // Example data values
-                    backgroundColor: [
-                        '#36DC56',
-                        '#FFA600',
-                        '#FF2525',
-                    ]
-                }]
-            };
+    // JavaScript code to create the pie chart
+    document.addEventListener('DOMContentLoaded', function () {
+        // Get the canvas element
+        var ctx = document.getElementById('myPieChart').getContext('2d');
 
-            // Create the pie chart
-            var myPieChart = new Chart(ctx, {
-                type: 'pie',
-                data: data
-            });
+        // Define the data for the pie chart
+        var data = {
+            labels: statusLabels,
+            datasets: [{
+                data: statusData,
+                backgroundColor: statusColors
+            }]
+        };
+
+        // Create the pie chart
+        var myPieChart = new Chart(ctx, {
+            type: 'pie',
+            data: data
         });
-    </script>
+    });
+</script>
+
 
 
 

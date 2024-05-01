@@ -175,7 +175,7 @@
 
                 </div>
 
-                <div class="card overflow-hidden">
+                <div class="card-body px-3 pt-0 pb-3" style="max-height: 300px; overflow-y: auto;">
                     <table id="taskTable" class="table" style="margin-top:25px;">
                         <!-- Your table content here -->
                         <thead>
@@ -252,6 +252,25 @@
         });
     });
 </script>
+
+
+<script>
+    $(document).ready(function() {
+        // Retrieve project ID from session
+        var projectId = "{{ session('projectId') }}";
+
+        // Highlight corresponding row
+        if (projectId) {
+            var $row = $('tr[data-project-id="' + projectId + '"]');
+            $row.css('background-color', 'yellow');
+            setTimeout(function() {
+                $row.css('background-color', '');
+            }, 5000); // Remove highlight after 5 seconds
+        }
+    });
+</script>
+
+
 
 
 @endsection

@@ -28,7 +28,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'dashboard'])->name('dashboard');
     Route::get('/profile', [UserController::class, 'profile'])->name('profile'); 
     Route::get('/taskmanager', [TaskManagerController::class, 'index'])->name('taskmanager'); 
-    Route::get('/draft', [DraftController::class, 'index'])->name('draft'); 
+    // Route::get('/draft', [DraftController::class, 'draft'])->name('draft'); 
     Route::get('/projectlist', [ProjectListController::class, 'projectlist'])->name('projectlist'); 
     Route::get('/newproject', [ProjectListController::class, 'newproject'])->name('newproject');
     Route::get('/calendar', [CalendarController::class, 'index'])->name('calendar');
@@ -42,6 +42,8 @@ Route::middleware('auth')->group(function () {
     Route::post('/new-project-submit', [ProjectListController::class, 'submitNewProject'])->name('submitNewProject');
     Route::get('/draft', [ProjectListController::class, 'draft'])->name('draft'); 
     Route::get('/events', [CalendarController::class, 'fetchEvents'])->name('calendar.events');
+    Route::get('/draft', [DraftController::class, 'draft'])->name('draft'); 
+    Route::get('/redirect-to-projectlist/{projectId}', [TaskManagerController::class, 'redirectToProjectList'])->name('redirect.projectlist');
 
 
 
