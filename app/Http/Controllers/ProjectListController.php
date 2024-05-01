@@ -8,10 +8,24 @@ use App\Models\Data;
 
 class ProjectListController extends Controller
 {
-    public function projectlist(){
-        $projects = Data::all(); 
-    
-        return view("pages.projectlist", compact('projects')); 
+    public function projectlist(Request $request){
+        // Mendapatkan nilai dari dropdown select
+        $selectedDesigner = $request->input('designer');
+        $filterStatus = $request->query('status');
+
+        // Mengambil data semua desainer
+        $designers = Data::pluck('designer')->unique();
+        $projects = $filterStatus ? Data::where('status', $filterStatus)->get() : Data::all();
+
+        // Query untuk mendapatkan data berdasarkan nilai dropdown select
+        $projectsQuery = Data::query();
+        if($selectedDesigner){
+            $projectsQuery->where('designer', $selectedDesigner);
+        }
+        $projects = $projectsQuery->get();
+
+        // Mengirim data desainer dan data proyek ke tampilan
+        return view("pages.projectlist", compact('projects', 'designers')); 
     }
     
 
@@ -35,6 +49,56 @@ class ProjectListController extends Controller
         return redirect()->route('projectlist')->with('success', 'Project deleted successfully');
     }
     
-    
+    public function storeNewProject(Request $request)
+    {
+
+        $validatedData = $request->validate([
+            'productID' => 'required',
+            'toyName' => 'required',
+            'pe' => 'required',
+            'designer' => 'required',
+            'category' => 'required',
+            'description' => 'required',
+            'meeting' => 'required|date',
+            'start_date' => 'required|date',
+            'finish_cmt' => 'required|date',
+            'remarks' => 'nullable',
+          
+        ]);
+
+        $projectID = rand(100000, 999999);
+
+        Data::create([
+            'projectID' => $projectID,
+            'assortment' => $request->toyName,
+            'productID' => $request->productID,
+            'toyName' => $request->toyName,
+            'pe'=> $request->pe,
+            'designer'=> $request->designer,
+            'category'=> $request->category,
+            'description'=> $request->description,
+            'meeting'=> $request->meeting,
+            'start_date'=> $request->start_date,
+            'finish_cmt'=> $request->finish_cmt,
+            'remarks'=> $request->remarks,
+        
+        ]);
+
+        // Redirect ke halaman lain atau lakukan tindakan lain sesuai kebutuhan
+        return redirect()->route('projectlist')->with('success', 'New project has been created successfully.');
+    }
+
+    public function submitNewProject(Request $request)
+{
+    // Panggil method untuk menyimpan data ke dalam database
+    $this->storeNewProject($request);
+
+    // Redirect ke halaman lain atau lakukan tindakan lain sesuai kebutuhan
+    return redirect()->route('projectlist')->with('success', 'New project has been submitted successfully.');
+}
+
+
 
 }
+
+

@@ -28,6 +28,8 @@ class Data extends Model
         'status',
         'lead_time',
         'remarks',
+        'image',
+        'description',
     ];
 
     // Jika Anda tidak ingin menggunakan timestamps (created_at dan updated_at), Anda dapat menonaktifkannya

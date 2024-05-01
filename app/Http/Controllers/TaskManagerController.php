@@ -3,12 +3,16 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Data;
 
 class TaskManagerController extends Controller
 {
     public function index()
     {
-        // Your logic for the Task Manager page goes here
-        return view('pages.taskmanager'); // Assuming 'pages.taskmanager' is the view file
+        // Ambil semua data yang memiliki status 'on going'
+        $projects = Data::where('status', 'on going')->get(); 
+
+        return view('pages.taskmanager', compact('projects')); 
     }
 }
+?>

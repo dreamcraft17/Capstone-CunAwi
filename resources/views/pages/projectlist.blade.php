@@ -6,6 +6,34 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.min.js"></script>
 
 <style>
+    /* Styles for the container to display progress bar */
+    .progress-bar {
+        width: 200px;
+        /* Adjust width as needed */
+        height: 20px;
+        /* Adjust height as needed */
+        background-color: #f0f0f0;
+        border-radius: 10px;
+        overflow: hidden;
+    }
+
+    /* Styles for the progress bar */
+    .progress {
+        height: 100%;
+        background-color: #4caf50;
+        /* Green color for progress */
+        text-align: center;
+        line-height: 20px;
+        /* Same as height for vertical centering */
+        color: white;
+    }
+
+    /* Styles for the container to display percentage */
+    .percentage-container {
+        margin-top: 10px;
+        text-align: center;
+    }
+
     .badge {
         display: inline-block;
         padding: 0.25em 0.5em;
@@ -26,6 +54,32 @@
     .badge-soft-warning {
         color: #f1b44c;
         background-color: rgba(241, 180, 76, .18);
+    }
+
+    .progress-bar {
+        width: 200px;
+        /* Adjust width as needed */
+        height: 20px;
+        /* Adjust height as needed */
+        background-color: #f0f0f0;
+        border-radius: 10px;
+        overflow: hidden;
+    }
+
+    .progress {
+        height: 100%;
+        background-color: #4caf50;
+        /* Green color for progress */
+        text-align: center;
+        line-height: 20px;
+        /* Same as height for vertical centering */
+        color: white;
+    }
+
+    /* Styles for the container to display percentage */
+    .percentage-container {
+        margin-top: 10px;
+        text-align: center;
     }
 
     .badge-success {
@@ -70,6 +124,12 @@
     .d-inline {
         display: inline;
     }
+
+    .dropdown-menu {
+        min-width: auto;
+        right: 0;
+        left: auto;
+    }
 </style>
 @endsection
 
@@ -87,75 +147,111 @@
                         <a href="{{ route('newproject') }}" class="btn btn-primary rubik-font ml-2"> + Add New </a>
                         <a href="{{ route('draft') }}" class="btn btn-secondary rubik-font ml-2"> Draft Project </a>
                     </CENTER>
+                    <!-- <select class="form-control" id="designerFilter">
+                        <option value="">All Designers</option>
+                        @foreach($designers as $designer)
+                            <option value="{{ $designer }}">{{ $designer }}</option>
+                        @endforeach
+                    </select> -->
                 </div>
             </div>
 
             <div class="card-body px-3 pt-0 pb-3">
-
-                <!-- Filter -->
                 <div class="mt-4" style="text-align: right;">
-                    <select id=" ">
-                        <option>Staff</option>
-                        <option> A </option>
-                        <option> B </option>
-                        <option> C </option>
-                        <!-- Add other designer options as needed -->
+                    <span>Choose designer :</span>
+                    <select id="designerFilter">
+                        <option value="">All Designers</option>
+                        @foreach($designers as $designer)
+                        <option value="{{ $designer }}">{{ $designer }}</option>
+                        @endforeach
+                    </select>
+                    <label for="filterStatus">Filter by Status:</label>
+                    <select id="filterStatus">
+                        <option value="">All</option>
+                        <option value="On going">On going</option>
+                        <option value="Finished">Finished</option>
                     </select>
 
-                    <select id="statusFilter">
-                        <option value="all">Status</option>
-                        <option value="On Going">On Going</option>
-                        <option value="Completed">Completed</option>
-                        <option value="Drop">Drop</option>
-                        <!-- Add other status options as needed -->
-                    </select>
+
                 </div>
 
-                <!-- TABLES -->
-                <table id="taskTable" class="table" style="margin-top:25px;">
-                    <!-- Your table content here -->
-                    <thead>
-                        <tr>
-                            <th scope="col">Tracking ID</th>
-                            <th scope="col">Product</th>
-                            <th scope="col">Staff Name</th>
-                            <th scope="col">Start Date</th>
-                            <th scope="col">Progress</th>
-                            <th scope="col">Category</th>
-                            <th scope="col">Status</th>
-                            <th scope="col">Action</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach($projects as $project)
-                        <tr>
-                            <td class="text-center">{{ $project->projectID }}</td>
-                            <td class="text-center">{{ $project->productID }}</td>
-                            <td class="text-center">{{ $project->designer }}</td>
-                            <td class="text-center">{{ $project->start_date }}</td>
-                            <td class="text-center">{{ $project->adherence }}</td>
-                            <td class="text-center">{{ $project->category }}</td>
-                            <td class="text-center">{{ $project->status }}</td>
-                            <td class="text-center">
-                               <button class="btn btn-danger">delete</button>
-                            </td>
-                        </tr>
-                        @endforeach
-                    </tbody>
-                </table>
+                <div class="card overflow-hidden">
+                    <table id="taskTable" class="table" style="margin-top:25px;">
+                        <!-- Your table content here -->
+                        <thead>
+                            <tr>
+                                <th scope="col">Tracking ID</th>
+                                <th scope="col">Product</th>
+                                <th scope="col">Staff Name</th>
+                                <th scope="col">Start Date</th>
+                                <th scope="col">Progress</th>
+                                <th scope="col">Category</th>
+                                <th scope="col">Status</th>
+                                <th scope="col">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody id="projectTableBody">
+                            @foreach($projects as $project)
+                            <tr data-designer="{{ $project->designer }}">
+                                <td class="text-center">{{ $project->projectID }}</td>
+                                <td class="text-center">{{ $project->productID }}</td>
+                                <td class="text-center">{{ $project->designer }}</td>
+                                <td class="text-center">{{ $project->start_date }}</td>
+                                <td class="text-center">
+                                    <div class="progress-bar">
+                                        <!-- Calculate percentage -->
+                                        @php
+                                        // Parse adherence value to get the percentage
+                                        $adherence = str_replace('%', '', $project->adherence); // Remove '%' sign
+                                        $percentage = intval($adherence);
+                                        @endphp
+                                        <!-- Set width based on percentage -->
+                                        <div class="progress" style="width: {{ $percentage }}%; height:150px;">
+                                            {{ $project->adherence }}
+                                        </div>
+                                    </div>
+                                </td>
+                                <td class="text-center">{{ $project->category }}</td>
+                                <td class="text-center">{{ $project->status }}</td>
+                                <td class="text-center">
+                                    <button class="btn btn-danger">delete</button>
+                                </td>
+                            </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
     </div>
 
     @include('layouts.footer')
 </div>
-{{-- Nambahin footer dari layout || footer di akhir --}}
 
 
-{{-- Modal harus di luar div --}}
+<script>
+    $(document).ready(function() {
+        // Function to filter table rows based on selected designer
+        $('#designerFilter, #filterStatus').change(function() {
+            var selectedDesigner = $('#designerFilter').val();
+            var selectedStatus = $('#filterStatus').val();
+
+            $('#projectTableBody tr').each(function() {
+                var designer = $(this).data('designer');
+                var status = $(this).find('td:eq(6)').text().trim();
+
+                var designerFilter = selectedDesigner === '' || designer === selectedDesigner;
+                var statusFilter = selectedStatus === '' || status === selectedStatus;
+
+                if (designerFilter && statusFilter) {
+                    $(this).show();
+                } else {
+                    $(this).hide();
+                }
+            });
+        });
+    });
+</script>
 
 
-
-
-{{-- Masukin script di sini --}}
 @endsection

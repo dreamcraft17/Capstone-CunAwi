@@ -38,6 +38,10 @@ Route::middleware('auth')->group(function () {
     Route::post('/profile/update', [UserController::class, 'update_profile'])->name('update_profile');
     Route::delete('/users/{id}', [UserController::class, 'delete'])->name('delete_user');
     Route::delete('/projects/{project}', [ProjectListController::class, 'delete'])->name('delete.project');
+    Route::post('/new-project', [ProjectListController::class, 'storeNewProject'])->name('storeNewProject');
+    Route::post('/new-project-submit', [ProjectListController::class, 'submitNewProject'])->name('submitNewProject');
+    Route::get('/draft', [ProjectListController::class, 'draft'])->name('draft'); 
+    Route::get('/events', [CalendarController::class, 'fetchEvents'])->name('calendar.events');
 
 
 

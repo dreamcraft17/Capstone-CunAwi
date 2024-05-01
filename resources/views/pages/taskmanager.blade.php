@@ -33,65 +33,28 @@
                     </div>
                 </div>
 
-                <div class="row">
-                    <div class="col">
-                        <div class="list-group">
-                            <a href="{{ route('projectlist') }}" class="list-group-item list-group-item-action">
-                                <div class="d-flex w-100 justify-content-between">
-                                    <h6 class="mb-1">[Task Name]</h6>
-                                    <small>02/07/2023</small>
-                                </div>
-                                <p class="mb-1">Date Commit</p></a>
-                            </a>
-                            <!-- Add more tasks here if needed -->
-                        </div>
-                    </div>
-                </div>
-
+                @foreach($projects as $project)
                 <div class="row mt-4">
                     <div class="col">
                         <div class="list-group">
                             <a href="#" class="list-group-item list-group-item-action">
                                 <div class="d-flex w-100 justify-content-between">
-                                    <h6 class="mb-1">[Task Name]</h6>
-                                    <small>02/07/2023</small>
+                                    <h6 class="mb-1">{{ $project->productID }}</h6>
+                                    <small>{{ $project->finish_cmt }}</small>
                                 </div>
-                                <p class="mb-1">Date Commit</p>
+                                <p class="mb-1">{{ $project->date_commit }}</p>
                             </a>
                             <!-- Add more tasks here if needed -->
                         </div>
                     </div>
                 </div>
+                @endforeach
 
-                <div class="row mt-4">
-                    <div class="col">
-                        <div class="list-group">
-                            <a href="#" class="list-group-item list-group-item-action">
-                                <div class="d-flex w-100 justify-content-between">
-                                    <h6 class="mb-1">[Task Name]</h6>
-                                    <small>02/07/2023</small>
-                                </div>
-                                <p class="mb-1">Date Commit</p>
-                            </a>
-                            <!-- Add more tasks here if needed -->
-                        </div>
-                    </div>
-                </div>
+                
 
-                <div class="row mt-4">
-                    <div class="col">
-                        <div class="list-group">
-                            <a href="#" class="list-group-item list-group-item-action">
-                                <div class="d-flex w-100 justify-content-between">
-                                    <h6 class="mb-1">[Task Name]</h6>
-                                    <small>02/07/2023</small>
-                                </div>
-                                <p class="mb-1">Date Commit</p>
-                            </a>
-                            <!-- Add more tasks here if needed -->
-                        </div>
-                    </div>
-                </div>
+                
+
+                
 
             </div>
         </div>

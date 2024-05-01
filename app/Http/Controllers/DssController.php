@@ -10,7 +10,7 @@ use App\Http\Controllers\CalendarController;
 
 class DssController extends Controller
 {
-   public function dss(){
+   public function index(){
         return view("pages.dss");
     }
 }
