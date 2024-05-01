@@ -67,6 +67,7 @@ class ProjectListController extends Controller
         ]);
 
         $projectID = rand(100000, 999999);
+        $status= "On going";
 
         Data::create([
             'projectID' => $projectID,
@@ -81,22 +82,27 @@ class ProjectListController extends Controller
             'start_date'=> $request->start_date,
             'finish_cmt'=> $request->finish_cmt,
             'remarks'=> $request->remarks,
+            'status'=> $status,
         
         ]);
 
-        // Redirect ke halaman lain atau lakukan tindakan lain sesuai kebutuhan
+        
         return redirect()->route('projectlist')->with('success', 'New project has been created successfully.');
     }
 
     public function submitNewProject(Request $request)
 {
-    // Panggil method untuk menyimpan data ke dalam database
+   
     $this->storeNewProject($request);
 
-    // Redirect ke halaman lain atau lakukan tindakan lain sesuai kebutuhan
+    
     return redirect()->route('projectlist')->with('success', 'New project has been submitted successfully.');
 }
 
+public function redirectToProjectList($projectId)
+    {
+        return redirect()->route('projectlist')->with('projectId', $projectId);
+    }
 
 
 }

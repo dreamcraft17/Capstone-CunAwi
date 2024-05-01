@@ -8,12 +8,22 @@ use App\Models\Data;
 
 class DraftController extends Controller
 {
-    public function index()
+    public function draft(Request $request)
     {
         
+        $selectedDesigner = $request->input('designer');
+
+        $designers = Data::pluck('designer')->unique();
         $data = Data::where('status', 'on going')->get();
 
+        $projectsQuery = Data::where('status', 'on going');
+        if($selectedDesigner){
+            $projectsQuery->where('designer', $selectedDesigner);
+        }
+        $data = $projectsQuery->get();
+
+
         
-        return response()->json($data);
+        return view("pages.draft",compact('data','designers'));
     }
 }

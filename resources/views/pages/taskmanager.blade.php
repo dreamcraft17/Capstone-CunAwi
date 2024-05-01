@@ -37,7 +37,7 @@
                 <div class="row mt-4">
                     <div class="col">
                         <div class="list-group">
-                            <a href="#" class="list-group-item list-group-item-action">
+                            <a href="{{ route('projectlist', ['project_id' => $project->projectID]) }}" class="list-group-item list-group-item-action">
                                 <div class="d-flex w-100 justify-content-between">
                                     <h6 class="mb-1">{{ $project->productID }}</h6>
                                     <small>{{ $project->finish_cmt }}</small>
@@ -50,11 +50,12 @@
                 </div>
                 @endforeach
 
-                
 
-                
 
-                
+
+
+
+
 
             </div>
         </div>

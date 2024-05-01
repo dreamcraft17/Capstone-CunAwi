@@ -291,7 +291,7 @@
 
                     <div style="text-align: right;" class="mt-4">
                         <input type="button" id="prevButton" class="previous btn btn-secondary rubik-font" value="Previous" />
-                        <input type="button" id="saveDraftButton" class="draft btn btn-secondary rubik-font" value="Draft" />
+                        <input type="submit" name="submit" id="submitNewProjectButton" class="btn btn-secondary rubik-font" value="Draft" />
                         <input type="submit" name="submit" id="submitNewProjectButton" class="btn btn-primary rubik-font" value="Submit" />
                     </div>
 
