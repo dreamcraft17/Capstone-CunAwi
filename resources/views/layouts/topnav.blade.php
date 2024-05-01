@@ -16,12 +16,15 @@
 
 <!-- Navbar -->
 <nav class="navbar navbar-main navbar-expand-lg px-0 mx-4 shadow-none border-radius-xl
-        {{ str_contains(Request::url(), 'virtual-reality') == true ? ' mt-3 mx-3 bg-primary' : '' }}" id="navbarBlur" data-scroll="false">
+        {{ str_contains(Request::url(), 'virtual-reality') == true ? ' mt-3 mx-3 bg-primary' : '' }}"
+    id="navbarBlur" data-scroll="false">
     <div class="container-fluid py-1 px-3">
         <nav aria-label="breadcrumb">
             <div class="mt-2 mb-2">
-                <button class="btn btn-round tombolback" id="backButton" onclick="goBack()"><i class="fa fa-chevron-left" aria-hidden="true"></i></button>
-                <button class="btn btn-round tombolforward" id="forwardButton" onclick="goForward()"><i class="fa fa-chevron-right" aria-hidden="true"></i></button>
+                <button class="btn btn-round tombolback" id="backButton" onclick="goBack()"><i class="fa fa-chevron-left"
+                        aria-hidden="true"></i></button>
+                <button class="btn btn-round tombolforward" id="forwardButton" onclick="goForward()"><i
+                        class="fa fa-chevron-right" aria-hidden="true"></i></button>
             </div>
             <ol class="breadcrumb bg-transparent mb-0 pb-0 pt-1 px-0 me-sm-6 me-5">
                 <li class="breadcrumb-item text-sm"><a class="opacity-5 text-white" href="javascript:;">Pages</a></li>
@@ -36,7 +39,7 @@
                     <a href="{{ route('profile') }}" class="btn btn-dark rubik-font"> Profile </a>
                 </div>
             </div>
-            <ul class="navbar-nav justify-content-end">
+            <ul class="navbar-nav mt-3 justify-content-end">
                 <form action="{{ route('logout') }}" method="POST">
                     @csrf
                     <button type="submit" class="btn btn-dark rubik-font">Log Out</button>
