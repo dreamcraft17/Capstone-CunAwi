@@ -30,7 +30,6 @@ return new class extends Migration
             $table->double('lead_time');
             $table->string('remarks');
             $table->string('image');
-            $table->string('remarks');
             $table->timestamps();
         });
     }
