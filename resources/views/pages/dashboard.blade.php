@@ -127,7 +127,7 @@
     var data = {
         labels:months,
         datasets: [{
-            label: 'Product Sample',
+            label: 'Product',
             data: productions,
             backgroundColor: [
                 'rgba(255, 99, 132, 0.2)',
