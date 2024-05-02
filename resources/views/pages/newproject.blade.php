@@ -291,7 +291,7 @@
 
                     <div style="text-align: right;" class="mt-4">
                         <input type="button" id="prevButton" class="previous btn btn-secondary rubik-font" value="Previous" />
-                        <input type="submit" name="submit" id="submitNewProjectButton" class="btn btn-secondary rubik-font" value="Draft" />
+                        <!-- <input type="submit" name="submit" id="submitNewProjectButton" class="btn btn-secondary rubik-font" value="Draft" /> -->
                         <input type="submit" name="submit" id="submitNewProjectButton" class="btn btn-primary rubik-font" value="Submit" />
                     </div>
 
@@ -630,21 +630,21 @@ $(document).ready(function() {
         e.preventDefault(); 
 
         $.ajax({
-    url: "{{ route('storeNewProject') }}",
-    type: "POST",
-    data: $("form").serialize(),
-    success: function(response) {
-        console.log(response);
-        // Redirect to project list page
-        window.location.href = "{{ route('projectlist') }}";
-    },
-    error: function(xhr, status, error) {
-        console.error(xhr.responseText);
-    }
-});
+            url: "{{ route('storeNewProject') }}",
+            type: "POST",
+            data: $("form").serialize(),
+            success: function(response) {
+                console.log(response);
+                // Tidak ada pengalihan di sini
+            },
+            error: function(xhr, status, error) {
+                console.error(xhr.responseText);
+            }
+        });
 
     });
 });
+
 </script>
 
 @endsection
