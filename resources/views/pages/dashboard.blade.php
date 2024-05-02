@@ -114,14 +114,21 @@
 {{-- Nambahin footer dari layout || footer di akhir --}}
 
 <script>
-    // Sample data for the chart
+    var productionData = <?php echo json_encode($productionByMonth);?>;
+    var months = [];
+    var productions =[];
+
+    productionData.forEach(function(item) {
+    months.push(item.month);
+    productions.push({x: item.month, y: item.total, total: item.total});
+});
+
+
     var data = {
-        labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October',
-            'November', 'December'
-        ],
+        labels:months,
         datasets: [{
-            label: 'Sample Data',
-            data: [12, 19, 3, 5, 2],
+            label: 'Product',
+            data: productions,
             backgroundColor: [
                 'rgba(255, 99, 132, 0.2)',
                 'rgba(54, 162, 235, 0.2)',
@@ -151,17 +158,16 @@
         }
     };
 
-    // Get the canvas element
+
     var ctx = document.getElementById('myChart').getContext('2d');
 
-    // Create the bar chart
     var myChart = new Chart(ctx, {
         type: 'bar',
         data: data,
         options: options
     });
 </script>
-{{-- Modal harus di luar div --}}
+
 
 
 
