@@ -33,7 +33,7 @@
             <div class="bg-soft">
                 <div class="row">
                     <div class="col m-4">
-                        <h2 style="color: black; text-align: center;"> New Project Form </h2>
+                        <h2 style="color: black; text-align: center;"> Edit Project Form </h2>
                     </div>
                 </div>
             </div>
@@ -322,8 +322,6 @@
 
 
     {{-- Modal harus di luar div --}}
-
-
 
 
 
@@ -636,10 +634,6 @@
             displayFormData();
         });
     </script>
-
-
-
-
 
     <script>
         $(document).ready(function() {
