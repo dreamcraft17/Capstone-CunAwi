@@ -142,7 +142,7 @@ https://cdn.datatables.net/1.13.1/css/jquery.dataTables.min.css" rel="stylesheet
 @endsection
 
 @section('content')
-    @include('layouts.topnav', ['title' => 'Project List'])
+    @include('layouts.topnav', ['title' => 'Dropped Project'])
 
     {{-- Di sini baru ngoding, buatla apa gitu --}}
     <div class="container">
@@ -152,8 +152,7 @@ https://cdn.datatables.net/1.13.1/css/jquery.dataTables.min.css" rel="stylesheet
                     <div class="col m-4">
                         <CENTER>
                             <h2 class="mt-2" style="color: #1d275f;"> Project List </h2>
-                            <a href="{{ route('newproject') }}" class="btn btn-primary rubik-font ml-2"> Create New </a>
-                            <a href="{{ route('dropproject') }}" class="btn btn-danger rubik-font ml-2"> Dropped Project</a>
+                            <a href="{{ route('projectlist') }}" class="btn btn-primary rubik-font ml-2"> Project List </a>
                             <a href="{{ route('draft') }}" class="btn btn-secondary rubik-font ml-2"> Draft Project </a>
                         </CENTER>
                     </div>
@@ -188,14 +187,9 @@ https://cdn.datatables.net/1.13.1/css/jquery.dataTables.min.css" rel="stylesheet
 
 
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script> <!-- Include jQuery before your script -->
-    <script
-        src="
-                                                                                                                                                                                                https://cdn.datatables.net/1.13.1/js/jquery.dataTables.min.js">
-    </script>
+    <script src="https://cdn.datatables.net/1.13.1/js/jquery.dataTables.min.js"></script>
     <script type="text/javascript" charset="utf8"
-        src="
-                                                                                                                                                                                                https://cdn.datatables.net/fixedheader/3.2.1/js/dataTables.fixedHeader.min.js">
-    </script>
+        src="https://cdn.datatables.net/fixedheader/3.2.1/js/dataTables.fixedHeader.min.js"></script>
 
     <script>
         $(document).ready(function() {
@@ -224,15 +218,15 @@ https://cdn.datatables.net/1.13.1/css/jquery.dataTables.min.css" rel="stylesheet
                     filteredProjects.forEach(function(item) {
                         var row = '<tr>' +
                             '<td></td>' +
-                            '<td class="project-number-cell">' + item.projectID + '</td>' +
-                            '<td>' + item.productID + '</td>' +
-                            '<td>' + item.toyName + '</td>' +
-                            '<td>' + item.pe + '</td>' +
-                            '<td>' + item.designer + '</td>' +
-                            '<td>' + item.meeting + '</td>' +
-                            '<td>' + item.start_date + '</td>' +
-                            '<td>' + item.finish_cmt + '</td>' +
-                            '<td>' + item.status + '</td>' +
+                            '<td class="project-number-cell">' + +'</td>' +
+                            '<td>' + +'</td>' +
+                            '<td>' + +'</td>' +
+                            '<td>' + +'</td>' +
+                            '<td>' + +'</td>' +
+                            '<td>' + +'</td>' +
+                            '<td>' + +'</td>' +
+                            '<td>' + +'</td>' +
+                            '<td>' + +'</td>' +
                             '</tr>';
                         tableBody.append(row);
                     });
@@ -267,40 +261,40 @@ https://cdn.datatables.net/1.13.1/css/jquery.dataTables.min.css" rel="stylesheet
                                 },
 
                                 {
-                                    data: 'projectID',
+                                    data: null,
                                     title: 'Project ID'
                                 },
 
                                 {
-                                    data: 'productID',
+                                    data: null,
                                     title: 'Product ID'
                                 },
                                 {
-                                    data: 'toyName',
+                                    data: null,
                                     title: 'Toy Name'
                                 },
                                 {
-                                    data: 'pe',
+                                    data: null,
                                     title: 'PE'
                                 },
                                 {
-                                    data: 'designer',
+                                    data: null,
                                     title: 'Designer'
                                 },
                                 {
-                                    data: 'meeting',
+                                    data: null,
                                     title: 'Meeting'
                                 },
                                 {
-                                    data: 'start_date',
+                                    data: null,
                                     title: 'Start Date'
                                 },
                                 {
-                                    data: 'finish_cmt',
+                                    data: null,
                                     title: 'Finish CMT'
                                 },
                                 {
-                                    data: 'status',
+                                    data: null,
                                     title: 'Status',
                                     render: function(data, type, row) {
                                         if (data === 'Finished') {

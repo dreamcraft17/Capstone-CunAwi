@@ -136,23 +136,7 @@
                             </div>
                         </div>
 
-                        <div class="card border-1 mt-3">
-                            <div class="container">
-                                <div class="card-body p-3 rubik-font">
-                                    <h3 class="mt-3">
-                                        <b style="color: #5e72e4;">Project SKU Detail</b>
-                                        <span><a class="ml-2 edit-info" data-bs-toggle="modal" data-bs-target=""><i
-                                                    class="fa fa-edit"></i></a></span>
-                                    </h3>
-                                    <div class="rubik-font">
-                                        <h6>SKU Numbers</h6>
-                                        <p class="sku-number" style="font-size: 14px;"></p>
-                                        <h6>SKU Count</h6>
-                                        <p id="" style="font-size: 14px;"></p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+
 
                     </div>
 
@@ -183,8 +167,10 @@
                     </div>
 
                     <div style="text-align: left;" class="mt-5 mb-0">
-                        <input type="button" id="" class="btn btn-secondary rubik-font" value="Edit" />
+                        <a type="button" href="{{ route('newproject') }}" class="btn btn-warning rubik-font"
+                            value="Edit">Edit</a>
                         <input type="button" id="" class=" btn btn-danger rubik-font" value="Drop" />
+                        <input type="button" id="" class=" btn btn-secondary rubik-font" value="Delete" />
                     </div>
 
                 </div>

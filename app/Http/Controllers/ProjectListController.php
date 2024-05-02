@@ -25,9 +25,9 @@ class ProjectListController extends Controller
         $projects = $projectsQuery->get();
 
         // Mengirim data desainer dan data proyek ke tampilan
-        return view("pages.projectlist", compact('projects', 'designers')); 
+        return view("pages.projectlist", compact('projects', 'designers'));
     }
-    
+
 
      public function newproject(){
         return view("pages.newproject");
@@ -37,18 +37,26 @@ class ProjectListController extends Controller
         return view("pages.draft");
     }
 
+    public function editproject(){
+        return view("pages.editproject");
+    }
+
     public function projectdetail(){
         return view("pages.projectdetail");
+    }
+
+     public function dropproject(){
+        return view("pages.dropproject");
     }
 
     public function delete($project)
     {
         $project = Data::findOrFail($project);
         $project->delete();
-    
+
         return redirect()->route('projectlist')->with('success', 'Project deleted successfully');
     }
-    
+
     public function storeNewProject(Request $request)
     {
 
@@ -63,7 +71,7 @@ class ProjectListController extends Controller
             'start_date' => 'required|date',
             'finish_cmt' => 'required|date',
             'remarks' => 'nullable',
-          
+
         ]);
 
         $projectID = rand(100000, 999999);
@@ -83,26 +91,35 @@ class ProjectListController extends Controller
             'finish_cmt'=> $request->finish_cmt,
             'remarks'=> $request->remarks,
             'status'=> $status,
-        
+
         ]);
 
-        
+
         return redirect()->route('projectlist')->with('success', 'New project has been created successfully.');
     }
 
-    public function submitNewProject(Request $request)
-{
-   
-    $this->storeNewProject($request);
+    public function submitNewProject(Request $request){
 
-    
-    return redirect()->route('projectlist')->with('success', 'New project has been submitted successfully.');
-}
+        $this->storeNewProject($request);
 
-public function redirectToProjectList($projectId)
-    {
+
+        return redirect()->route('projectlist')->with('success', 'New project has been submitted successfully.');
+    }
+
+    public function redirectToProjectList($projectId){
         return redirect()->route('projectlist')->with('projectId', $projectId);
     }
+
+   public function displayProject()
+{
+    // Retrieve all projects from the Data model
+    $projects = Data::all();
+
+    // Return the projects as JSON
+    return response()->json($projects);
+}
+
+
 
 
 }

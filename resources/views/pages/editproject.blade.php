@@ -33,7 +33,7 @@
             <div class="bg-soft">
                 <div class="row">
                     <div class="col m-4">
-                        <h2 style="color: black; text-align: center;"> New Project Form </h2>
+                        <h2 style="color: black; text-align: center;"> Edit Project Form </h2>
                     </div>
                 </div>
             </div>
@@ -322,8 +322,6 @@
 
 
     {{-- Modal harus di luar div --}}
-
-
 
 
 
@@ -637,27 +635,25 @@
         });
     </script>
 
+    <script>
+        $(document).ready(function() {
+            $("#submitNewProjectButton").click(function(e) {
+                alert("dsasd");
+                e.preventDefault();
 
-
-
-
-<script>
-$(document).ready(function() {
-    $("#submitNewProjectButton").click(function(e) {
-        e.preventDefault(); 
-
-        $.ajax({
-            url: "{{ route('storeNewProject') }}",
-            type: "POST",
-            data: $("form").serialize(),
-            success: function(response) {
-                console.log(response);
-                window.location.href = "{{ route('projectlist') }}";
-            },
-            error: function(xhr, status, error) {
-                console.error(xhr.responseText);
-            }
-        });
+                $.ajax({
+                    url: "{{ route('storeNewProject') }}",
+                    type: "POST",
+                    data: $("form").serialize(),
+                    success: function(response) {
+                        console.log(response);
+                        // Redirect to project list page
+                        window.location.href = "{{ route('projectlist') }}";
+                    },
+                    error: function(xhr, status, error) {
+                        console.error(xhr.responseText);
+                    }
+                });
 
             });
         });
