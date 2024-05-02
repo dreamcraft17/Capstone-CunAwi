@@ -635,7 +635,7 @@ $(document).ready(function() {
             data: $("form").serialize(),
             success: function(response) {
                 console.log(response);
-                // Tidak ada pengalihan di sini
+                window.location.href = "{{ route('projectlist') }}";
             },
             error: function(xhr, status, error) {
                 console.error(xhr.responseText);
