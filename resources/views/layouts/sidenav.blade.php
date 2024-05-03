@@ -1,76 +1,80 @@
 <head>
-    <link rel="stylesheet" href="argon/assets/css/argon-dashboard.css">
-    <link rel="stylesheet" href="font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/argon/assets/css/argon-dashboard.css">
+    <link rel="stylesheet" href="/font-awesome/css/font-awesome.min.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://cdn.datatables.net/1.13.1/css/jquery.dataTables.min.css" rel="stylesheet" />
     <link href="https://fonts.googleapis.com/css2?family=Rubik&display=swap" rel="stylesheet">
-    <link rel="icon" type="image/png" href="img/alt-main-logo.png"/>
+    <link rel="icon" type="image/png" href="/img/alt-main-logo.png" />
     @yield('head')
 
-     <style>
-            * {
-                font-family: "Open Sans", sans-serif;
-            }
+    <style>
+        * {
+            font-family: "Open Sans", sans-serif;
+        }
 
-            .dataTables_wrapper table.dataTable thead th,
-            .dataTables_wrapper table.dataTable tbody td,
-            .dataTables_length select,
-            .dataTables_filter input,
-            .dataTables_info,
-            .dataTables_paginate {
-                font-family: 'Rubik', sans-serif;
-            }
+        .dataTables_wrapper table.dataTable thead th,
+        .dataTables_wrapper table.dataTable tbody td,
+        .dataTables_length select,
+        .dataTables_filter input,
+        .dataTables_info,
+        .dataTables_paginate {
+            font-family: 'Rubik', sans-serif;
+        }
 
-            .dataTables_wrapper .dataTables_paginate .paginate_button {
-                height: 30px;
-                width: 30px;
-                padding: 0px;
-                margin: 0 0.125rem;
-                line-height: 30px;
-                text-align: center;
-                font-size: 13px;
-                vertical-align: middle;
-                border-radius: 0.375rem;
-                border: 0 !important;
-                color: floralwhite !important;
-                background: #CBE2C9;
-                cursor: pointer;
-                box-shadow: none !important;
-            }
+        .dataTables_wrapper .dataTables_paginate .paginate_button {
+            height: 30px;
+            width: 30px;
+            padding: 0px;
+            margin: 0 0.125rem;
+            line-height: 30px;
+            text-align: center;
+            font-size: 13px;
+            vertical-align: middle;
+            border-radius: 0.375rem;
+            border: 0 !important;
+            color: floralwhite !important;
+            background: #CBE2C9;
+            cursor: pointer;
+            box-shadow: none !important;
+        }
 
-                .dataTables_wrapper .dataTables_paginate .paginate_button.current {
-                    background: black;
-                    color: white !important;
-                }
+        .dataTables_wrapper .dataTables_paginate .paginate_button.current {
+            background: black;
+            color: white !important;
+        }
 
-                    .dataTables_wrapper .dataTables_paginate .paginate_button.current:hover {
-                        background: #92817A;
-                        color: white !important;
-                    }
+        .dataTables_wrapper .dataTables_paginate .paginate_button.current:hover {
+            background: #92817A;
+            color: white !important;
+        }
 
-                .dataTables_wrapper .dataTables_paginate .paginate_button:hover {
-                    background: white;
-                    color: black !important;
-                }
+        .dataTables_wrapper .dataTables_paginate .paginate_button:hover {
+            background: white;
+            color: black !important;
+        }
 
-            .dataTables_info,
-            .dataTables_paginate {
-                margin-top: 10px;
-            }
+        .dataTables_info,
+        .dataTables_paginate {
+            margin-top: 10px;
+        }
 
-            table.dataTable thead tr > .dtfc-fixed-left, table.dataTable thead tr > .dtfc-fixed-right, table.dataTable tfoot tr > .dtfc-fixed-left, table.dataTable tfoot tr > .dtfc-fixed-right {
-                top: 0;
-                bottom: 0;
-                z-index: 3;
-                background-color: #F684AF;
-            }
+        table.dataTable thead tr>.dtfc-fixed-left,
+        table.dataTable thead tr>.dtfc-fixed-right,
+        table.dataTable tfoot tr>.dtfc-fixed-left,
+        table.dataTable tfoot tr>.dtfc-fixed-right {
+            top: 0;
+            bottom: 0;
+            z-index: 3;
+            background-color: #F684AF;
+        }
 
-            table.dataTable tbody tr > .dtfc-fixed-left, table.dataTable tbody tr > .dtfc-fixed-right {
-                z-index: 1;
-                background-color: white;
-            }
-        </style>
+        table.dataTable tbody tr>.dtfc-fixed-left,
+        table.dataTable tbody tr>.dtfc-fixed-right {
+            z-index: 1;
+            background-color: white;
+        }
+    </style>
 </head>
 
 <body class="g-sidenav-show bg-gray-200">
@@ -79,51 +83,57 @@
         <span class="mask bg-dark opacity-6"></span>
     </div>
 
-<aside class="sidenav bg-dark navbar navbar-vertical navbar-expand-xs border-0 border-radius-xl my-3 fixed-start ms-4 shadow-lg"
-    id="sidenav-main">
-    <div class="sidenav-header">
-        <i class="fas fa-times p-3 cursor-pointer text-secondary opacity-5 position-absolute end-0 top-0 d-none d-xl-none"
-            aria-hidden="true" id="iconSidenav"></i>
-        {{-- <a class="navbar-brand m-0" href="{{ route('home') }}"
+    <aside
+        class="sidenav bg-dark navbar navbar-vertical navbar-expand-xs border-0 border-radius-xl my-3 fixed-start ms-4 shadow-lg"
+        id="sidenav-main">
+        <div class="sidenav-header">
+            <i class="fas fa-times p-3 cursor-pointer text-secondary opacity-5 position-absolute end-0 top-0 d-none d-xl-none"
+                aria-hidden="true" id="iconSidenav"></i>
+            {{-- <a class="navbar-brand m-0" href="{{ route('home') }}"
             target="_blank">
             <img src="./img/logo-ct-dark.png" class="navbar-brand-img h-100" alt="main_logo">
             <span class="ms-1 font-weight-bold">Argon Dashboard 2 Laravel</span>
         </a> --}}
-    </div>
-    <hr class="horizontal dark mt-0">
-    <div class="collapse navbar-collapse  w-auto " id="sidenav-collapse-main">
-        <ul class="navbar-nav">
-            <li class="nav-item">
-                <a class="nav-link {{ Route::currentRouteName() == 'home' ? 'active' : '' }}" href="{{ route('dashboard') }}">
-                    <i class="fa fa-home"></i>
-                    <span class="nav-link-text ms-1">Dashboard</span>
-                </a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link {{ Route::currentRouteName() == 'projectlist' ? 'active' : '' }}" href="{{ route('projectlist') }}">
-                    <i class="fa fa-list"></i>
-                    <span class="nav-link-text ms-1">Project List</span>
-                </a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link {{ Route::currentRouteName() == 'taskmanager' ? 'active' : '' }}" href="{{ route('taskmanager') }}">
-                    <i class="fa fa-book"></i>
-                    <span class="nav-link-text ms-1">Task Manager</span>
-                </a>
-            </li>
-             <li class="nav-item">
-                <a class="nav-link {{ Route::currentRouteName() == 'calendar' ? 'active' : '' }}" href="{{ route('calendar') }}">
-                    <i class="fa fa-calendar"></i>
-                    <span class="nav-link-text ms-1">Calendar</span>
-                </a>
-            </li>
-              <li class="nav-item">
-                <a class="nav-link {{ Route::currentRouteName() == 'dss' ? 'active' : '' }}" href="{{ route('dss') }}">
-                    <i class="fa fa-plus"></i>
-                    <span class="nav-link-text ms-1">Decision Support System</span>
-                </a>
-            </li>
-            {{-- <li class="nav-item mt-3 d-flex align-items-center">
+        </div>
+        <hr class="horizontal dark mt-0">
+        <div class="collapse navbar-collapse  w-auto " id="sidenav-collapse-main">
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-link {{ Route::currentRouteName() == 'home' ? 'active' : '' }}"
+                        href="{{ route('dashboard') }}">
+                        <i class="fa fa-home"></i>
+                        <span class="nav-link-text ms-1">Dashboard</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link {{ Route::currentRouteName() == 'projectlist' ? 'active' : '' }}"
+                        href="{{ route('projectlist') }}">
+                        <i class="fa fa-list"></i>
+                        <span class="nav-link-text ms-1">Project List</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link {{ Route::currentRouteName() == 'taskmanager' ? 'active' : '' }}"
+                        href="{{ route('taskmanager') }}">
+                        <i class="fa fa-book"></i>
+                        <span class="nav-link-text ms-1">Task Manager</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link {{ Route::currentRouteName() == 'calendar' ? 'active' : '' }}"
+                        href="{{ route('calendar') }}">
+                        <i class="fa fa-calendar"></i>
+                        <span class="nav-link-text ms-1">Calendar</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link {{ Route::currentRouteName() == 'dss' ? 'active' : '' }}"
+                        href="{{ route('dss') }}">
+                        <i class="fa fa-plus"></i>
+                        <span class="nav-link-text ms-1">Decision Support System</span>
+                    </a>
+                </li>
+                {{-- <li class="nav-item mt-3 d-flex align-items-center">
                 <div class="ps-4">
                     <i class="fab fa-laravel" style="color: #f4645f;"></i>
                 </div>
@@ -233,12 +243,12 @@
         <a class="btn btn-primary btn-sm mb-0 w-100"
             href="https://www.creative-tim.com/product/argon-dashboard-pro-laravel" target="_blank" type="button">Upgrade to PRO</a>
     </div> --}}
-</aside>
+    </aside>
 
-<main class="main-content position-relative border-radius-lg">
-    <div class="content">
-        @yield('content')
-    </div>
-</main>
+    <main class="main-content position-relative border-radius-lg">
+        <div class="content">
+            @yield('content')
+        </div>
+    </main>
 
 </body>

@@ -190,11 +190,11 @@ https://cdn.datatables.net/1.13.1/css/jquery.dataTables.min.css" rel="stylesheet
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script> <!-- Include jQuery before your script -->
     <script
         src="
-                                                                                                                                                                                                https://cdn.datatables.net/1.13.1/js/jquery.dataTables.min.js">
+                                                                                                                                                                                                                                                                                                            https://cdn.datatables.net/1.13.1/js/jquery.dataTables.min.js">
     </script>
     <script type="text/javascript" charset="utf8"
         src="
-                                                                                                                                                                                                https://cdn.datatables.net/fixedheader/3.2.1/js/dataTables.fixedHeader.min.js">
+                                                                                                                                                                                                                                                                                                            https://cdn.datatables.net/fixedheader/3.2.1/js/dataTables.fixedHeader.min.js">
     </script>
 
     <script>
@@ -222,8 +222,9 @@ https://cdn.datatables.net/1.13.1/css/jquery.dataTables.min.css" rel="stylesheet
                     tableBody.empty();
 
                     filteredProjects.forEach(function(item) {
-                        var row = '<tr>' +
+                        var row = '<tr data-id="' + item.ID + '">' +
                             '<td></td>' +
+                            '<td>' + item.ID + '</td>' +
                             '<td class="project-number-cell">' + item.projectID + '</td>' +
                             '<td>' + item.productID + '</td>' +
                             '<td>' + item.toyName + '</td>' +
@@ -234,6 +235,7 @@ https://cdn.datatables.net/1.13.1/css/jquery.dataTables.min.css" rel="stylesheet
                             '<td>' + item.finish_cmt + '</td>' +
                             '<td>' + item.status + '</td>' +
                             '</tr>';
+
                         tableBody.append(row);
                     });
 
@@ -258,14 +260,29 @@ https://cdn.datatables.net/1.13.1/css/jquery.dataTables.min.css" rel="stylesheet
                                     data: null,
                                     title: 'A',
                                     render: function(data, type, row) {
-                                        // Assuming 'data' contains the URL for the link
-                                        // You can customize the link text and attributes as needed
-                                        return '<a style="margin-bottom: 0px; background-color: #FFE5F1; color: #E2328B;" class="btn" title="See Project Detail" href="{{ route('projectdetail') }}"' +
-                                            data +
+                                        var projectId = row
+                                        .ID; // Access the 'ID' attribute directly from the 'row' object
+                                        console.log("Project ID:",
+                                        projectId); // Check the project ID in the console
+
+                                        // Generate the URL for the project detail page using the projectId
+                                        var projectDetailURL = projectId ?
+                                            '/projectdetail/' + projectId : '#';
+                                        console.log("Project Detail URL:",
+                                            projectDetailURL
+                                            ); // Check the project detail URL in the console
+
+                                        // Create the link with the generated URL
+                                        return '<a style="margin-bottom: 0px; background-color: #FFE5F1; color: #E2328B;" class="btn" title="See Project Detail" href="' +
+                                            projectDetailURL +
                                             '"><i class="fa fa-info" aria-hidden="true"></i></a>';
                                     }
                                 },
-
+                                {
+                                    data: 'ID',
+                                    title: 'ID',
+                                    visible: false
+                                },
                                 {
                                     data: 'projectID',
                                     title: 'Project ID'

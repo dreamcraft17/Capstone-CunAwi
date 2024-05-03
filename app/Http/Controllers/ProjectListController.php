@@ -41,8 +41,10 @@ class ProjectListController extends Controller
         return view("pages.editproject");
     }
 
-    public function projectdetail(){
-        return view("pages.projectdetail");
+    public function projectdetail($id){
+        $project = Data::findOrFail($id);
+
+        return view("pages.projectdetail", compact('project'));
     }
 
      public function dropproject(){
@@ -110,14 +112,14 @@ class ProjectListController extends Controller
         return redirect()->route('projectlist')->with('projectId', $projectId);
     }
 
-   public function displayProject()
-{
-    // Retrieve all projects from the Data model
-    $projects = Data::all();
+    public function displayProject()
+    {
+        // Retrieve all projects from the Data model
+        $projects = Data::all();
 
-    // Return the projects as JSON
-    return response()->json($projects);
-}
+        // Return the projects as JSON
+        return response()->json($projects);
+    }
 
 
 
