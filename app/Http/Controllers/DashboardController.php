@@ -26,7 +26,9 @@ class DashboardController extends Controller
     $statusLabels = ['Finished', 'On Going', 'Drop'];
     $statusColors = ['#36DC56', '#FFA600', '#FF2525'];
 
+    $totalfinish = ($finishCount / $projectCount)*100;
+    $totalongoing =($ongoingCount / $projectCount)*100;
 
-        return view("pages.dashboard", ['name' => $name, 'projectCount' => $projectCount], compact('productionByMonth','statusData','statusLabels','statusColors'));
+        return view("pages.dashboard", ['name' => $name, 'projectCount' => $projectCount], compact('productionByMonth','statusData','statusLabels','statusColors','totalfinish','totalongoing'));
     }
 }
