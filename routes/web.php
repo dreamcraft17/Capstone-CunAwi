@@ -28,10 +28,8 @@ Route::middleware('auth')->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'dashboard'])->name('dashboard');
     Route::get('/profile', [UserController::class, 'profile'])->name('profile');
     Route::get('/taskmanager', [TaskManagerController::class, 'index'])->name('taskmanager');
-    // Route::get('/draft', [DraftController::class, 'draft'])->name('draft');
     Route::get('/projectlist', [ProjectListController::class, 'projectlist'])->name('projectlist');
     Route::get('/newproject', [ProjectListController::class, 'newproject'])->name('newproject');
-    Route::get('/projectdetail', [ProjectListController::class, 'projectdetail'])->name('projectdetail');
     Route::get('/calendar', [CalendarController::class, 'index'])->name('calendar');
     Route::get('/dss', [DssController::class, 'index'])->name('dss');
     Route::post('logout', [UserController::class, 'logout'])->name('logout');
@@ -43,18 +41,15 @@ Route::middleware('auth')->group(function () {
     Route::post('/new-project-submit', [ProjectListController::class, 'submitNewProject'])->name('submitNewProject');
     Route::get('/draft', [ProjectListController::class, 'draft'])->name('draft');
     Route::get('/events', [CalendarController::class, 'fetchEvents'])->name('calendar.events');
-    Route::get('/draft', [DraftController::class, 'draft'])->name('draft');
     Route::get('/redirect-to-projectlist/{projectId}', [TaskManagerController::class, 'redirectToProjectList'])->name('redirect.projectlist');
     Route::get('display-project', [ProjectListController::class, 'displayProject'])->name('display.project');
     Route::get('/editproject', [ProjectListController::class, 'editproject'])->name('editproject');
     Route::get('/dropproject', [ProjectListController::class, 'dropproject'])->name('dropproject');
-
-
+    // Route::get('/projectdetail/{projectId}', [ProjectListController::class, 'showDataDetail'])->name('projectdetail');
+    Route::get('/projectdetail/{project}', [ProjectListController::class, 'showProjectDetail'])->name('projectdetail');
 
 
 
 
 });
-
-
 

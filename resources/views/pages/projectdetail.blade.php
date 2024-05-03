@@ -21,7 +21,7 @@
             <div class="bg-soft">
                 <div class="text-center mt-4">
                     <span class="text-bold ml-2 mr-2" style="font-size: 24px;">Project Name</span>
-                    <h4 class="p-2 m-0 rubik-font" style="color: #5e72e4; opacity: 0.6;"></h4>
+                    <h4 class="p-2 m-0 rubik-font" style="color: #5e72e4; opacity: 0.6;">{{ $project->toyName }}</h4>
                 </div>
                 <div class="row p-4">
                     <div class="col-7">
@@ -96,10 +96,10 @@
                                     </p>
                                     <div class="text-center rubik-font mb-2">
                                         <h4 style="color: #5e72e4; opacity: 0.6;"><b>Project ID</b></h4>
-                                        <h5></h5>
+                                        <h5>{{ $project->projectID }}</h5>
                                         <br />
-                                        <h4 style="color: #5e72e4; opacity: 0.6;"><b>Product ID</b></h4>
-                                        <h5></h5>
+                                        <h4 style="color: #5e72e4; opacity: 0.6;"><b>Toy Name</b></h4>
+                                        <h5>{{ $project->toyName }}</h5>
                                     </div>
                                     <hr class="bg-dark mb-3" />
                                     <div class="list-group list-group-flush mt-4">

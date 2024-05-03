@@ -254,71 +254,64 @@ https://cdn.datatables.net/1.13.1/css/jquery.dataTables.min.css" rel="stylesheet
                             ordering: true,
                             info: true,
                             responsive: true,
-                            columns: [{
-                                    data: null,
-                                    title: 'A',
-                                    render: function(data, type, row) {
-                                        // Assuming 'data' contains the URL for the link
-                                        // You can customize the link text and attributes as needed
-                                        return '<a style="margin-bottom: 0px; background-color: #FFE5F1; color: #E2328B;" class="btn" title="See Project Detail" href="{{ route('projectdetail') }}"' +
-                                            data +
-                                            '"><i class="fa fa-info" aria-hidden="true"></i></a>';
-                                    }
-                                },
+                            columns: [
+    {
+        data: 'projectID',
+        title: 'A',
+        render: function(data, type, row) {
+            return '<a type="button" href="{{ route("projectdetail", ["project" => ":id"]) }}" class="btn btn-warning rubik-font" value="detail">Detail</a>'
+            .replace(':id', data);
+        }
+    },
+    {
+        data: 'projectID',
+        title: 'Project ID'
+    },
+    {
+        data: 'productID',
+        title: 'Product ID'
+    },
+    {
+        data: 'toyName',
+        title: 'Toy Name'
+    },
+    {
+        data: 'pe',
+        title: 'PE'
+    },
+    {
+        data: 'designer',
+        title: 'Designer'
+    },
+    {
+        data: 'meeting',
+        title: 'Meeting'
+    },
+    {
+        data: 'start_date',
+        title: 'Start Date'
+    },
+    {
+        data: 'finish_cmt',
+        title: 'Finish CMT'
+    },
+    {
+        data: 'status',
+        title: 'Status',
+        render: function(data, type, row) {
+            if (data === 'Finished') {
+                return '<span class="badge badge-soft-success rounded-pill d-inline">' + data + '</span>';
+            } else if (data === 'On going' || data === 'on going') {
+                return '<span class="badge badge-soft-warning rounded-pill d-inline">' + data + '</span>';
+            } else if (data === 'Drop') {
+                return '<span class="badge badge-danger-subtle rounded-pill d-inline">' + data + '</span>';
+            } else {
+                return data;
+            }
+        }
+    }
+],
 
-                                {
-                                    data: 'projectID',
-                                    title: 'Project ID'
-                                },
-
-                                {
-                                    data: 'productID',
-                                    title: 'Product ID'
-                                },
-                                {
-                                    data: 'toyName',
-                                    title: 'Toy Name'
-                                },
-                                {
-                                    data: 'pe',
-                                    title: 'PE'
-                                },
-                                {
-                                    data: 'designer',
-                                    title: 'Designer'
-                                },
-                                {
-                                    data: 'meeting',
-                                    title: 'Meeting'
-                                },
-                                {
-                                    data: 'start_date',
-                                    title: 'Start Date'
-                                },
-                                {
-                                    data: 'finish_cmt',
-                                    title: 'Finish CMT'
-                                },
-                                {
-                                    data: 'status',
-                                    title: 'Status',
-                                    render: function(data, type, row) {
-                                        if (data === 'Finished') {
-                                            return '<span class="badge badge-soft-success rounded-pill d-inline">' +
-                                                data + '</span>';
-                                        } else if (data === 'On going' || data ===
-                                            'on going') {
-                                            return '<span class="badge badge-soft-warning rounded-pill d-inline">' +
-                                                data + '</span>';
-                                        } else if (data === 'Drop') {
-                                            return '<span class="badge badge-danger-subtle rounded-pill d-inline">' +
-                                                data + '</span>';
-                                        } else {
-                                            return data;
-                                        }
-                                    }
-                                },
-                            ],
                             order: [
                                 [9, 'desc']
                             ], // Assuming 'status' is the last column
