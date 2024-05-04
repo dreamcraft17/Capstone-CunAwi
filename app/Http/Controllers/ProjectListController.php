@@ -70,8 +70,15 @@ class ProjectListController extends Controller
         return view("pages.editproject");
     }
 
-    public function projectdetail(){
-        return view("pages.projectdetail");
+    public function projectdetail($id){
+        
+        $project = Data::find($id);
+    
+        if (!$project) {
+            return response()->json(['error' => 'Project not found'], 404);
+        }
+        //   dd($project);
+        return view('pages.projectdetail', compact('project'));
     }
 
      public function dropproject(){

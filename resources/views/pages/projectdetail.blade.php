@@ -99,9 +99,9 @@
                                                 <h6>Toy Description</h6>
                                                 <p>{{ $project->description }}</p>
                                                 <h6 class="mt-4">Category Material</h6>
-                                                <p></p>
+                                                <p>{{ $project->category }}</p>
                                                 <h6 class="mt-4">Product Engineer</h6>
-                                                <p></p>
+                                                <p>{{ $project->pe }}</p>
                                             </div>
                                             <div class="col rubik-font">
                                                 <h6>Launch Quantity</h6>
