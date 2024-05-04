@@ -45,6 +45,8 @@ Route::middleware('auth')->group(function () {
     Route::get('/redirect-to-projectlist/{projectId}', [TaskManagerController::class, 'redirectToProjectList'])->name('redirect.projectlist');
     Route::get('display-project', [ProjectListController::class, 'displayProject'])->name('display.project');
     Route::get('/editproject', [ProjectListController::class, 'editproject'])->name('editproject');
+    // Route::get('/editproject/{id}', [ProjectListController::class, 'editproject'])->name('editproject');
+    // Route::post('/editproject/{id}', [ProjectListController::class, 'updateproject'])->name('updateproject');
     Route::get('/dropproject', [ProjectListController::class, 'dropproject'])->name('dropproject');
     // Route::get('/projectdetail/{projectId}', [ProjectListController::class, 'showDataDetail'])->name('projectdetail');
     Route::get('/projectdetail/{project}', [ProjectListController::class, 'showProjectDetail'])->name('projectdetail');

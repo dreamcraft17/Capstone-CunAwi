@@ -21,8 +21,8 @@
             <div class="bg-soft">
                 <div class="text-center mt-4">
                     <span class="text-bold ml-2 mr-2" style="font-size: 24px;">Project Name</span>
-                    <h4 class="p-2 m-0 rubik-font" style="color: #5e72e4; opacity: 0.6;">{{ $project->toyName }}</h4>
-                    <h4 class="p-2 m-0 rubik-font" style="color: #5e72e4; opacity: 0.6;">{{ $project->toyName }}</h4>
+                    <h4 class="p-2 m-0 rubik-font" style="color: #5e72e4; opacity: 0.6;" id="toyName">
+                        {{ $project->toyName }}</h4>
                 </div>
                 <div class="row p-4">
                     <div class="col-7">
@@ -74,6 +74,17 @@
                                     data-bs-target="#upfoto"> Add Photo </button>
                             </CENTER>
                         </div>
+
+                        <div class="card border-1 mt-4">
+                            <div class="container">
+                                <div class="card-body p-3 rubik-font toy-note">
+                                    <h3><b style="color: #5e72e4;">Remarks</b></h3>
+                                    <p class="rubik-font mt-2" style="white-space: pre-line;" id=""></p>
+                                    <p class="rubik-font mt-2"><i>{{ $project->remarks }}</i></p>
+                                </div>
+                            </div>
+                        </div>
+
                     </div>
 
                     <div class="col">
@@ -99,9 +110,9 @@
                                                 <h6>Toy Description</h6>
                                                 <p>{{ $project->description }}</p>
                                                 <h6 class="mt-4">Category Material</h6>
-                                                <p></p>
-                                                <h6 class="mt-4">Product Engineer</h6>
-                                                <p></p>
+                                                <p>{{ $project->category }}</p>
+                                                <h6 class="mt-3">Product Engineer</h6>
+                                                <p>{{ $project->pe }}</p>
                                             </div>
                                             <div class="col rubik-font">
                                                 <h6>Launch Quantity</h6>
@@ -109,7 +120,7 @@
                                                 <h6 class="mt-4">Launch Avail</h6>
                                                 <p></p>
                                                 <h6 class="mt-4">Product Design</h6>
-                                                <p></p>
+                                                <p>{{ $project->designer }}</p>
                                             </div>
                                         </div>
                                     </div>
@@ -120,14 +131,15 @@
                         <div class="card border-1 mt-4">
                             <div class="container">
                                 <div class="card-body p-3 rubik-font toy-note">
-                                    <h3><b style="color: #5e72e4;">Remarks</b></h3>
+                                    <h4 class="mt-2"><b style="color: #5e72e4;">Adherence</b></h4>
                                     <p class="rubik-font mt-2" style="white-space: pre-line;" id=""></p>
-                                    <p class="rubik-font mt-2"><i>No remarks...</i></p>
+                                    <p class="rubik-font mt-2"><i></i></p>
+                                    <h4 class="mt-5"><b style="color: #5e72e4;">Lead Time</b></h4>
+                                    <p class="rubik-font mt-2" style="white-space: pre-line;" id=""></p>
+                                    <p class="rubik-font mt-2"><i></i></p>
                                 </div>
                             </div>
                         </div>
-
-
                     </div>
 
                     <div class="container">
@@ -144,8 +156,8 @@
                                 </thead>
                                 <tbody>
                                     <tr class="text-dark activity-row">
-                                        <td class="rubik-font activity-name"></td>
-                                        <td class="rubik-font"></td>
+                                        <td class="rubik-font activity-name">{{ $project->start_date }}</td>
+                                        <td class="rubik-font">{{ $project->finish_cmt }}</td>
                                         <td class="rubik-font"></td>
                                         <td class="rubik-font"></td>
                                     </tr>
@@ -157,8 +169,8 @@
                     </div>
 
                     <div style="text-align: left;" class="mt-5 mb-0">
-                        <a type="button" href="{{ route('editproject') }}" class="btn btn-warning rubik-font"
-                            value="Edit">Edit</a>
+                        <a type="button" href="{{ route('editproject', ['id' => $project->id]) }}"
+                            class="btn btn-warning rubik-font" value="Edit">Edit</a>
                         <input type="button" id="" class=" btn btn-danger rubik-font" value="Drop" />
                         <input type="button" id="" class=" btn btn-secondary rubik-font" value="Delete" />
                     </div>
@@ -177,6 +189,36 @@
     {{-- Modal harus di luar div --}}
 
 
+    <script>
+        $(document).ready(function() {
+            // Function to populate edit form fields with project detail data
+            function populateEditForm() {
+                // Extract data from project detail section
+                var productID = $('#projectDetail #project_id').text();
+                var toyName = $('#projectDetail #toy_name').text();
+                var productEngineering = $('#projectDetail #product_engineering').text();
+                var productDesign = $('#projectDetail #product_design').text();
+                // Repeat this process for other fields
+
+                // Log extracted data to console for debugging
+                console.log("Product ID: ", productID);
+                console.log("Toy Name: ", toyName);
+                console.log("Product Engineering: ", productEngineering);
+                console.log("Product Design: ", productDesign);
+                // Repeat this process for other fields
+
+                // Populate edit form fields
+                $('#editProjectForm #productID').val(productID);
+                $('#editProjectForm #toyName').val(toyName);
+                $('#editProjectForm #pe').val(productEngineering);
+                $('#editProjectForm #designer').val(productDesign);
+                // Repeat this process for other fields
+            }
+
+            // Call the function to populate edit form when the page loads
+            populateEditForm();
+        });
+    </script>
 
 
 
