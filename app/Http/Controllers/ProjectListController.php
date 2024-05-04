@@ -28,11 +28,11 @@ class ProjectListController extends Controller
         // Mengirim data desainer dan data proyek ke tampilan
         return view("pages.projectlist", compact('projects', 'designers'));
     }
- 
+
     public function showProjectDetail($id)
 {
     $project = Data::find($id);
-    
+
     if (!$project) {
         return response()->json(['error' => 'Project not found'], 404);
     }
@@ -40,7 +40,7 @@ class ProjectListController extends Controller
     return view('pages.projectdetail', compact('project'));
 }
 
-    
+
     // public function showProjectDetail()
     // {
     //     return view('pages.projectdetail');
@@ -81,8 +81,7 @@ class ProjectListController extends Controller
         return view('pages.projectdetail', compact('project'));
     }
 
-     public function dropproject(){
-
+    public function dropproject(){
         return view("pages.dropproject");
     }
 
@@ -118,7 +117,7 @@ class ProjectListController extends Controller
         $finishCMT = new \DateTime($request->start_date);
         $interval = $startDate->diff($finishCMT);
         $months = $interval->m + ($interval->y * 12);
-   
+
 
         $adherence = ($status === "On going") ? 0 : null;
 
@@ -137,7 +136,7 @@ class ProjectListController extends Controller
             'remarks'=> $request->remarks,
             'status'=> $status,
             'adherence' => $adherence,
-            'month' => $months, 
+            'month' => $months,
 
         ]);
 

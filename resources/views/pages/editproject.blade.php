@@ -39,183 +39,205 @@
             </div>
         </div>
 
-        <form action="{{ route('storeNewProject') }}" method="POST">
-            @csrf
-            <div class="row">
-                <div class="card mt-4">
+
+        <div class="row">
+            <div class="card mt-4">
+                <div class="card-body">
                     <div class="card-body">
-                        <div class="card-body">
-                            <div class="row mb-4">
-                                <div class="row">
+                        <div class="row mb-4">
+                            <div class="row">
 
-                                    <div class="col">
-                                        <label>Product ID <span class="text-danger">*</span></label>
-                                        <input type="text" class="form-control" id="productID" name="productID"
-                                            placeholder="Click Here to Enter" />
-                                    </div>
-
-                                    <div class="col">
-                                        <label>Toy Name <span class="text-danger">*</span></label>
-                                        <input type="text" class="form-control" id="toyName"
-                                            placeholder="Click Here to Enter" name="toyName">
-                                    </div>
-
-                                    <div class="col">
-                                        <label>Product Engineering<span class="text-danger">*</span></label>
-                                        <select id="pe" class="form-control" name="pe">
-                                            <option selected> -- Select Here -- </option>
-                                            <option value="Emily Jhonson">Emily Johnson</option>
-                                            <option value="Jessica Lee">Jessica Lee</option>
-                                            <option value="Ryan Johnson">Ryan Johnson</option>
-                                        </select>
-                                    </div>
-
-                                    <div class="col">
-                                        <label>Product Design<span class="text-danger">*</span></label>
-                                        <select id="designer" class="form-control" name="designer">
-                                            <option selected> -- Select Here -- </option>
-                                            <option value="Sarah Davis">Sarah Davis</option>
-                                            <option value="Dnaiel Kim">Daniel Kim</option>
-                                            <option value="Ethan Chen">Ethan Chen</option>
-                                        </select>
-                                    </div>
-
-
+                                <div class="col">
+                                    <label>Product ID <span class="text-danger">*</span></label>
+                                    <input type="text" class="form-control" id="productID" name="productID"
+                                        placeholder="Click Here to Enter" />
                                 </div>
 
-                                <div class="row g-2 mt-4">
-                                    <div class="col-sm-12">
-                                        <div id="queuedImages" class="queued-div p-2">
-                                            <div id="imagePreviewContainer" class="d-flex flex-wrap mr-3"></div>
-                                        </div>
-                                        <div id="id-input-div" class="mt-2">
-                                            <label class="text-dark text-bold">Insert Picture(s) <span
-                                                    class="text-danger">*</span></label>
-                                            <label>Drag & drop photos here or click to browse</label>
-                                            <input name="images" id="input_image" type="file" class="form-control"
-                                                accept="image/jpeg, image/png, image/jpg" />
-                                        </div>
-                                    </div>
+                                <div class="col">
+                                    <label>Toy Name <span class="text-danger">*</span></label>
+                                    <input type="text" class="form-control" id="toyName"
+                                        placeholder="Click Here to Enter" name="toyName">
                                 </div>
 
-                                <div class="row mt-4">
-                                    <div class="col">
-                                        <label>Category Material <span class="text-danger">*</span></label>
-                                        <select id="category" class="form-control" name="category">
-                                            <option selected> -- Select Here -- </option>
-                                            <option value="Plastic">Plastic</option>
-                                            <option value="Rubber">Rubber</option>
-                                            <option value="Metal">Metal</option>
-                                            <option value="Plastic, Rubber">Plastic, Rubber</option>
-                                            <option value="Plastic, Metal">Plastic, Metal</option>
-                                            <option value="Rubber, Metal">Rubber, Metal</option>
-                                            <option value="Plastic, Rubber, Metal">Plastic, Rubber, Metal</option>
-                                            <option value="Cardboard">Cardboard</option>
-                                        </select>
-                                    </div>
-
-                                    <div class="col">
-                                        <label>Product Description <span class="text-danger">*</span></label>
-                                        <input type="text" class="form-control" id="description"
-                                            placeholder="Enter Description" name="description">
-                                    </div>
+                                <div class="col">
+                                    <label>Product Engineering<span class="text-danger">*</span></label>
+                                    <select id="pe" class="form-control" name="pe">
+                                        <option selected> -- Select Here -- </option>
+                                        <option value="Emily Jhonson">Emily Johnson</option>
+                                        <option value="Jessica Lee">Jessica Lee</option>
+                                        <option value="Ryan Johnson">Ryan Johnson</option>
+                                    </select>
                                 </div>
 
-                                <div class="container mt-4">
-                                    <div class="row">
-                                        <div class="col">
-                                            <br />
-                                            <p class="text-dark mt-2">Meeting Date</p>
-                                        </div>
-                                        <div class="col">
-                                            <label>Date</label>
-                                            <input type="date" class="form-control" id="meeting" name="meeting" />
-                                        </div>
-                                        <div class="col">
-                                            <label>Day</label>
-                                            <input type="text" class="form-control" id="koday" readonly />
-                                        </div>
-                                    </div>
+                                <div class="col">
+                                    <label>Product Design<span class="text-danger">*</span></label>
+                                    <select id="designer" class="form-control" name="designer">
+                                        <option selected> -- Select Here -- </option>
+                                        <option value="Sarah Davis">Sarah Davis</option>
+                                        <option value="Dnaiel Kim">Daniel Kim</option>
+                                        <option value="Ethan Chen">Ethan Chen</option>
+                                    </select>
                                 </div>
 
-                                <div class="container mt-4">
-                                    <div class="row">
-                                        <div class="col">
-                                            <br />
-                                            <p class="text-dark mt-2">Start Date</p>
-                                        </div>
-                                        <div class="col">
-                                            <label>Date</label>
-                                            <input type="date" class="form-control" id="start_date"
-                                                name="start_date" />
-                                        </div>
-                                        <div class="col">
-                                            <label>Day</label>
-                                            <input type="text" class="form-control" id="startday" readonly />
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="container mt-4">
-                                    <div class="row">
-                                        <div class="col">
-                                            <br />
-                                            <p class="text-dark mt-2">Finish Date (CMT)</p>
-                                        </div>
-                                        <div class="col">
-                                            <label>Date</label>
-                                            <input type="date" class="form-control" id="finish_cmt" name="finish_cmt"
-                                                readonly />
-                                        </div>
-                                        <div class="col">
-                                            <label>Day</label>
-                                            <input type="text" class="form-control" id="finishday" readonly />
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="container mt-4">
-                                    <div class="row">
-                                        <div class="col">
-                                            <br />
-                                            <p class="text-dark mt-2">Finish Date (ACT)</p>
-                                        </div>
-                                        <div class="col">
-                                            <label>Date</label>
-                                            <input type="date" class="form-control" id="finish_act" />
-                                        </div>
-                                        <div class="col">
-                                            <label>Day</label>
-                                            <input type="text" class="form-control" id="finishdayact" readonly />
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="row mt-4">
-                                    <label>Delay Reason</label>
-                                    <input type="text" class="form-control" id="delayreason"
-                                        placeholder="Enter Remarks" name="delayreason">
-                                </div>
-
-                                <div class="row mt-4">
-                                    <label>Remarks</label>
-                                    <input type="text" class="form-control" id="remarks"
-                                        placeholder="Enter Remarks" name="remarks">
-                                </div>
-
-                                <div style="text-align: right;" class="mt-4">
-                                    <input type="button" id="saveDraftButton" class="btn btn-secondary rubik-font"
-                                        value="Draft" />
-                                    <input type="button" id="nextButton" class=" btn btn-danger rubik-font"
-                                        value="Next Step" />
-                                </div>
 
                             </div>
+
+                            <div class="row g-2 mt-4">
+                                <div class="col-sm-12">
+                                    <div id="queuedImages" class="queued-div p-2">
+                                        <div id="imagePreviewContainer" class="d-flex flex-wrap mr-3"></div>
+                                    </div>
+                                    <div id="id-input-div" class="mt-2">
+                                        <label class="text-dark text-bold">Insert Picture(s) <span
+                                                class="text-danger">*</span></label>
+                                        <label>Drag & drop photos here or click to browse</label>
+                                        <input name="images" id="input_image" type="file" class="form-control"
+                                            accept="image/jpeg, image/png, image/jpg" />
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row mt-4">
+                                <div class="col">
+                                    <label>Category Material <span class="text-danger">*</span></label>
+                                    <select id="category" class="form-control" name="category">
+                                        <option selected> -- Select Here -- </option>
+                                        <option value="Plastic">Plastic</option>
+                                        <option value="Rubber">Rubber</option>
+                                        <option value="Metal">Metal</option>
+                                        <option value="Plastic, Rubber">Plastic, Rubber</option>
+                                        <option value="Plastic, Metal">Plastic, Metal</option>
+                                        <option value="Rubber, Metal">Rubber, Metal</option>
+                                        <option value="Plastic, Rubber, Metal">Plastic, Rubber, Metal</option>
+                                        <option value="Cardboard">Cardboard</option>
+                                    </select>
+                                </div>
+
+                                <div class="col">
+                                    <label>Product Description <span class="text-danger">*</span></label>
+                                    <input type="text" class="form-control" id="description"
+                                        placeholder="Enter Description" name="description">
+                                </div>
+
+                                <div class="col">
+                                    <label>Quantity</label>
+                                    <input type="number" class="form-control" name="viewModel.Quota" id="quantity"
+                                        autocomplete="off" placeholder="Input Toy Quota" />
+                                </div>
+                            </div>
+
+                            <div class="container mt-4">
+                                <div class="row">
+                                    <div class="col">
+                                        <br />
+                                        <p class="text-dark mt-2">Meeting Date</p>
+                                    </div>
+                                    <div class="col">
+                                        <label>Date</label>
+                                        <input type="date" class="form-control" id="meeting" name="meeting" readonly />
+                                    </div>
+                                    <div class="col">
+                                        <label>Day</label>
+                                        <input type="text" class="form-control" id="koday" readonly />
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="container mt-4">
+                                <div class="row">
+                                    <div class="col">
+                                        <br />
+                                        <p class="text-dark mt-2">Start Date</p>
+                                    </div>
+                                    <div class="col">
+                                        <label>Date</label>
+                                        <input type="date" class="form-control" id="start_date" name="start_date"
+                                            readonly />
+                                    </div>
+                                    <div class="col">
+                                        <label>Day</label>
+                                        <input type="text" class="form-control" id="startday" readonly />
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="container mt-4">
+                                <div class="row">
+                                    <div class="col">
+                                        <br />
+                                        <p class="text-dark mt-2">Finish Date (CMT)</p>
+                                    </div>
+                                    <div class="col">
+                                        <label>Date</label>
+                                        <input type="date" class="form-control" id="finish_cmt" name="finish_cmt"
+                                            readonly />
+                                    </div>
+                                    <div class="col">
+                                        <label>Day</label>
+                                        <input type="text" class="form-control" id="finishday" readonly />
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="container mt-4">
+                                <div class="row">
+                                    <div class="col">
+                                        <br />
+                                        <p class="text-dark mt-2">Finish Date (ACT)</p>
+                                    </div>
+                                    <div class="col">
+                                        <label>Date</label>
+                                        <input type="date" class="form-control" id="finish_act" />
+                                    </div>
+                                    <div class="col">
+                                        <label>Day</label>
+                                        <input type="text" class="form-control" id="finishdayact" readonly />
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="container mt-4">
+                                <div class="row">
+                                    <div class="col">
+                                        <br />
+                                        <p class="text-dark mt-2">Launch Avail</p>
+                                    </div>
+                                    <div class="col">
+                                        <label>Date</label>
+                                        <input type="date" class="form-control" id="launchdate" />
+                                    </div>
+                                    <div class="col">
+                                        <label>Day</label>
+                                        <input type="text" class="form-control" id="launchday" readonly />
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row mt-4">
+                                <label>Delay Reason</label>
+                                <input type="text" class="form-control" id="delayreason" placeholder="Enter Remarks"
+                                    name="delayreason">
+                            </div>
+
+                            <div class="row mt-4">
+                                <label>Remarks</label>
+                                <input type="text" class="form-control" id="remarks" placeholder="Enter Remarks"
+                                    name="remarks">
+                            </div>
+
+                            <div style="text-align: right;" class="mt-4">
+                                <input type="button" id="cancel" class="btn btn-danger rubik-font" value="Cancel" />
+                                <input type="button" id="saveDraftButton" class="btn btn-secondary rubik-font"
+                                    value="Draft" />
+                                <input type="button" id="" class=" btn btn-primary rubik-font"
+                                    value="Save" />
+                            </div>
+
                         </div>
                     </div>
                 </div>
             </div>
-        </form>
+        </div>
 
 
         @include('layouts.footer')
@@ -472,6 +494,10 @@
 
             $('#finish_act').change(function() {
                 updateDay('finish_act', 'finishdayact');
+            });
+
+            $('#launchdate').change(function() {
+                updateDay('launchdate', 'launchday');
             });
         });
     </script>

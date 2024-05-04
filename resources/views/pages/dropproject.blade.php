@@ -142,7 +142,7 @@ https://cdn.datatables.net/1.13.1/css/jquery.dataTables.min.css" rel="stylesheet
 @endsection
 
 @section('content')
-    @include('layouts.topnav', ['title' => 'Dropped Project'])
+    @include('layouts.topnav', ['title' => 'Draft Project'])
 
     {{-- Di sini baru ngoding, buatla apa gitu --}}
     <div class="container">
@@ -151,9 +151,9 @@ https://cdn.datatables.net/1.13.1/css/jquery.dataTables.min.css" rel="stylesheet
                 <div class="row">
                     <div class="col m-4">
                         <CENTER>
-                            <h2 class="mt-2" style="color: #1d275f;"> Project List </h2>
+                            <h2 class="mt-2" style="color: #1d275f;"> Draft Project </h2>
                             <a href="{{ route('projectlist') }}" class="btn btn-primary rubik-font ml-2"> Project List </a>
-                            <a href="{{ route('draft') }}" class="btn btn-secondary rubik-font ml-2"> Draft Project </a>
+                            <a href="{{ route('draft') }}" class="btn btn-secondary rubik-font ml-2"> Draft</a>
                         </CENTER>
                     </div>
                 </div>
@@ -224,9 +224,10 @@ https://cdn.datatables.net/1.13.1/css/jquery.dataTables.min.css" rel="stylesheet
                             '<td>' + +'</td>' +
                             '<td>' + +'</td>' +
                             '<td>' + +'</td>' +
-                            '<td>' + +'</td>' +
-                            '<td>' + +'</td>' +
-                            '<td>' + +'</td>' +
+                            '<td></td>' +
+                            '<td></td>' +
+                            '<td></td>' +
+                            '<td></td>' +
                             '</tr>';
                         tableBody.append(row);
                     });
@@ -250,14 +251,7 @@ https://cdn.datatables.net/1.13.1/css/jquery.dataTables.min.css" rel="stylesheet
                             responsive: true,
                             columns: [{
                                     data: null,
-                                    title: 'A',
-                                    render: function(data, type, row) {
-                                        // Assuming 'data' contains the URL for the link
-                                        // You can customize the link text and attributes as needed
-                                        return '<a style="margin-bottom: 0px; background-color: #FFE5F1; color: #E2328B;" class="btn" title="See Project Detail" href="{{ route('projectdetail') }}"' +
-                                            data +
-                                            '"><i class="fa fa-info" aria-hidden="true"></i></a>';
-                                    }
+                                    title: 'A'
                                 },
 
                                 {
@@ -295,6 +289,10 @@ https://cdn.datatables.net/1.13.1/css/jquery.dataTables.min.css" rel="stylesheet
                                 },
                                 {
                                     data: null,
+                                    title: 'Finish ACT'
+                                },
+                                {
+                                    data: null,
                                     title: 'Status',
                                     render: function(data, type, row) {
                                         if (data === 'Finished') {
@@ -314,10 +312,10 @@ https://cdn.datatables.net/1.13.1/css/jquery.dataTables.min.css" rel="stylesheet
                                 },
                             ],
                             order: [
-                                [9, 'desc']
+                                [10, 'desc']
                             ], // Assuming 'status' is the last column
                             initComplete: function() {
-                                this.api().columns("9").every(function() {
+                                this.api().columns("10").every(function() {
                                     var column = this;
                                     var select = $(
                                             '<select class="form-select form-select-lg"><option value="">All Status</option></select>'
