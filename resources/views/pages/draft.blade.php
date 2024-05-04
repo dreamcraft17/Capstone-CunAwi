@@ -137,7 +137,7 @@
                                         $percentage = intval($adherence);
                                         @endphp
                                         <!-- Set width based on percentage -->
-                                        <div class="progress" style="width: {{ $percentage }}%; height:150px;">
+                                        <div class="progress" style="width: {{ $percentage }}%; height:20px;">
                                             {{ $project->adherence }}
                                         </div>
                                     </div>

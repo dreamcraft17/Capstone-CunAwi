@@ -93,7 +93,7 @@
                                                 <label class="text-dark text-bold">Insert Picture(s) <span
                                                         class="text-danger">*</span></label>
                                                 <label>Drag & drop photos here or click to browse</label>
-                                                <input name="images" id="input_image" type="file" class="form-control"
+                                                <input name="image" id="input_image" type="file" class="form-control"
                                                     accept="image/jpeg, image/png, image/jpg" />
                                             </div>
                                         </div>
@@ -306,8 +306,8 @@
                         <div style="text-align: right;" class="mt-4">
                             <input type="button" id="prevButton" class="previous btn btn-secondary rubik-font"
                                 value="Previous" />
-                            <input type="submit" name="submit" id="" class="btn btn-secondary rubik-font"
-                                value="Draft" />
+                            <input type="submit" name="submit" id="saveDraftButton" class="btn btn-secondary rubik-font"
+                                value="draft" />
                             <input type="submit" name="submit" id="submitNewProjectButton"
                                 class="btn btn-primary rubik-font" value="Submit" />
                         </div>
@@ -424,9 +424,9 @@
 
 
             // Function to handle the "Save as Draft" button
-            $("#saveDraftButton").click(function() {
-                // Add your logic to save the form as a draft
-            });
+            // $("#saveDraftButton").click(function() {
+            //     // Add your logic to save the form as a draft
+            // });
 
             // Function to handle the "Save Changes" button
             $("#saveChangesButton").click(function() {
@@ -662,4 +662,29 @@ $(document).ready(function() {
             });
         });
     </script>
+
+<script>
+$(document).ready(function() {
+    $("#saveDraftButton").click(function(e) {
+        e.preventDefault(); 
+
+       
+        // $("form").append('<input type="hidden" name="submit" value="Draft">');
+
+      
+        $.ajax({
+            url: "{{ route('storeNewProject') }}",
+            type: "POST",
+            data: $("form").serialize(),
+            success: function(response) {
+                console.log(response);
+                window.location.href = "{{ route('projectlist') }}";
+            },
+            error: function(xhr, status, error) {
+                console.error(xhr.responseText);
+            }
+        });
+    });
+});
+</script>
 @endsection

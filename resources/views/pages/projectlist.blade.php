@@ -224,6 +224,7 @@ https://cdn.datatables.net/1.13.1/css/jquery.dataTables.min.css" rel="stylesheet
                     filteredProjects.forEach(function(item) {
                         var row = '<tr>' +
                             '<td></td>' +
+                            '<td class="project-number-cell">' + item.ID + '</td>' +
                             '<td class="project-number-cell">' + item.projectID + '</td>' +
                             '<td>' + item.productID + '</td>' +
                             '<td>' + item.toyName + '</td>' +
@@ -256,12 +257,18 @@ https://cdn.datatables.net/1.13.1/css/jquery.dataTables.min.css" rel="stylesheet
                             responsive: true,
                             columns: [
     {
-        data: 'projectID',
-        title: 'A',
-        render: function(data, type, row) {
-            return '<a type="button" href="{{ route("projectdetail", ["project" => ":id"]) }}" class="btn btn-warning rubik-font" value="detail">Detail</a>'
-            .replace(':id', data);
-        }
+        data: 'ID',
+title: 'A',
+render: function(data, type, row) {
+    var url = "{{ route('projectdetail', ':id') }}"; // URL dengan placeholder ':id'
+    url = url.replace(':id', data); // Mengganti placeholder ':id' dengan nilai dari data
+    return '<a type="button" href="' + url + '" class="btn btn-warning rubik-font" value="detail">Detail</a>';
+}
+    },
+    {
+        data: 'ID',
+        title: 'ID',
+          visible: false
     },
     {
         data: 'projectID',
