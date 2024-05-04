@@ -50,7 +50,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/dropproject', [ProjectListController::class, 'dropproject'])->name('dropproject');
     // Route::get('/projectdetail/{projectId}', [ProjectListController::class, 'showDataDetail'])->name('projectdetail');
     Route::get('/projectdetail/{project}', [ProjectListController::class, 'showProjectDetail'])->name('projectdetail');
-
+    Route::get('/projects/{date}', 'CalendarController@getProjectsByDate');
 
 
 

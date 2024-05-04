@@ -28,7 +28,9 @@ class DashboardController extends Controller
 
     $totalfinish = ($finishCount / $projectCount)*100;
     $totalongoing =($ongoingCount / $projectCount)*100;
+    $totaldrop = (($dropCount/ $projectCount)*100) ? null: 0;
 
-        return view("pages.dashboard", ['name' => $name, 'projectCount' => $projectCount], compact('productionByMonth','statusData','statusLabels','statusColors','totalfinish','totalongoing'));
+
+        return view("pages.dashboard", ['name' => $name, 'projectCount' => $projectCount], compact('productionByMonth','statusData','statusLabels','statusColors','totalfinish','totalongoing','totaldrop'));
     }
 }

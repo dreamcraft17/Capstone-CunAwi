@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Http\Controllers\DashboardController;
 use App\Models\Data;
+use RealRashid\SweetAlert\Facades\Alert;
 // use App\Http\Controllers\ProjectListController;
 
 class ProjectListController extends Controller
@@ -28,13 +29,41 @@ class ProjectListController extends Controller
         return view("pages.projectlist", compact('projects', 'designers'));
     }
 
+    public function showProjectDetail($id)
+{
+    $project = Data::find($id);
+
+    if (!$project) {
+        return response()->json(['error' => 'Project not found'], 404);
+    }
+    //   dd($project);
+    return view('pages.projectdetail', compact('project'));
+}
+
+
+    // public function showProjectDetail()
+    // {
+    //     return view('pages.projectdetail');
+    // }
+
+
 
      public function newproject(){
         return view("pages.newproject");
     }
 
-    public function draft(){
-        return view("pages.draft");
+    public function draft(Request $request){
+        $selectedDesigner = $request->input('designer');
+
+        $designers = Data::pluck('designer')->unique();
+        $data = Data::where('status', 'on going')->get();
+
+        $projectsQuery = Data::where('status', 'on going');
+        if($selectedDesigner){
+            $projectsQuery->where('designer', $selectedDesigner);
+        }
+        $data = $projectsQuery->get();
+        return view("pages.draft",compact('data','designers'));
     }
 
     public function editproject(){
@@ -79,6 +108,14 @@ class ProjectListController extends Controller
         $projectID = rand(100000, 999999);
         $status= "On going";
 
+        $startDate = new \DateTime($request->meeting_date);
+        $finishCMT = new \DateTime($request->start_date);
+        $interval = $startDate->diff($finishCMT);
+        $months = $interval->m + ($interval->y * 12);
+
+
+        $adherence = ($status === "On going") ? 0 : null;
+
         Data::create([
             'projectID' => $projectID,
             'assortment' => $request->toyName,
@@ -93,10 +130,12 @@ class ProjectListController extends Controller
             'finish_cmt'=> $request->finish_cmt,
             'remarks'=> $request->remarks,
             'status'=> $status,
+            'adherence' => $adherence,
+            'month' => $months,
 
         ]);
 
-
+        Alert::success('Success', 'Project Added!!');
         return redirect()->route('projectlist')->with('success', 'New project has been created successfully.');
     }
 

@@ -121,6 +121,7 @@
                                                 <p></p>
                                                 <h6 class="mt-4">Product Design</h6>
                                                 <p>{{ $project->designer }}</p>
+                                                <p>{{ $project->designer }}</p>
                                             </div>
                                         </div>
                                     </div>
@@ -148,10 +149,10 @@
                                 style="vertical-align: middle;">
                                 <thead class="table-primary">
                                     <tr>
-                                        <th class="pl-2 rubik-font" style="color: #5e72e4;">Start Date</th>
-                                        <th class="pl-2 rubik-font" style="color: #5e72e4;">Finish Date CMT</th>
-                                        <th class="pl-2 rubik-font" style="color: #5e72e4;">Finish Date ACT</th>
-                                        <th class="pl-2 rubik-font" style="color: #5e72e4;">Delay Reason</th>
+                                        <th class="pl-2 rubik-font text-center" style="color: #5e72e4;">Start Date</th>
+                                        <th class="pl-2 rubik-font text-center" style="color: #5e72e4;">Finish Date CMT</th>
+                                        <th class="pl-2 rubik-font text-center" style="color: #5e72e4;">Finish Date ACT</th>
+                                        <th class="pl-2 rubik-font text-center" style="color: #5e72e4;">Delay Reason</th>
                                     </tr>
                                 </thead>
                                 <tbody>
