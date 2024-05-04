@@ -5,13 +5,8 @@
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <link rel="stylesheet" href="argon/assets/css/argon-dashboard.css">
-    <link href="
-https://cdn.datatables.net/v/dt/dt-1.13.6/datatables.min.css" rel="stylesheet">
-    <link href="
-https://cdn.datatables.net/1.13.1/css/jquery.dataTables.min.css" rel="stylesheet" />
-    <link rel="stylesheet" href="/font-awesome/css/font-awesome.min.css">
     <link rel="stylesheet" href="/argon/assets/css/argon-dashboard.css">
+
     <style>
 
     </style>
@@ -24,11 +19,11 @@ https://cdn.datatables.net/1.13.1/css/jquery.dataTables.min.css" rel="stylesheet
     <div class="container">
         <div class="card overflow-hidden">
             <div class="bg-soft">
-            <div class="text-center mt-4">
-    <span class="text-bold ml-2 mr-2" style="font-size: 24px;">Project Name</span>
-    <h4 class="p-2 m-0 rubik-font" style="color: #5e72e4; opacity: 0.6;">{{ $project->toyName }}</h4>
-</div>
-
+                <div class="text-center mt-4">
+                    <span class="text-bold ml-2 mr-2" style="font-size: 24px;">Project Name</span>
+                    <h4 class="p-2 m-0 rubik-font" style="color: #5e72e4; opacity: 0.6;">{{ $project->toyName }}</h4>
+                    <h4 class="p-2 m-0 rubik-font" style="color: #5e72e4; opacity: 0.6;">{{ $project->toyName }}</h4>
+                </div>
                 <div class="row p-4">
                     <div class="col-7">
                         <div class="card border-1 mb-3" id="toy-card-container">
@@ -79,16 +74,6 @@ https://cdn.datatables.net/1.13.1/css/jquery.dataTables.min.css" rel="stylesheet
                                     data-bs-target="#upfoto"> Add Photo </button>
                             </CENTER>
                         </div>
-
-                        <div class="card border-1 mb-3">
-                            <div class="container">
-                                <div class="card-body p-3 rubik-font toy-note">
-                                    <h3><b style="color: #5e72e4;">Remarks</b></h3>
-                                    <p class="rubik-font mt-2" style="white-space: pre-line;" id=""></p>
-                                    <p class="rubik-font mt-2"><i>{{ $project->remarks }}</i></p>
-                                </div>
-                            </div>
-                        </div>
                     </div>
 
                     <div class="col">
@@ -102,10 +87,10 @@ https://cdn.datatables.net/1.13.1/css/jquery.dataTables.min.css" rel="stylesheet
                                     </p>
                                     <div class="text-center rubik-font mb-2">
                                         <h4 style="color: #5e72e4; opacity: 0.6;"><b>Project ID</b></h4>
-                                        <h5>{{ $project->projectID }}</h5>
+                                        <h5 id="project_id">{{ $project->projectID }}</h5>
                                         <br />
-                                        <h4 style="color: #5e72e4; opacity: 0.6;"><b>Toy Name</b></h4>
-                                        <h5>{{ $project->toyName }}</h5>
+                                        <h4 style="color: #5e72e4; opacity: 0.6;"><b>Product ID</b></h4>
+                                        <h5>{{ $project->productID }}</h5>
                                     </div>
                                     <hr class="bg-dark mb-3" />
                                     <div class="list-group list-group-flush mt-4">
@@ -113,25 +98,15 @@ https://cdn.datatables.net/1.13.1/css/jquery.dataTables.min.css" rel="stylesheet
                                             <div class="col rubik-font">
                                                 <h6>Toy Description</h6>
                                                 <p>{{ $project->description }}</p>
-                                                <h6 class="mt-4">Age Grade</h6>
+                                                <h6 class="mt-4">Category Material</h6>
                                                 <p></p>
-                                                <h6 class="mt-4">Licensed</h6>
+                                                <h6 class="mt-4">Product Engineer</h6>
                                                 <p></p>
-                                                <h6>Run Rate/Week</h6>
-                                                <p></p>
-                                                <h6>Cost Iteration</h6>
-                                                <p></p>
-                                                <h6>Product Engineer</h6>
-                                                <p>{{ $project->pe }}</p>
                                             </div>
                                             <div class="col rubik-font">
                                                 <h6>Launch Quantity</h6>
                                                 <p></p>
                                                 <h6 class="mt-4">Launch Avail</h6>
-                                                <p></p>
-                                                <h6 class="mt-4">Suggested Retail Price</h6>
-                                                <p></p>
-                                                <h6 class="mt-4">Tool Cost Budget</h6>
                                                 <p></p>
                                                 <h6 class="mt-4">Product Design</h6>
                                                 <p>{{ $project->designer }}</p>
@@ -142,6 +117,15 @@ https://cdn.datatables.net/1.13.1/css/jquery.dataTables.min.css" rel="stylesheet
                             </div>
                         </div>
 
+                        <div class="card border-1 mt-4">
+                            <div class="container">
+                                <div class="card-body p-3 rubik-font toy-note">
+                                    <h3><b style="color: #5e72e4;">Remarks</b></h3>
+                                    <p class="rubik-font mt-2" style="white-space: pre-line;" id=""></p>
+                                    <p class="rubik-font mt-2"><i>No remarks...</i></p>
+                                </div>
+                            </div>
+                        </div>
 
 
                     </div>
@@ -173,7 +157,7 @@ https://cdn.datatables.net/1.13.1/css/jquery.dataTables.min.css" rel="stylesheet
                     </div>
 
                     <div style="text-align: left;" class="mt-5 mb-0">
-                        <a type="button" href="{{ route('newproject') }}" class="btn btn-warning rubik-font"
+                        <a type="button" href="{{ route('editproject') }}" class="btn btn-warning rubik-font"
                             value="Edit">Edit</a>
                         <input type="button" id="" class=" btn btn-danger rubik-font" value="Drop" />
                         <input type="button" id="" class=" btn btn-secondary rubik-font" value="Delete" />

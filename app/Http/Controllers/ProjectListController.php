@@ -46,8 +46,8 @@ class ProjectListController extends Controller
     //     return view('pages.projectdetail');
     // }
 
-    
-  
+
+
      public function newproject(){
         return view("pages.newproject");
     }
@@ -70,8 +70,12 @@ class ProjectListController extends Controller
         return view("pages.editproject");
     }
 
+    public function projectdetail(){
+        return view("pages.projectdetail");
+    }
+
      public function dropproject(){
-        
+
         return view("pages.dropproject");
     }
 
@@ -146,14 +150,14 @@ class ProjectListController extends Controller
         return redirect()->route('projectlist')->with('projectId', $projectId);
     }
 
-   public function displayProject()
-{
-    // Retrieve all projects from the Data model
-    $projects = Data::all();
+    public function displayProject()
+    {
+        // Retrieve all projects from the Data model
+        $projects = Data::all();
 
-    // Return the projects as JSON
-    return response()->json($projects);
-}
+        // Return the projects as JSON
+        return response()->json($projects);
+    }
 
 
 

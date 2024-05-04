@@ -190,11 +190,11 @@ https://cdn.datatables.net/1.13.1/css/jquery.dataTables.min.css" rel="stylesheet
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script> <!-- Include jQuery before your script -->
     <script
         src="
-                                                                                                                                                                                                https://cdn.datatables.net/1.13.1/js/jquery.dataTables.min.js">
+                                                                                                                                                                                                                                                                                                            https://cdn.datatables.net/1.13.1/js/jquery.dataTables.min.js">
     </script>
     <script type="text/javascript" charset="utf8"
         src="
-                                                                                                                                                                                                https://cdn.datatables.net/fixedheader/3.2.1/js/dataTables.fixedHeader.min.js">
+                                                                                                                                                                                                                                                                                                            https://cdn.datatables.net/fixedheader/3.2.1/js/dataTables.fixedHeader.min.js">
     </script>
 
     <script>
@@ -222,9 +222,9 @@ https://cdn.datatables.net/1.13.1/css/jquery.dataTables.min.css" rel="stylesheet
                     tableBody.empty();
 
                     filteredProjects.forEach(function(item) {
-                        var row = '<tr>' +
+                        var row = '<tr data-id="' + item.ID + '">' +
                             '<td></td>' +
-                            '<td class="project-number-cell">' + item.ID + '</td>' +
+                            '<td>' + item.ID + '</td>' +
                             '<td class="project-number-cell">' + item.projectID + '</td>' +
                             '<td>' + item.productID + '</td>' +
                             '<td>' + item.toyName + '</td>' +
@@ -235,6 +235,7 @@ https://cdn.datatables.net/1.13.1/css/jquery.dataTables.min.css" rel="stylesheet
                             '<td>' + item.finish_cmt + '</td>' +
                             '<td>' + item.status + '</td>' +
                             '</tr>';
+
                         tableBody.append(row);
                     });
 
@@ -255,70 +256,86 @@ https://cdn.datatables.net/1.13.1/css/jquery.dataTables.min.css" rel="stylesheet
                             ordering: true,
                             info: true,
                             responsive: true,
-                            columns: [
-    {
-        data: 'ID',
-title: 'A',
-render: function(data, type, row) {
-    var url = "{{ route('projectdetail', ':id') }}"; // URL dengan placeholder ':id'
-    url = url.replace(':id', data); // Mengganti placeholder ':id' dengan nilai dari data
-    return '<a type="button" href="' + url + '" class="btn btn-warning rubik-font" value="detail">Detail</a>';
-}
-    },
-    {
-        data: 'ID',
-        title: 'ID',
-          visible: false
-    },
-    {
-        data: 'projectID',
-        title: 'Project ID'
-    },
-    {
-        data: 'productID',
-        title: 'Product ID'
-    },
-    {
-        data: 'toyName',
-        title: 'Toy Name'
-    },
-    {
-        data: 'pe',
-        title: 'PE'
-    },
-    {
-        data: 'designer',
-        title: 'Designer'
-    },
-    {
-        data: 'meeting',
-        title: 'Meeting'
-    },
-    {
-        data: 'start_date',
-        title: 'Start Date'
-    },
-    {
-        data: 'finish_cmt',
-        title: 'Finish CMT'
-    },
-    {
-        data: 'status',
-        title: 'Status',
-        render: function(data, type, row) {
-            if (data === 'Finished') {
-                return '<span class="badge badge-soft-success rounded-pill d-inline">' + data + '</span>';
-            } else if (data === 'On going' || data === 'on going') {
-                return '<span class="badge badge-soft-warning rounded-pill d-inline">' + data + '</span>';
-            } else if (data === 'Drop') {
-                return '<span class="badge badge-danger-subtle rounded-pill d-inline">' + data + '</span>';
-            } else {
-                return data;
-            }
-        }
-    }
-],
+                            columns: [{
+                                    data: null,
+                                    title: 'A',
+                                    render: function(data, type, row) {
+                                        var projectId = row
+                                        .ID; // Access the 'ID' attribute directly from the 'row' object
+                                        console.log("Project ID:",
+                                        projectId); // Check the project ID in the console
 
+                                        // Generate the URL for the project detail page using the projectId
+                                        var projectDetailURL = projectId ?
+                                            '/projectdetail/' + projectId : '#';
+                                        console.log("Project Detail URL:",
+                                            projectDetailURL
+                                            ); // Check the project detail URL in the console
+
+                                        // Create the link with the generated URL
+                                        return '<a style="margin-bottom: 0px; background-color: #FFE5F1; color: #E2328B;" class="btn" title="See Project Detail" href="' +
+                                            projectDetailURL +
+                                            '"><i class="fa fa-info" aria-hidden="true"></i></a>';
+                                    }
+                                },
+                                {
+                                    data: 'ID',
+                                    title: 'ID',
+                                    visible: false
+                                },
+                                {
+                                    data: 'projectID',
+                                    title: 'Project ID'
+                                },
+
+                                {
+                                    data: 'productID',
+                                    title: 'Product ID'
+                                },
+                                {
+                                    data: 'toyName',
+                                    title: 'Toy Name'
+                                },
+                                {
+                                    data: 'pe',
+                                    title: 'PE'
+                                },
+                                {
+                                    data: 'designer',
+                                    title: 'Designer'
+                                },
+                                {
+                                    data: 'meeting',
+                                    title: 'Meeting'
+                                },
+                                {
+                                    data: 'start_date',
+                                    title: 'Start Date'
+                                },
+                                {
+                                    data: 'finish_cmt',
+                                    title: 'Finish CMT'
+                                },
+                                {
+                                    data: 'status',
+                                    title: 'Status',
+                                    render: function(data, type, row) {
+                                        if (data === 'Finished') {
+                                            return '<span class="badge badge-soft-success rounded-pill d-inline">' +
+                                                data + '</span>';
+                                        } else if (data === 'On going' || data ===
+                                            'on going') {
+                                            return '<span class="badge badge-soft-warning rounded-pill d-inline">' +
+                                                data + '</span>';
+                                        } else if (data === 'Drop') {
+                                            return '<span class="badge badge-danger-subtle rounded-pill d-inline">' +
+                                                data + '</span>';
+                                        } else {
+                                            return data;
+                                        }
+                                    }
+                                },
+                            ],
                             order: [
                                 [9, 'desc']
                             ], // Assuming 'status' is the last column

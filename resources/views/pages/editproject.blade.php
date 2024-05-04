@@ -24,7 +24,7 @@
 @endsection
 
 @section('content')
-    @include('layouts.topnav', ['title' => 'New Project'])
+    @include('layouts.topnav', ['title' => 'Edit Project'])
 
     {{-- Di sini baru ngoding, buatla apa gitu --}}
     <div class="container">
@@ -39,282 +39,184 @@
             </div>
         </div>
 
-        <fieldset>
-            <form action="{{ route('storeNewProject') }}" method="POST">
-                @csrf
-                <div class="row">
-                    <div class="card mt-4">
-                        <div class="card-body">
-                            <div class="card-body">
-                                <div class="row mb-4">
-                                    <div class="row">
-
-                                        <div class="col">
-                                            <label>Product ID <span class="text-danger">*</span></label>
-                                            <input type="text" class="form-control" id="productID" name="productID"
-                                                placeholder="Click Here to Enter" />
-                                        </div>
-
-                                        <div class="col">
-                                            <label>Toy Name <span class="text-danger">*</span></label>
-                                            <input type="text" class="form-control" id="toyName"
-                                                placeholder="Click Here to Enter" name="toyName">
-                                        </div>
-
-                                        <div class="col">
-                                            <label>Product Engineering<span class="text-danger">*</span></label>
-                                            <select id="pe" class="form-control" name="pe">
-                                                <option selected> -- Select Here -- </option>
-                                                <option value="Emily Jhonson">Emily Johnson</option>
-                                                <option value="Jessica Lee">Jessica Lee</option>
-                                                <option value="Ryan Johnson">Ryan Johnson</option>
-                                            </select>
-                                        </div>
-
-                                        <div class="col">
-                                            <label>Product Design<span class="text-danger">*</span></label>
-                                            <select id="designer" class="form-control" name="designer">
-                                                <option selected> -- Select Here -- </option>
-                                                <option value="Sarah Davis">Sarah Davis</option>
-                                                <option value="Dnaiel Kim">Daniel Kim</option>
-                                                <option value="Ethan Chen">Ethan Chen</option>
-                                            </select>
-                                        </div>
-
-
-                                    </div>
-
-                                    <div class="row g-2 mt-4">
-                                        <div class="col-sm-12">
-                                            <div id="queuedImages" class="queued-div p-2">
-                                                <div id="imagePreviewContainer" class="d-flex flex-wrap mr-3"></div>
-                                            </div>
-                                            <div id="id-input-div" class="mt-2">
-                                                <label class="text-dark text-bold">Insert Picture(s) <span
-                                                        class="text-danger">*</span></label>
-                                                <label>Drag & drop photos here or click to browse</label>
-                                                <input name="images" id="input_image" type="file" class="form-control"
-                                                    accept="image/jpeg, image/png, image/jpg" />
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div class="row mt-4">
-                                        <div class="col">
-                                            <label>Category Material <span class="text-danger">*</span></label>
-                                            <select id="category" class="form-control" name="category">
-                                                <option selected> -- Select Here -- </option>
-                                                <option value="Plastic">Plastic</option>
-                                                <option value="Rubber">Rubber</option>
-                                                <option value="Metal">Metal</option>
-                                                <option value="Plastic, Rubber">Plastic, Rubber</option>
-                                                <option value="Plastic, Metal">Plastic, Metal</option>
-                                                <option value="Rubber, Metal">Rubber, Metal</option>
-                                                <option value="Plastic, Rubber, Metal">Plastic, Rubber, Metal</option>
-                                                <option value="Cardboard">Cardboard</option>
-                                            </select>
-                                        </div>
-
-                                        <div class="col">
-                                            <label>Product Description <span class="text-danger">*</span></label>
-                                            <input type="text" class="form-control" id="description"
-                                                placeholder="Enter Description" name="description">
-                                        </div>
-                                    </div>
-
-                                    <div class="container mt-4">
-                                        <div class="row">
-                                            <div class="col">
-                                                <br />
-                                                <p class="text-dark mt-2">Meeting Date</p>
-                                            </div>
-                                            <div class="col">
-                                                <label>Date</label>
-                                                <input type="date" class="form-control" id="meeting" name="meeting" />
-                                            </div>
-                                            <div class="col">
-                                                <label>Day</label>
-                                                <input type="text" class="form-control" id="koday" readonly />
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div class="container mt-4">
-                                        <div class="row">
-                                            <div class="col">
-                                                <br />
-                                                <p class="text-dark mt-2">Start Date</p>
-                                            </div>
-                                            <div class="col">
-                                                <label>Date</label>
-                                                <input type="date" class="form-control" id="start_date"
-                                                    name="start_date" />
-                                            </div>
-                                            <div class="col">
-                                                <label>Day</label>
-                                                <input type="text" class="form-control" id="startday" readonly />
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div class="container mt-4">
-                                        <div class="row">
-                                            <div class="col">
-                                                <br />
-                                                <p class="text-dark mt-2">Finish Date (CMT)</p>
-                                            </div>
-                                            <div class="col">
-                                                <label>Date</label>
-                                                <input type="date" class="form-control" id="finish_cmt"
-                                                    name="finish_cmt" readonly />
-                                            </div>
-                                            <div class="col">
-                                                <label>Day</label>
-                                                <input type="text" class="form-control" id="finishday" readonly />
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div class="row mt-4">
-                                        <label>Remarks</label>
-                                        <input type="text" class="form-control" id="remarks"
-                                            placeholder="Enter Remarks" name="remarks">
-                                    </div>
-
-                                    <div style="text-align: right;" class="mt-4">
-                                        <input type="button" id="saveDraftButton" class="btn btn-secondary rubik-font"
-                                            value="Draft" />
-                                        <input type="button" id="nextButton" class=" btn btn-danger rubik-font"
-                                            value="Next Step" />
-                                    </div>
-
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </form>
-        </fieldset>
-
-        <fieldset style="display: none;">
-            <!-- Add your form fields here -->s
+        <form action="{{ route('storeNewProject') }}" method="POST">
+            @csrf
             <div class="row">
                 <div class="card mt-4">
-
-                    <div class="text-center mt-4">
-                        <span class="text-bold ml-2 mr-2" style="font-size: 24px;">
-                            <a style="text-align: center;">
-                                <h1 id="displayProjectName"></h1>
-                            </a>
-                        </span>
-                    </div>
-
-                    <div class="row p-4">
-                        <div class="col">
-                            <div class="row">
+                    <div class="card-body">
+                        <div class="card-body">
+                            <div class="row mb-4">
                                 <div class="row">
-                                    <div class="col-md-6">
-                                        <!-- Image slideshow -->
-                                        <div style="padding:10px; position: relative;">
-                                            <div class="slide-content" style="max-width: 850px; text-align: center;">
-                                                <div id="slideshow-container fade">
-                                                    <div class="image-container">
-                                                        <img id="uploadedImage"
-                                                            class="mySlides img-fluid border-radius-md" width="300"
-                                                            src="https://cdn3d.iconscout.com/3d/premium/thumb/no-photo-5590994-4652997.png"
-                                                            style="display:block;" />
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
+
+                                    <div class="col">
+                                        <label>Product ID <span class="text-danger">*</span></label>
+                                        <input type="text" class="form-control" id="productID" name="productID"
+                                            placeholder="Click Here to Enter" />
                                     </div>
 
-                                    <div class="col-md-6">
-                                        <!-- Content catalog -->
-                                        <div class="content-catalog">
-                                            <hr />
-                                            <!-- Add more content here -->
-                                            <div class="row">
-                                                <div class="col rubik-font">
-                                                    <a style="text-align: left;">
-                                                        <h6 style="opacity: 0.8;">PRODUCT ID</h6>
-                                                        <p id="displayProductID"></p>
+                                    <div class="col">
+                                        <label>Toy Name <span class="text-danger">*</span></label>
+                                        <input type="text" class="form-control" id="toyName"
+                                            placeholder="Click Here to Enter" name="toyName">
+                                    </div>
 
-                                                        <h6 style="opacity: 0.8;">PRODUCT DESCRIPTION</h6>
-                                                        <p id="displayProductDescription"></p>
-                                                    </a>
-                                                </div>
+                                    <div class="col">
+                                        <label>Product Engineering<span class="text-danger">*</span></label>
+                                        <select id="pe" class="form-control" name="pe">
+                                            <option selected> -- Select Here -- </option>
+                                            <option value="Emily Jhonson">Emily Johnson</option>
+                                            <option value="Jessica Lee">Jessica Lee</option>
+                                            <option value="Ryan Johnson">Ryan Johnson</option>
+                                        </select>
+                                    </div>
 
-                                                <div class="col rubik-font">
-                                                    <a style="text-align: left;">
+                                    <div class="col">
+                                        <label>Product Design<span class="text-danger">*</span></label>
+                                        <select id="designer" class="form-control" name="designer">
+                                            <option selected> -- Select Here -- </option>
+                                            <option value="Sarah Davis">Sarah Davis</option>
+                                            <option value="Dnaiel Kim">Daniel Kim</option>
+                                            <option value="Ethan Chen">Ethan Chen</option>
+                                        </select>
+                                    </div>
 
 
+                                </div>
 
-                                                        <h6 style="opacity: 0.8;">PRODUCT ENGINEER</h6>
-                                                        <p id="displayProductEngineering"></p>
-
-                                                        <h6 style="opacity: 0.8;">PRODUCT DESIGN</h6>
-                                                        <p id="displayProductDesign"></p>
-                                                    </a>
-                                                </div>
-                                            </div>
+                                <div class="row g-2 mt-4">
+                                    <div class="col-sm-12">
+                                        <div id="queuedImages" class="queued-div p-2">
+                                            <div id="imagePreviewContainer" class="d-flex flex-wrap mr-3"></div>
+                                        </div>
+                                        <div id="id-input-div" class="mt-2">
+                                            <label class="text-dark text-bold">Insert Picture(s) <span
+                                                    class="text-danger">*</span></label>
+                                            <label>Drag & drop photos here or click to browse</label>
+                                            <input name="images" id="input_image" type="file" class="form-control"
+                                                accept="image/jpeg, image/png, image/jpg" />
                                         </div>
                                     </div>
                                 </div>
+
+                                <div class="row mt-4">
+                                    <div class="col">
+                                        <label>Category Material <span class="text-danger">*</span></label>
+                                        <select id="category" class="form-control" name="category">
+                                            <option selected> -- Select Here -- </option>
+                                            <option value="Plastic">Plastic</option>
+                                            <option value="Rubber">Rubber</option>
+                                            <option value="Metal">Metal</option>
+                                            <option value="Plastic, Rubber">Plastic, Rubber</option>
+                                            <option value="Plastic, Metal">Plastic, Metal</option>
+                                            <option value="Rubber, Metal">Rubber, Metal</option>
+                                            <option value="Plastic, Rubber, Metal">Plastic, Rubber, Metal</option>
+                                            <option value="Cardboard">Cardboard</option>
+                                        </select>
+                                    </div>
+
+                                    <div class="col">
+                                        <label>Product Description <span class="text-danger">*</span></label>
+                                        <input type="text" class="form-control" id="description"
+                                            placeholder="Enter Description" name="description">
+                                    </div>
+                                </div>
+
+                                <div class="container mt-4">
+                                    <div class="row">
+                                        <div class="col">
+                                            <br />
+                                            <p class="text-dark mt-2">Meeting Date</p>
+                                        </div>
+                                        <div class="col">
+                                            <label>Date</label>
+                                            <input type="date" class="form-control" id="meeting" name="meeting" />
+                                        </div>
+                                        <div class="col">
+                                            <label>Day</label>
+                                            <input type="text" class="form-control" id="koday" readonly />
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="container mt-4">
+                                    <div class="row">
+                                        <div class="col">
+                                            <br />
+                                            <p class="text-dark mt-2">Start Date</p>
+                                        </div>
+                                        <div class="col">
+                                            <label>Date</label>
+                                            <input type="date" class="form-control" id="start_date"
+                                                name="start_date" />
+                                        </div>
+                                        <div class="col">
+                                            <label>Day</label>
+                                            <input type="text" class="form-control" id="startday" readonly />
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="container mt-4">
+                                    <div class="row">
+                                        <div class="col">
+                                            <br />
+                                            <p class="text-dark mt-2">Finish Date (CMT)</p>
+                                        </div>
+                                        <div class="col">
+                                            <label>Date</label>
+                                            <input type="date" class="form-control" id="finish_cmt" name="finish_cmt"
+                                                readonly />
+                                        </div>
+                                        <div class="col">
+                                            <label>Day</label>
+                                            <input type="text" class="form-control" id="finishday" readonly />
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="container mt-4">
+                                    <div class="row">
+                                        <div class="col">
+                                            <br />
+                                            <p class="text-dark mt-2">Finish Date (ACT)</p>
+                                        </div>
+                                        <div class="col">
+                                            <label>Date</label>
+                                            <input type="date" class="form-control" id="finish_act" />
+                                        </div>
+                                        <div class="col">
+                                            <label>Day</label>
+                                            <input type="text" class="form-control" id="finishdayact" readonly />
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row mt-4">
+                                    <label>Delay Reason</label>
+                                    <input type="text" class="form-control" id="delayreason"
+                                        placeholder="Enter Remarks" name="delayreason">
+                                </div>
+
+                                <div class="row mt-4">
+                                    <label>Remarks</label>
+                                    <input type="text" class="form-control" id="remarks"
+                                        placeholder="Enter Remarks" name="remarks">
+                                </div>
+
+                                <div style="text-align: right;" class="mt-4">
+                                    <input type="button" id="saveDraftButton" class="btn btn-secondary rubik-font"
+                                        value="Draft" />
+                                    <input type="button" id="nextButton" class=" btn btn-danger rubik-font"
+                                        value="Next Step" />
+                                </div>
+
                             </div>
                         </div>
-
-                        <hr class="bg-dark" />
-
-                        <h3 class="mt-3 text-center"><b style="color: #5e72e4;">Schedule</b></h3>
-                        <div class="container">
-                            <div class="px-3 pt-2 pb-3">
-                                <table id="activitiesTable" class="table table-bordered mt-3 table-responsive"
-                                    style="vertical-align: middle;">
-                                    <thead class="table-primary">
-                                        <tr>
-                                            <th class="pl-2 rubik-font" style="color: #5e72e4;">Meeting Date</th>
-                                            <th class="pl-2 rubik-font" style="color: #5e72e4;">Start Date</th>
-                                            <th class="pl-2 rubik-font" style="color: #5e72e4;">Finish Date CMT</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr class="text-dark activity-row">
-                                            <td class="rubik-font">
-                                                <p id="displayMeetingDate"></p>
-                                            </td>
-                                            <td class="rubik-font">
-                                                <p id="displaystart_date"></p>
-                                            </td>
-                                            <td class="rubik-font">
-                                                <p id="displayfinish_cmtCMT"></p>
-                                            </td>
-                                        <tr>
-                                        </tr>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-
-                        <h3><b style="color: #5e72e4;">Remarks</b></h3>
-                        <div class="card-body p-3 rubik-font toy-note remarks-container">
-                            <p class="rubik-font mt-2" style="white-space: pre-line;" id="displayRemarks"></p>
-                        </div>
-
-
-                        <div style="text-align: right;" class="mt-4">
-                            <input type="button" id="prevButton" class="previous btn btn-secondary rubik-font"
-                                value="Previous" />
-                            <input type="submit" name="submit" id="" class="btn btn-secondary rubik-font"
-                                value="Draft" />
-                            <input type="submit" name="submit" id="submitNewProjectButton"
-                                class="btn btn-primary rubik-font" value="Submit" />
-                        </div>
-
                     </div>
                 </div>
-        </fieldset>
+            </div>
+        </form>
+
 
         @include('layouts.footer')
     </div>
@@ -567,6 +469,10 @@
             $('#start_date').change(function() {
                 updateDay('start_date', 'startday');
             });
+
+            $('#finish_act').change(function() {
+                updateDay('finish_act', 'finishdayact');
+            });
         });
     </script>
 
@@ -655,6 +561,41 @@
                     }
                 });
 
+            });
+        });
+    </script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Attach event listeners to form elements
+            const form = document.querySelector('form');
+            const saveDraftButton = document.getElementById('saveDraftButton');
+            const nextButton = document.getElementById('nextButton');
+
+            // Add event listener for Save Draft button
+            saveDraftButton.addEventListener('click', function() {
+                const formData = new FormData(form);
+                // Retrieve data from form elements
+                const productID = formData.get('productID');
+                const toyName = formData.get('toyName');
+                const pe = formData.get('pe');
+                const designer = formData.get('designer');
+                // Retrieve more form data as needed
+
+                // Process the captured data
+                console.log('Product ID:', productID);
+                console.log('Toy Name:', toyName);
+                console.log('Product Engineering:', pe);
+                console.log('Designer:', designer);
+                // Process more data as needed
+
+                // Perform action with the captured data, such as sending it to the server
+            });
+
+            // Add event listener for Next Step button
+            nextButton.addEventListener('click', function() {
+                const formData = new FormData(form);
+                // Retrieve and process data as needed
             });
         });
     </script>

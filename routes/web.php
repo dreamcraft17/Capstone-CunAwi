@@ -30,6 +30,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/taskmanager', [TaskManagerController::class, 'index'])->name('taskmanager');
     Route::get('/projectlist', [ProjectListController::class, 'projectlist'])->name('projectlist');
     Route::get('/newproject', [ProjectListController::class, 'newproject'])->name('newproject');
+    Route::get('/projectdetail/{id}', [ProjectListController::class, 'projectdetail'])->name('projectdetail');
     Route::get('/calendar', [CalendarController::class, 'index'])->name('calendar');
     Route::get('/dss', [DssController::class, 'index'])->name('dss');
     Route::post('logout', [UserController::class, 'logout'])->name('logout');
