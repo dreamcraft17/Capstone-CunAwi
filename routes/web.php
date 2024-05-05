@@ -45,7 +45,7 @@ Route::middleware('auth')->group(function () {
     Route::get('display-project', [ProjectListController::class, 'displayProject'])->name('display.project');
     // Route::get('/editproject', [ProjectListController::class, 'editproject'])->name('editproject');
     Route::get('/editproject/{id}', [ProjectListController::class, 'editproject'])->name('editproject');
-    Route::post('/updateproject/{id}', [ProjectListController::class, 'updateProject'])->name('updateProject');
+    // Route::post('/updateproject/{id}', [ProjectListController::class, 'updateProject'])->name('updateProject');
     Route::get('/dropproject', [ProjectListController::class, 'dropproject'])->name('dropproject');
     // Route::get('/projectdetail/{projectId}', [ProjectListController::class, 'showDataDetail'])->name('projectdetail');
     Route::get('/projectdetail/{project}', [ProjectListController::class, 'showProjectDetail'])->name('projectdetail');
@@ -53,6 +53,8 @@ Route::middleware('auth')->group(function () {
     // Route::get('/editproject/{id}', 'ProjectListController@editProject')->name('editproject');
     // Route::post('/updateproject/{id}', 'ProjectListController@updateProject')->name('updateproject');
     Route::post('/dss', [DssController::class, 'evaluateProductionDecision'])->name('production.decision');
+    Route::post('/updateProject/{id}', 'ProjectController@updateProject')->name('updateProject');
+
 
 
 
