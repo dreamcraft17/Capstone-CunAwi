@@ -200,7 +200,17 @@
                     const cancelButton = document.getElementById("cancelButton"); // Get the cancel button
                     const saveButton = document.getElementById("saveChangesButton");
                     const inputs = document.querySelectorAll("input[readonly]"); <
-                    script >
+                 
+    // Event listener for input changes
+    inputs.forEach(input => {
+    input.addEventListener("input", function() {
+    saveButton.disabled = false; // Enable save button when any input changes
+    });
+    });
+    });
+    </script>
+
+<script >
                         document.addEventListener("DOMContentLoaded", function() {
                             const editButton = document.getElementById("editButton");
                             const cancelButton = document.getElementById("cancelButton"); // Get the cancel button
@@ -217,31 +227,32 @@
                                     "inline-block"; // Show cancel button if inputs are editable
                             }
                             // Toggle between readonly and editable mode for inputs
-                            function toggleInputs(readonly) {
-                                inputs.forEach(input => {
-                                    input.readOnly = readonly;
-                                });
-                                saveButton.disabled = readonly;
-                                cancelButton.style.display = readonly ? "none" :
-                                    "inline-block"; // Show cancel button if inputs are editable
-                            }
+                            // function toggleInputs(readonly) {
+                            //     inputs.forEach(input => {
+                            //         input.readOnly = readonly;
+                            //     });
+                            //     saveButton.disabled = readonly;
+                            //     cancelButton.style.display = readonly ? "none" :
+                            //         "inline-block"; // Show cancel button if inputs are editable
+                            // }
 
                             // Event listener for Edit button click
                             editButton.addEventListener("click", function() {
                                 toggleInputs(false); // Enable editing
                             });
                             // Event listener for Edit button click
-                            editButton.addEventListener("click", function() {
-                                toggleInputs(false); // Enable editing
-                            });
+                            // editButton.addEventListener("click", function() {
+                            //     toggleInputs(false); // Enable editing
+                            // });
 
                             // Event listener for Save button click
-                            saveButton.addEventListener("click", function() {
-                                toggleInputs(true); // Disable editing
-                            });
+                            // saveButton.addEventListener("click", function() {
+                            //     toggleInputs(true); // Disable editing
+                            // });
                             // Event listener for Save button click
                             saveButton.addEventListener("click", function() {
-                                toggleInputs(true); // Disable editing
+                                toggleInputs(true);
+                                document,getElementById("updateProfileForm").submit(); // Disable editing
                             });
 
                             // Event listener for Cancel button click
@@ -249,9 +260,9 @@
                                 toggleInputs(true); // Revert changes
                             });
                             // Event listener for Cancel button click
-                            cancelButton.addEventListener("click", function() {
-                                toggleInputs(true); // Revert changes
-                            });
+                            // cancelButton.addEventListener("click", function() {
+                            //     toggleInputs(true); // Revert changes
+                            // });
 
                             // Event listener for input changes
                             inputs.forEach(input => {
@@ -261,14 +272,6 @@
                                 });
                             });
                         });
-    </script>
-    // Event listener for input changes
-    inputs.forEach(input => {
-    input.addEventListener("input", function() {
-    saveButton.disabled = false; // Enable save button when any input changes
-    });
-    });
-    });
     </script>
 
 

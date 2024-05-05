@@ -66,9 +66,36 @@ class ProjectListController extends Controller
         return view("pages.draft",compact('data','designers'));
     }
 
-    public function editproject(){
-        return view("pages.editproject");
-    }
+    public function editProject($id)
+{
+    $project = Data::findOrFail($id);
+    return view('pages.editproject', compact('project', 'id')); // Menambahkan variabel $id ke compact
+}
+
+public function updateProject(Request $request, $id)
+{
+    $project = Data::findOrFail($id);
+
+    $validatedData = $request->validate([
+        'productID' => 'required',
+        'toyName' => 'required',
+        'pe' => 'required',
+        'designer' => 'required',
+        'category' => 'required',
+        'description' => 'required',
+        'meeting' => 'required|date',
+        'start_date' => 'required|date',
+        'finish_cmt' => 'required|date',
+        'remarks' => 'nullable',
+    ]);
+
+    // Menggunakan $validatedData untuk pembaruan proyek
+    $project->update($validatedData);
+
+    return redirect()->route('projectdetail', ['id' => $id])->with('success', 'Project updated successfully.');
+}
+
+    
 
     public function projectdetail($id){
         
@@ -130,7 +157,7 @@ class ProjectListController extends Controller
             'designer'=> $request->designer,
             'category'=> $request->category,
             'description'=> $request->description,
-            'meeting'=> $request->meeting,
+            'meeting'=> $request->meeting,  
             'start_date'=> $request->start_date,
             'finish_cmt'=> $request->finish_cmt,
             'remarks'=> $request->remarks,

@@ -50,19 +50,19 @@
                                 <div class="col">
                                     <label>Product ID <span class="text-danger">*</span></label>
                                     <input type="text" class="form-control" id="productID" name="productID"
-                                        placeholder="Click Here to Enter" />
+                                        placeholder="Click Here to Enter" value="{{$project->productID}}"/>
                                 </div>
 
                                 <div class="col">
                                     <label>Toy Name <span class="text-danger">*</span></label>
                                     <input type="text" class="form-control" id="toyName"
-                                        placeholder="Click Here to Enter" name="toyName">
+                                        placeholder="Click Here to Enter" name="toyName" value="{{$project->toyName}}">
                                 </div>
 
                                 <div class="col">
                                     <label>Product Engineering<span class="text-danger">*</span></label>
                                     <select id="pe" class="form-control" name="pe">
-                                        <option selected> -- Select Here -- </option>
+                                        <option selected value="{{$project->pe}}"> {{$project->pe}}</option>
                                         <option value="Emily Jhonson">Emily Johnson</option>
                                         <option value="Jessica Lee">Jessica Lee</option>
                                         <option value="Ryan Johnson">Ryan Johnson</option>
@@ -72,7 +72,7 @@
                                 <div class="col">
                                     <label>Product Design<span class="text-danger">*</span></label>
                                     <select id="designer" class="form-control" name="designer">
-                                        <option selected> -- Select Here -- </option>
+                                        <option selected value="{{$project->designer}}">{{$project->designer}}</option>
                                         <option value="Sarah Davis">Sarah Davis</option>
                                         <option value="Dnaiel Kim">Daniel Kim</option>
                                         <option value="Ethan Chen">Ethan Chen</option>
@@ -101,7 +101,7 @@
                                 <div class="col">
                                     <label>Category Material <span class="text-danger">*</span></label>
                                     <select id="category" class="form-control" name="category">
-                                        <option selected> -- Select Here -- </option>
+                                        <option selected value="{{$project->category}}">{{$project->category}}</option>
                                         <option value="Plastic">Plastic</option>
                                         <option value="Rubber">Rubber</option>
                                         <option value="Metal">Metal</option>
@@ -116,13 +116,13 @@
                                 <div class="col">
                                     <label>Product Description <span class="text-danger">*</span></label>
                                     <input type="text" class="form-control" id="description"
-                                        placeholder="Enter Description" name="description">
+                                        placeholder="Enter Description" name="description" value="{{$project->description}}">
                                 </div>
 
                                 <div class="col">
                                     <label>Quantity</label>
                                     <input type="number" class="form-control" name="viewModel.Quota" id="quantity"
-                                        autocomplete="off" placeholder="Input Toy Quota" />
+                                        autocomplete="off" placeholder="Input Toy Quota" value="{{$project->qty}}"/>
                                 </div>
                             </div>
 
@@ -134,7 +134,7 @@
                                     </div>
                                     <div class="col">
                                         <label>Date</label>
-                                        <input type="date" class="form-control" id="meeting" name="meeting" readonly />
+                                        <input type="date" class="form-control" id="meeting" name="meeting"  value="{{$project->meeting}}" />
                                     </div>
                                     <div class="col">
                                         <label>Day</label>
@@ -151,7 +151,7 @@
                                     </div>
                                     <div class="col">
                                         <label>Date</label>
-                                        <input type="date" class="form-control" id="start_date" name="start_date"
+                                        <input type="date" class="form-control" id="start_date" name="start_date" value="{{$project->start_date}}"
                                             readonly />
                                     </div>
                                     <div class="col">
@@ -169,7 +169,7 @@
                                     </div>
                                     <div class="col">
                                         <label>Date</label>
-                                        <input type="date" class="form-control" id="finish_cmt" name="finish_cmt"
+                                        <input type="date" class="form-control" id="finish_cmt" name="finish_cmt" value="{{$project->finish_cmt}}"
                                             readonly />
                                     </div>
                                     <div class="col">
@@ -222,7 +222,7 @@
                             <div class="row mt-4">
                                 <label>Remarks</label>
                                 <input type="text" class="form-control" id="remarks" placeholder="Enter Remarks"
-                                    name="remarks">
+                                    name="remarks" value="{{$project->remarks}}">
                             </div>
 
                             <div style="text-align: right;" class="mt-4">

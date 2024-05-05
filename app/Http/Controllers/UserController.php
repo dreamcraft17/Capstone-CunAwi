@@ -126,26 +126,31 @@ class UserController extends Controller
     }
 
     public function update_profile(Request $request)
-    {
-        $user = Auth::user();
+{
+    $user = Auth::user();
 
-        if (!$user) {
-            return redirect()->route('login');
-        }
-
-        $request->validate([
-            'name' => 'required',
-            'username' => 'required',
-            'email' => 'required|email|unique:users,email,' . $user->id,
-        ]);
-
-        $user->name = $request->name;
-        $user->username = $request->username;
-        $user->email = $request->email;
-        $user->save();
-
-        return redirect()->route('profile')->with('success', 'Profile updated successfully!');
+    if (!$user) {
+        return redirect()->route('login');
     }
+
+    $request->validate([
+        'name' => 'required',
+        'username' => 'required',
+        'email' => 'required|email|unique:users,email,' . $user->id,
+    ]);
+
+  
+    $userToUpdate = User::find($request->user_id);
+
+
+    $userToUpdate->name = $request->name;
+    $userToUpdate->username = $request->username;
+    $userToUpdate->email = $request->email;
+    
+    $userToUpdate->save();
+
+    return redirect()->route('profile')->with('success', 'Profile updated successfully!');
+}
 
     public function delete($id)
     {

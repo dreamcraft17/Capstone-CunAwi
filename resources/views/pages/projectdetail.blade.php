@@ -20,7 +20,7 @@
         <div class="card overflow-hidden">
             <div class="bg-soft">
                 <div class="text-center mt-4">
-                    <span class="text-bold ml-2 mr-2" style="font-size: 24px;">Project Name</span>
+                    <span class="text-bold ml-2 mr-2" style="font-size: 24px;">Project Name {{ $project->ID }}</span>
                     <h4 class="p-2 m-0 rubik-font" style="color: #5e72e4; opacity: 0.6;" id="toyName">
                         {{ $project->toyName }}</h4>
                 </div>
@@ -121,7 +121,6 @@
                                                 <p></p>
                                                 <h6 class="mt-4">Product Design</h6>
                                                 <p>{{ $project->designer }}</p>
-                                                <p>{{ $project->designer }}</p>
                                             </div>
                                         </div>
                                     </div>
@@ -133,10 +132,10 @@
                             <div class="container">
                                 <div class="card-body p-3 rubik-font toy-note">
                                     <h4 class="mt-2"><b style="color: #5e72e4;">Adherence</b></h4>
-                                    <p class="rubik-font mt-2" style="white-space: pre-line;" id=""></p>
+                                    <p class="rubik-font mt-2" style="white-space: pre-line;" id="">{{$project->adherence}}</p>
                                     <p class="rubik-font mt-2"><i></i></p>
                                     <h4 class="mt-5"><b style="color: #5e72e4;">Lead Time</b></h4>
-                                    <p class="rubik-font mt-2" style="white-space: pre-line;" id=""></p>
+                                    <p class="rubik-font mt-2" style="white-space: pre-line;" id="">{{$project->lead_time}}</p>
                                     <p class="rubik-font mt-2"><i></i></p>
                                 </div>
                             </div>
@@ -170,8 +169,7 @@
                     </div>
 
                     <div style="text-align: left;" class="mt-5 mb-0">
-                        <a type="button" href="{{ route('editproject', ['id' => $project->id]) }}"
-                            class="btn btn-warning rubik-font" value="Edit">Edit</a>
+                    <a href="{{ route('editproject', ['id' => $project->ID]) }}" class="btn btn-warning rubik-font">Edit</a>
                         <input type="button" id="" class=" btn btn-danger rubik-font" value="Drop" />
                         <input type="button" id="" class=" btn btn-secondary rubik-font" value="Delete" />
                     </div>
