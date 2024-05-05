@@ -21,11 +21,18 @@ class DssController extends Controller
         $totalproduction = $data->count();
         $totalcost = $cost->sum("cost");
 
+        $totalproduction = $totalproduction ?? 0;
+        $totalcost = $totalcost ?? 0;
+        
         $totalAdherence = $data->sum('adherence');
         $totalLead = $data->sum('lead_time');
-        $averageAdherence = $totalAdherence / $totalproduction;
-        $averageLead = $totalLead / $totalproduction;
-        $averageCost = $totalproduction / $totalcost;
+
+        $totalAdherence = $totalAdherence ?? 0;
+        $totalLead = $totalLead ?? 0;
+
+        $averageAdherence = $totalproduction != 0 ? $totalAdherence / $totalproduction : 0;
+        $averageLead = $totalproduction != 0 ? $totalLead / $totalproduction : 0;
+        $averageCost = $totalcost != 0 ? $totalproduction / $totalcost : 0;
 
         $productionByMonth = Data::selectRaw('DATE_FORMAT(created_at, "%Y-%m") as month, COUNT(*) as total')
             ->groupByRaw('DATE_FORMAT(created_at, "%Y-%m")')

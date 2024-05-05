@@ -74,8 +74,10 @@ class ProjectListController extends Controller
 
 public function updateProject(Request $request, $id)
 {
+    // Mengambil proyek berdasarkan ID
     $project = Data::findOrFail($id);
 
+    // Validasi data yang diterima dari form
     $validatedData = $request->validate([
         'productID' => 'required',
         'toyName' => 'required',
@@ -89,11 +91,13 @@ public function updateProject(Request $request, $id)
         'remarks' => 'nullable',
     ]);
 
-    // Menggunakan $validatedData untuk pembaruan proyek
+    // Jika data lolos validasi, update proyek dengan data yang divalidasi
     $project->update($validatedData);
 
+    // Redirect ke halaman detail proyek setelah berhasil memperbarui
     return redirect()->route('projectdetail', ['id' => $id])->with('success', 'Project updated successfully.');
 }
+
 
     
 
