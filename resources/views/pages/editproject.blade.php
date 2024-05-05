@@ -214,9 +214,21 @@
                             </div>
 
                             <div class="row mt-4">
-                                <label>Delay Reason</label>
-                                <input type="text" class="form-control" id="delayreason" placeholder="Enter Remarks"
-                                    name="delayreason">
+                                <div class="col">
+                                    <label>Delay Reason</label>
+                                    <input type="text" class="form-control" id="delayreason"
+                                        placeholder="Enter Remarks" name="delayreason">
+                                </div>
+
+                                <div class="col">
+                                    <label>Status</label>
+                                    <select id="status_up" class="form-control" name="designer">
+                                        <option selected> -- Select Here -- </option>
+                                        <option value="Finished">Finished</option>
+                                        <option value="On Going">On Going</option>
+                                        <option value="Drop">Drop</option>
+                                    </select>
+                                </div>
                             </div>
 
                             <div class="row mt-4">
