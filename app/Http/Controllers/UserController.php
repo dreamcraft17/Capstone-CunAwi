@@ -112,20 +112,20 @@ class UserController extends Controller
     }
 
     public function edit_profile()
-    {
-        $user = Auth::user();
+{
+    $user = Auth::user();
 
-        if (!$user) {
-            return redirect()->route('login');
-        }
-
-        $data['title'] = 'Edit Profile';
-        $data['user'] = $user;
-
-        return view('authorization/profile', $data);
+    if (!$user) {
+        return redirect()->route('login');
     }
 
-    public function update_profile(Request $request)
+    $data['title'] = 'Edit Profile';
+    $data['user'] = $user;
+
+    return view('authorization.profile', $data);
+}
+
+public function update_profile(Request $request)
 {
     $user = Auth::user();
 
@@ -139,18 +139,15 @@ class UserController extends Controller
         'email' => 'required|email|unique:users,email,' . $user->id,
     ]);
 
-  
-    $userToUpdate = User::find($request->user_id);
+    $user->name = $request->name;
+    $user->username = $request->username;
+    $user->email = $request->email;
 
-
-    $userToUpdate->name = $request->name;
-    $userToUpdate->username = $request->username;
-    $userToUpdate->email = $request->email;
-    
-    $userToUpdate->save();
+    $user->save();
 
     return redirect()->route('profile')->with('success', 'Profile updated successfully!');
 }
+
 
     public function delete($id)
     {
