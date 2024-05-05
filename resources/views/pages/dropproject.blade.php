@@ -151,7 +151,7 @@ https://cdn.datatables.net/1.13.1/css/jquery.dataTables.min.css" rel="stylesheet
                 <div class="row">
                     <div class="col m-4">
                         <CENTER>
-                            <h2 class="mt-2" style="color: #1d275f;"> Draft Project </h2>
+                            <h2 class="mt-2" style="color: #1d275f;"> Dropped Project </h2>
                             <a href="{{ route('projectlist') }}" class="btn btn-primary rubik-font ml-2"> Project List </a>
                             <a href="{{ route('draft') }}" class="btn btn-secondary rubik-font ml-2"> Draft</a>
                         </CENTER>
