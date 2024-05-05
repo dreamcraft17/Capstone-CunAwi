@@ -39,9 +39,49 @@ class DssController extends Controller
         $statusData = [$finishCount, $ongoingCount, $dropCount];
         $statusLabels = ['Finished', 'On Going', 'Drop'];
         $statusColors = ['#36DC56', '#FFA600', '#FF2525'];
+     
+        $decision = null;
+        return view("pages.dss", compact('totalproduction', 'averageAdherence', 'totalLead', 'averageLead', 'averageCost', 'productionByMonth', 'statusData', 'statusLabels', 'statusColors','decision'));
+    }
 
 
+    public function evaluateProductionDecision(Request $request)
+    {
+        $totalToys = $request->input('totalToys');
+        $months = $request->input('months');
+    
+        $decision = $this->evaluateProductionDecisionLogic($totalToys, $months);
+        dd($decision);
+        return $this->index()->with('decision', $decision);
+    }
+    private function evaluateProductionDecisionLogic($totalToys, $months)
+    {
+        
+        $lastYearData = Cost::whereYear('created_at', now()->subYear()->year)->get();
 
-        return view("pages.dss", compact('totalproduction', 'averageAdherence', 'totalLead', 'averageLead', 'averageCost', 'productionByMonth','statusData','statusLabels','statusColors'));
+        
+        $totalProductionLastYear = $lastYearData->count();
+        $totalLaborCostLastYear = $lastYearData->sum('labor');
+        $totalMachineCostLastYear = $lastYearData->sum('cost');
+        $totalCostLastYear = $totalLaborCostLastYear + $totalMachineCostLastYear;
+
+        
+        $efficiency = $totalProductionLastYear / $totalCostLastYear;
+
+       
+        $totalProductionCost = $totalToys * ($totalLaborCostLastYear / $totalProductionLastYear) * $months;
+
+        
+        if ($totalProductionCost < $efficiency) {
+            
+            return "Saran: Menambah tenaga kerja";
+        } else {
+            
+            if ($totalMachineCostLastYear < ($totalCostLastYear * 0.3)) {
+                return "Saran: Menambah mesin";
+            } else {
+                return "Saran: Menambah keduanya";
+            }
+        }
     }
 }
