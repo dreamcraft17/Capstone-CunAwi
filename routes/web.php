@@ -10,7 +10,6 @@ use App\Http\Controllers\DssController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\DraftController;
 
-
 // Routes accessible to all users
 Route::get('/', function () {
     return view('authorization.login');
@@ -53,7 +52,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/projects/{date}', 'CalendarController@getProjectsByDate');
     // Route::get('/editproject/{id}', 'ProjectListController@editProject')->name('editproject');
     // Route::post('/updateproject/{id}', 'ProjectListController@updateProject')->name('updateproject');
-
+    Route::post('/dss', [DssController::class, 'evaluateProductionDecision'])->name('production.decision');
 
 
 
