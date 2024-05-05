@@ -39,8 +39,9 @@ class DssController extends Controller
         $statusData = [$finishCount, $ongoingCount, $dropCount];
         $statusLabels = ['Finished', 'On Going', 'Drop'];
         $statusColors = ['#36DC56', '#FFA600', '#FF2525'];
-     
-        $decision = null;
+
+        $decision = $this->evaluateProductionDecisionLogic($totalproduction, $totalcost);
+
         return view("pages.dss", compact('totalproduction', 'averageAdherence', 'totalLead', 'averageLead', 'averageCost', 'productionByMonth', 'statusData', 'statusLabels', 'statusColors','decision'));
     }
 
@@ -51,8 +52,8 @@ class DssController extends Controller
         $months = $request->input('months');
     
         $decision = $this->evaluateProductionDecisionLogic($totalToys, $months);
-        dd($decision);
-        return $this->index()->with('decision', $decision);
+    
+        return $decision;
     }
     private function evaluateProductionDecisionLogic($totalToys, $months)
     {
@@ -74,13 +75,13 @@ class DssController extends Controller
         
         if ($totalProductionCost < $efficiency) {
             
-            return "Saran: Menambah tenaga kerja";
+            return "Suggesstion : Add the labors";
         } else {
             
             if ($totalMachineCostLastYear < ($totalCostLastYear * 0.3)) {
-                return "Saran: Menambah mesin";
+                return "Suggesstion : Add Machine";
             } else {
-                return "Saran: Menambah keduanya";
+                return "suggesstion : add machine and labor";
             }
         }
     }

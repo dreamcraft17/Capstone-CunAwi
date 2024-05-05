@@ -2,14 +2,34 @@
 
 @section('head')
 {{-- style, script, manggil library script cdn --}}
-<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <link rel="stylesheet" href="argon/assets/css/argon-dashboard.css">
 
-<style>
+<script>
+  $(document).ready(function() {
+    $('form').submit(function(event) {
+      event.preventDefault(); // Prevent default form submission
+      
+      $.ajax({
+        type: $(this).attr('method'),
+        url: $(this).attr('action'),
+        data: $(this).serialize(),
+        success: function(response) {
+          displayDecisionModal(response); // Display decision message
+        }
+      });
+    });
+  });
 
-</style>
+  function displayDecisionModal(message) {
+    $('#decisionMessage').text(message); // Set the decision message
+    $('#decisionModal').modal('show'); // Show the modal
+  }
+</script>
+
+
 @endsection
 
 @section('content')
@@ -25,7 +45,7 @@
                     <h5 class="card-title">Production Decision</h5>
                 </div>
                 <div class="card-body">
-                    <form action="{{ route('production.decision') }}" method="POST">
+                    <form action="{{ route('production.decision') }}" method="POST" >
                         @csrf
                         <div class="form-group">
                             <label for="totalToys">Total Toys to Produce:</label>
@@ -35,9 +55,7 @@
                             <label for="months">Production Duration (Months):</label>
                             <input type="number" class="form-control" id="months" name="months" required>
                         </div>
-                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#productionDecisionModal">
-                            Evaluate Production Decision
-                        </button>
+                        <button type="submit" class="btn btn-primary">Evaluate Production Decision</button>
                     </form>
                 </div>
             </div>
@@ -325,32 +343,36 @@
             </div>
         </div>
     </div>
+
+    <div class="modal fade" id="decisionModal" tabindex="-1" aria-labelledby="decisionModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="decisionModalLabel">Production Decision</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <!-- Decision message will be displayed here -->
+        <p id="decisionMessage"></p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
     @include('layouts.footer')
 </div>
 
-
-<div class="modal fade" id="productionDecisionModal" tabindex="-1" aria-labelledby="productionDecisionModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="productionDecisionModalLabel">Production Decision Result</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <!-- Tampilkan hasil keputusan produksi di sini -->
-                
-                <p>{{ $decision }}</p>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-            </div>
-        </div>
-    </div>
-</div>
-
-
+<script>
+  function displayDecisionModal(message) {
+    $('#decisionMessage').text(message); // Set the decision message
+    $('#decisionModal').modal('show'); // Show the modal
+  }
+</script>
 {{-- Nambahin footer dari layout || footer di akhir --}}
 <script src="./assets/js/plugins/chartjs.min.js"></script>
 <script>
