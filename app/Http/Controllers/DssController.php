@@ -23,7 +23,7 @@ class DssController extends Controller
 
         $totalproduction = $totalproduction ?? 0;
         $totalcost = $totalcost ?? 0;
-        
+
         $totalAdherence = $data->sum('adherence');
         $totalLead = $data->sum('lead_time');
 
@@ -49,7 +49,7 @@ class DssController extends Controller
 
         $decision = $this->evaluateProductionDecisionLogic($totalproduction, $totalcost);
 
-        return view("pages.dss", compact('totalproduction', 'averageAdherence', 'totalLead', 'averageLead', 'averageCost', 'productionByMonth', 'statusData', 'statusLabels', 'statusColors','decision'));
+        return view("pages.dss", compact('totalproduction', 'averageAdherence', 'totalLead', 'averageLead', 'averageCost', 'productionByMonth', 'statusData', 'statusLabels', 'statusColors', 'decision'));
     }
 
 
@@ -57,38 +57,67 @@ class DssController extends Controller
     {
         $totalToys = $request->input('totalToys');
         $months = $request->input('months');
-    
+
         $decision = $this->evaluateProductionDecisionLogic($totalToys, $months);
-    
+
         return $decision;
     }
+    // private function evaluateProductionDecisionLogic($totalToys, $months)
+    // {
+
+    //     $lastYearData = Cost::whereYear('created_at', now()->subYear()->year)->get();
+
+
+    //     $totalProductionLastYear = $lastYearData->count();
+    //     $totalLaborCostLastYear = $lastYearData->sum('labor');
+    //     $totalMachineCostLastYear = $lastYearData->sum('cost');
+    //     $totalCostLastYear = $totalLaborCostLastYear + $totalMachineCostLastYear;
+
+
+    //     $efficiency = $totalProductionLastYear / $totalCostLastYear;
+
+
+    //     $totalProductionCost = $totalToys * ($totalLaborCostLastYear / $totalProductionLastYear) * $months;
+
+
+    //     if ($totalProductionCost < $efficiency) {
+
+    //         return "Suggesstion : Add the labors";
+    //     } else {
+
+    //         if ($totalMachineCostLastYear < ($totalCostLastYear * 0.3)) {
+    //             return "Suggesstion : Add Machine";
+    //         } else {
+    //             return "suggesstion : add machine and labor";
+    //         }
+    //     }
+    // }
+
     private function evaluateProductionDecisionLogic($totalToys, $months)
     {
-        
         $lastYearData = Cost::whereYear('created_at', now()->subYear()->year)->get();
 
-        
         $totalProductionLastYear = $lastYearData->count();
         $totalLaborCostLastYear = $lastYearData->sum('labor');
         $totalMachineCostLastYear = $lastYearData->sum('cost');
         $totalCostLastYear = $totalLaborCostLastYear + $totalMachineCostLastYear;
 
         
+        if ($totalCostLastYear == 0) {
+            return "Unable to calculate efficiency. Total cost last year is zero.";
+        }
+
         $efficiency = $totalProductionLastYear / $totalCostLastYear;
 
-       
         $totalProductionCost = $totalToys * ($totalLaborCostLastYear / $totalProductionLastYear) * $months;
 
-        
         if ($totalProductionCost < $efficiency) {
-            
-            return "Suggesstion : Add the labors";
+            return "Suggestion: Add labor.";
         } else {
-            
             if ($totalMachineCostLastYear < ($totalCostLastYear * 0.3)) {
-                return "Suggesstion : Add Machine";
+                return "Suggestion: Add Machine.";
             } else {
-                return "suggesstion : add machine and labor";
+                return "Suggestion: Add machine and labor.";
             }
         }
     }
