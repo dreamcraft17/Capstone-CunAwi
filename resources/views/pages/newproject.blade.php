@@ -182,8 +182,8 @@
                                     </div>
 
                                     <div style="text-align: right;" class="mt-4">
-                                        <input type="button" id="saveDraftButton" class="btn btn-secondary rubik-font"
-                                            value="Draft" />
+                                        {{-- <input type="button" id="saveDraftButton" class="btn btn-secondary rubik-font"
+                                            value="Draft" /> --}}
                                         <input type="button" id="nextButton" class=" btn btn-danger rubik-font"
                                             value="Next Step" />
                                     </div>
@@ -306,8 +306,8 @@
                         <div style="text-align: right;" class="mt-4">
                             <input type="button" id="prevButton" class="previous btn btn-secondary rubik-font"
                                 value="Previous" />
-                            <input type="submit" name="submit" id="saveDraftButton" class="btn btn-secondary rubik-font"
-                                value="draft" />
+                            <input type="submit" name="submit" id="saveDraftButton"
+                                class="btn btn-secondary rubik-font" value="draft" />
                             <input type="submit" name="submit" id="submitNewProjectButton"
                                 class="btn btn-primary rubik-font" value="Submit" />
                         </div>
@@ -641,50 +641,50 @@
 
 
 
-<script>
-$(document).ready(function() {
-    $("#submitNewProjectButton").click(function(e) {
-        e.preventDefault(); 
+    <script>
+        $(document).ready(function() {
+            $("#submitNewProjectButton").click(function(e) {
+                e.preventDefault();
 
-        $.ajax({
-            url: "{{ route('storeNewProject') }}",
-            type: "POST",
-            data: $("form").serialize(),
-            success: function(response) {
-                console.log(response);
-                window.location.href = "{{ route('projectlist') }}";
-            },
-            error: function(xhr, status, error) {
-                console.error(xhr.responseText);
-            }
-        });
+                $.ajax({
+                    url: "{{ route('storeNewProject') }}",
+                    type: "POST",
+                    data: $("form").serialize(),
+                    success: function(response) {
+                        console.log(response);
+                        window.location.href = "{{ route('projectlist') }}";
+                    },
+                    error: function(xhr, status, error) {
+                        console.error(xhr.responseText);
+                    }
+                });
 
             });
         });
     </script>
 
-<script>
-$(document).ready(function() {
-    $("#saveDraftButton").click(function(e) {
-        e.preventDefault(); 
+    <script>
+        $(document).ready(function() {
+            $("#saveDraftButton").click(function(e) {
+                e.preventDefault();
 
-       
-        // $("form").append('<input type="hidden" name="submit" value="Draft">');
 
-      
-        $.ajax({
-            url: "{{ route('storeNewProject') }}",
-            type: "POST",
-            data: $("form").serialize(),
-            success: function(response) {
-                console.log(response);
-                window.location.href = "{{ route('projectlist') }}";
-            },
-            error: function(xhr, status, error) {
-                console.error(xhr.responseText);
-            }
+                // $("form").append('<input type="hidden" name="submit" value="Draft">');
+
+
+                $.ajax({
+                    url: "{{ route('storeNewProject') }}",
+                    type: "POST",
+                    data: $("form").serialize(),
+                    success: function(response) {
+                        console.log(response);
+                        window.location.href = "{{ route('projectlist') }}";
+                    },
+                    error: function(xhr, status, error) {
+                        console.error(xhr.responseText);
+                    }
+                });
+            });
         });
-    });
-});
-</script>
+    </script>
 @endsection
