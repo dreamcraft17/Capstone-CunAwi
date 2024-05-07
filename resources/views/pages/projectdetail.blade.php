@@ -20,7 +20,7 @@
         <div class="card overflow-hidden">
             <div class="bg-soft">
                 <div class="text-center mt-4">
-                    <span class="text-bold ml-2 mr-2" style="font-size: 24px;">Project Name {{ $project->ID }}</span>
+                    <span class="text-bold ml-2 mr-2" style="font-size: 24px;">Project Name</span>
                     <h4 class="p-2 m-0 rubik-font" style="color: #5e72e4; opacity: 0.6;" id="toyName">
                         {{ $project->toyName }}</h4>
                 </div>
