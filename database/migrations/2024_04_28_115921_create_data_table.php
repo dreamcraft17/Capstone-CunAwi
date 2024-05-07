@@ -23,8 +23,8 @@ return new class extends Migration
             $table->string('meeting');
             $table->string('start_date');
             $table->integer('month');
-            $table->string('finish_cmt');
-            $table->string('finish_act');
+            $table->date('finish_cmt');
+            $table->date('finish_act')->nullable();
             $table->string('adherence');
             $table->string('status');
             $table->double('lead_time');

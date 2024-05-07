@@ -206,7 +206,7 @@ https://cdn.datatables.net/1.13.1/css/jquery.dataTables.min.css" rel="stylesheet
             }
 
             $.ajax({
-                url: '{{ route('display.project') }}', // Update the route name here
+                url: '{{ route('display.drop') }}', // Update the route name here
                 type: 'GET',
                 dataType: 'json',
                 success: function(result) {
@@ -216,18 +216,19 @@ https://cdn.datatables.net/1.13.1/css/jquery.dataTables.min.css" rel="stylesheet
                     tableBody.empty();
 
                     filteredProjects.forEach(function(item) {
-                        var row = '<tr>' +
+                        var row = '<tr data-id="' + item.ID + '">' +
                             '<td></td>' +
-                            '<td class="project-number-cell">' + +'</td>' +
-                            '<td>' + +'</td>' +
-                            '<td>' + +'</td>' +
-                            '<td>' + +'</td>' +
-                            '<td>' + +'</td>' +
-                            '<td>' + +'</td>' +
-                            '<td></td>' +
-                            '<td></td>' +
-                            '<td></td>' +
-                            '<td></td>' +
+                            '<td>' + item.ID + '</td>' +
+                            '<td class="project-number-cell">' + item.projectID + '</td>' +
+                            '<td>' + item.productID + '</td>' +
+                            '<td>' + item.toyName + '</td>' +
+                            '<td>' + item.pe + '</td>' +
+                            '<td>' + item.designer + '</td>' +
+                            '<td>' + item.meeting + '</td>' +
+                            '<td>' + item.start_date + '</td>' +
+                            '<td>' + item.finish_cmt + '</td>' +
+                            '<td>' + item.finish_act + '</td>' +
+                            '<td>' + item.status + '</td>' +
                             '</tr>';
                         tableBody.append(row);
                     });
@@ -251,48 +252,70 @@ https://cdn.datatables.net/1.13.1/css/jquery.dataTables.min.css" rel="stylesheet
                             responsive: true,
                             columns: [{
                                     data: null,
-                                    title: 'A'
-                                },
+                                    title: 'A',
+                                    render: function(data, type, row) {
+                                        var projectId = row
+                                            .ID; 
+                                        console.log("Project ID:",
+                                            projectId
+                                        ); 
 
+                                        var projectDetailURL = projectId ?
+                                            '/projectdetail/' + projectId : '#';
+                                        console.log("Project Detail URL:",
+                                            projectDetailURL
+                                        ); // Check the project detail URL in the console
+
+                                        // Create the link with the generated URL
+                                        return '<a style="margin-bottom: 0px; background-color: #FFE5F1; color: #E2328B;" class="btn" title="See Project Detail" href="' +
+                                            projectDetailURL +
+                                            '"><i class="fa fa-info" aria-hidden="true"></i></a>';
+                                    }
+                                },
                                 {
-                                    data: null,
+                                    data: 'ID',
+                                    title: 'ID',
+                                    visible: false
+                                },
+                                {
+                                    data: 'projectID',
                                     title: 'Project ID'
                                 },
 
                                 {
-                                    data: null,
+                                    data: 'productID',
                                     title: 'Product ID'
                                 },
                                 {
-                                    data: null,
+                                    data: 'toyName',
                                     title: 'Toy Name'
                                 },
                                 {
-                                    data: null,
+                                    data: 'pe',
                                     title: 'PE'
                                 },
                                 {
-                                    data: null,
+                                    data: 'designer',
                                     title: 'Designer'
                                 },
                                 {
-                                    data: null,
+                                    data: 'meeting',
                                     title: 'Meeting'
                                 },
                                 {
-                                    data: null,
+                                    data: 'start_date',
                                     title: 'Start Date'
                                 },
                                 {
-                                    data: null,
+                                    data: 'finish_cmt',
                                     title: 'Finish CMT'
                                 },
                                 {
-                                    data: null,
+                                    data: 'finish_act',
                                     title: 'Finish ACT'
                                 },
                                 {
-                                    data: null,
+                                    data: status,
                                     title: 'Status',
                                     render: function(data, type, row) {
                                         if (data === 'Finished') {

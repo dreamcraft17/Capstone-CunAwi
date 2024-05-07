@@ -152,6 +152,7 @@
                                         <th class="pl-2 rubik-font text-center" style="color: #5e72e4;">Finish Date CMT</th>
                                         <th class="pl-2 rubik-font text-center" style="color: #5e72e4;">Finish Date ACT</th>
                                         <th class="pl-2 rubik-font text-center" style="color: #5e72e4;">Delay Reason</th>
+                                        <th class="pl-2 rubik-font text-center" style="color: #5e72e4;">Status</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -160,6 +161,7 @@
                                         <td class="rubik-font">{{ $project->finish_cmt }}</td>
                                         <td class="rubik-font"></td>
                                         <td class="rubik-font"></td>
+                                        <td class="rubik-font">{{ $project->status }}</td>
                                     </tr>
                                     <tr>
                                     </tr>
@@ -169,10 +171,22 @@
                     </div>
 
                     <div style="text-align: left;" class="mt-5 mb-0">
-                    <a href="{{ route('editproject', ['id' => $project->ID]) }}" class="btn btn-warning rubik-font">Edit</a>
-                        <input type="button" id="" class=" btn btn-danger rubik-font" value="Drop" />
-                        <input type="button" id="" class=" btn btn-secondary rubik-font" value="Delete" />
+                        <div style="display: flex; gap: 10px;">
+                            <a href="{{ route('editproject', ['id' => $project->ID]) }}" class="btn btn-warning rubik-font">Edit</a>
+                            
+                            <form action="{{ route('project.drop', ['id' => $project->ID]) }}" method="post">
+                                @csrf
+                                <input type="submit" class="btn btn-danger rubik-font" value="Drop" />
+                            </form>
+                            
+                            <form action="/projects/{{ $project->ID }}" method="POST">
+                                @csrf
+                                @method('DELETE')
+                                <input type="submit" class="btn btn-danger rubik-font" value="Delete" />
+                            </form>
+                        </div>
                     </div>
+
 
                 </div>
             </div>
@@ -201,6 +215,7 @@
 
                 // Log extracted data to console for debugging
                 console.log("Product ID: ", productID);
+                console.log("status: ", status);
                 console.log("Toy Name: ", toyName);
                 console.log("Product Engineering: ", productEngineering);
                 console.log("Product Design: ", productDesign);
@@ -222,5 +237,5 @@
 
 
 
-    {{-- Masukin script di sini --}}
+    // {{-- Masukin script di sini --}}
 @endsection

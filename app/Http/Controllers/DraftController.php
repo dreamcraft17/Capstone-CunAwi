@@ -14,9 +14,9 @@ class DraftController extends Controller
         $selectedDesigner = $request->input('designer');
 
         $designers = Data::pluck('designer')->unique();
-        $data = Data::where('status', 'on going')->get();
+        $data = Data::where('status', null)->get();
 
-        $projectsQuery = Data::where('status', 'on going');
+        $projectsQuery = Data::where('status', null);
         if($selectedDesigner){
             $projectsQuery->where('designer', $selectedDesigner);
         }
@@ -25,5 +25,11 @@ class DraftController extends Controller
 
         
         return view("pages.draft",compact('data','designers'));
+    }
+
+    public function displaydraft(){
+        $data = Data::where('status', null)->get();
+
+        return response()->json($data);
     }
 }

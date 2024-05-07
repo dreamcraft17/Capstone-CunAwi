@@ -153,7 +153,7 @@ https://cdn.datatables.net/1.13.1/css/jquery.dataTables.min.css" rel="stylesheet
                         <CENTER>
                             <h2 class="mt-2" style="color: #1d275f;"> Project List </h2>
                             <a href="{{ route('newproject') }}" class="btn btn-primary rubik-font ml-2"> Create New </a>
-                            <a href="{{ route('dropproject') }}" class="btn btn-danger rubik-font ml-2"> Dropped Project</a>
+                            <a href="{{ route('drop') }}" class="btn btn-danger rubik-font ml-2"> Dropped Project</a>
                             <a href="{{ route('draft') }}" class="btn btn-secondary rubik-font ml-2"> Draft Project </a>
                         </CENTER>
                     </div>
@@ -172,7 +172,7 @@ https://cdn.datatables.net/1.13.1/css/jquery.dataTables.min.css" rel="stylesheet
                     <br />
 
                     <div class="table-responsive p-0 rubik-font">
-                        <table id="projectTable" class="display table table-bordered">
+                        <table id="projectTable" class="display table table-bordered text-center">
                             {{-- <thead class="text-white" style="background-color: #F684AF;"></thead> --}}
                             <tbody id="projectTableBody"></tbody>
                         </table>
@@ -222,6 +222,13 @@ https://cdn.datatables.net/1.13.1/css/jquery.dataTables.min.css" rel="stylesheet
                     tableBody.empty();
 
                     filteredProjects.forEach(function(item) {
+                        if (item.finish_act === null) {
+                            item.finish_act = ' - ';
+                        }
+                        
+                        if (item.status === null){
+                            item.status = 'Draft';
+                        }
                         var row = '<tr data-id="' + item.ID + '">' +
                             '<td></td>' +
                             '<td>' + item.ID + '</td>' +
@@ -233,7 +240,7 @@ https://cdn.datatables.net/1.13.1/css/jquery.dataTables.min.css" rel="stylesheet
                             '<td>' + item.meeting + '</td>' +
                             '<td>' + item.start_date + '</td>' +
                             '<td>' + item.finish_cmt + '</td>' +
-                            '<td></td>' +
+                            '<td>' + item.finish_act + '</td>' +
                             '<td>' + item.status + '</td>' +
                             '</tr>';
 
@@ -319,8 +326,9 @@ https://cdn.datatables.net/1.13.1/css/jquery.dataTables.min.css" rel="stylesheet
                                     title: 'Finish CMT'
                                 },
                                 {
-                                    data: null,
-                                    title: 'Finish ACT'
+                                    data: 'finish_act',
+                                    title: 'Finish ACT',
+
                                 },
                                 {
                                     data: 'status',

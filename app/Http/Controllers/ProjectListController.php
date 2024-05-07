@@ -5,6 +5,8 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\DashboardController;
 use App\Models\Data;
 use RealRashid\SweetAlert\Facades\Alert;
+use Illuminate\Support\Facades\Log;
+
 // use App\Http\Controllers\ProjectListController;
 
 class ProjectListController extends Controller
@@ -24,6 +26,15 @@ class ProjectListController extends Controller
             $projectsQuery->where('designer', $selectedDesigner);
         }
         $projects = $projectsQuery->get();
+
+        // $projects->transform(function ($project) {
+        //     if (is_null($project->status)) {
+        //         $project->status = " - ";
+        //     }
+        //     return $project;
+        // });
+
+
 
         // Mengirim data desainer dan data proyek ke tampilan
         return view("pages.projectlist", compact('projects', 'designers'));
@@ -72,12 +83,8 @@ class ProjectListController extends Controller
     return view('pages.editproject', compact('project', 'id')); // Menambahkan variabel $id ke compact
 }
 
-public function updateProject(Request $request, $id)
+public function update(Request $request, $id)
 {
-    // Mengambil proyek berdasarkan ID
-    $project = Data::findOrFail($id);
-
-    // Validasi data yang diterima dari form
     $validatedData = $request->validate([
         'productID' => 'required',
         'toyName' => 'required',
@@ -91,15 +98,28 @@ public function updateProject(Request $request, $id)
         'remarks' => 'nullable',
     ]);
 
-    // Jika data lolos validasi, update proyek dengan data yang divalidasi
-    $project->update($validatedData);
+    $project = Data::findOrFail($id);
 
-    // Redirect ke halaman detail proyek setelah berhasil memperbarui
-    return redirect()->route('projectdetail', ['id' => $id])->with('success', 'Project updated successfully.');
+    // Set nilai atribut berdasarkan data yang diterima dari request
+    $project->productID = $request->productID;
+    $project->toyName = $request->toyName;
+    $project->pe = $request->pe;
+    $project->designer = $request->designer;
+    $project->category = $request->category;
+    $project->description = $request->description;
+    $project->meeting = $request->meeting;
+    $project->start_date = $request->start_date;
+    $project->finish_cmt = $request->finish_cmt;
+    $project->remarks = $request->remarks;
+
+    // Simpan perubahan ke database
+    $project->save();
+
+    // dd($project);
+    // Redirect kembali ke halaman detail proyek dengan pesan sukses
+    return redirect()->route('projectdetail', ['project' => $id])->with('success', 'Project updated successfully.');
 }
 
-
-    
 
     public function projectdetail($id){
         
@@ -112,17 +132,19 @@ public function updateProject(Request $request, $id)
         return view('pages.projectdetail', compact('project'));
     }
 
-    public function dropproject(){
-        return view("pages.dropproject");
-    }
 
-    public function delete($project)
-    {
-        $project = Data::findOrFail($project);
-        $project->delete();
+    
+  
 
-        return redirect()->route('projectlist')->with('success', 'Project deleted successfully');
-    }
+
+    
+    // public function delete($project)
+    // {
+    //     $project = Data::findOrFail($project);
+    //     $project->delete();
+
+    //     return redirect()->route('projectlist')->with('success', 'Project deleted successfully');
+    // }
 
     public function storeNewProject(Request $request)
     {
@@ -138,11 +160,27 @@ public function updateProject(Request $request, $id)
             'start_date' => 'required|date',
             'finish_cmt' => 'required|date',
             'remarks' => 'nullable',
+            'image' => 'image|mimes:jpeg,png,jpg,gif|max:2048',
 
         ]);
 
+        $imageName = null;
+        if ($request->hasFile('image')) {
+            $image = $request->file('image');
+            $imageName = time() . '.' . $image->getClientOriginalExtension();
+            // Sebelum penyimpanan gambar
+Log::info('Before saving image');
+
+// Proses penyimpanan gambar
+$image->move(public_path('img'), $imageName);
+
+// Setelah penyimpanan gambar
+Log::info('After saving image');
+        }
+
+        
         $projectID = rand(100000, 999999);
-        $status= "On going";
+        $status = $request->input('draft') ? null : "On going";
 
         $startDate = new \DateTime($request->meeting_date);
         $finishCMT = new \DateTime($request->start_date);
@@ -168,10 +206,12 @@ public function updateProject(Request $request, $id)
             'status'=> $status,
             'adherence' => $adherence,
             'month' => $months,
+            'image' => $imageName, 
 
         ]);
 
         Alert::success('Success', 'Project Added!!');
+        
         return redirect()->route('projectlist')->with('success', 'New project has been created successfully.');
     }
 
@@ -189,14 +229,48 @@ public function updateProject(Request $request, $id)
 
     public function displayProject()
     {
-        // Retrieve all projects from the Data model
-        $projects = Data::all();
-
-        // Return the projects as JSON
+        $projects = Data::whereNotNull('status')
+                        ->where('status', '!=', 'DROP')
+                        ->get();
+    
         return response()->json($projects);
     }
+    
 
+    public function dropProject($id)
+    {
+        
+        $project = Data::find($id);
+    
+      
+        if (!$project) {
+            return redirect()->back()->with('error', 'Project not found.');
+        }
+    
+       
+        $project->status = 'DROP';
+        $project->save();
+    
+       
+        if ($project->status !== 'DROP') {
+            return redirect()->back()->with('error', 'Failed to drop project.');
+        }
+    
+      
+        return redirect()->route('projectdetail', ['project' => $id])->with('success', 'Project dropped successfully.');
+    }
+    
+    
+    public function delete($id)
+{
+    $project = Data::findOrFail($id);
+    $project->delete();
 
+    return redirect()->route('projectlist')->with('success', 'Project deleted successfully');
+}
+
+    
+    
 
 
 }
