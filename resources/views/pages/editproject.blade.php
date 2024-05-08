@@ -42,11 +42,11 @@
             <div class="card mt-4">
                 <div class="card-body">
                     <div class="card-body">
-                    <!-- {{ dump($project->ID) }} -->
-                    <form method="POST" action="{{ route('update.project', ['id' => $project->ID]) }}">
+                        <!-- {{ dump($project->id) }} -->
+                        <form method="POST" action="{{ route('update.project', ['id' => $project->id]) }}">
                             @csrf
                             @method('PUT')
-                            <input type="hidden" name="id" value="{{ $project->ID }}">
+                            <input type="hidden" name="id" value="{{ $project->id }}">
                             <div class="row mb-4">
                                 <div class="row">
                                     <div class="col">
@@ -127,9 +127,16 @@
 
                                     <div class="col">
                                         <label>Quantity</label>
-                                        <input type="number" class="form-control" name="viewModel.Quota" id="quantity"
+                                        <input type="number" class="form-control" name="qty" id="quantity"
                                             autocomplete="off" placeholder="Input Toy Quota"
                                             value="{{ $project->qty }}" />
+                                    </div>
+
+                                    <div class="col">
+                                        <label>Cost Budget</label>
+                                        <input type="number" step="0.01" class="form-control" name="costbudget"
+                                            id="costbudget" autocomplete="off" placeholder="Input Cost Budget"
+                                            value="" />
                                     </div>
                                 </div>
 
@@ -248,8 +255,6 @@
                                 <div style="text-align: right;" class="mt-4">
                                     <input type="button" id="cancel" class="btn btn-danger rubik-font"
                                         value="Cancel" />
-                                    <input type="button" id="saveDraftButton" class="btn btn-secondary rubik-font"
-                                        value="Draft" />
                                     <input type="submit" id="" class=" btn btn-primary rubik-font"
                                         value="Save" />
                                 </div>
@@ -367,15 +372,6 @@
             document.getElementById('input_image').addEventListener('change', previewImage);
 
 
-            // Function to handle the "Save as Draft" button
-            $("#saveDraftButton").click(function() {
-                // Add your logic to save the form as a draft
-            });
-
-            // Function to handle the "Save Changes" button
-            $("#saveChangesButton").click(function() {
-                // Add your logic to save the form changes
-            });
         });
     </script>
 
@@ -521,6 +517,16 @@
             $('#launchdate').change(function() {
                 updateDay('launchdate', 'launchday');
             });
+
+            function fetchDay() {
+                updateDay('finish_cmt', 'finishday');
+                updateDay('meeting', 'koday');
+                updateDay('start_date', 'startday');
+                updateDay('finish_act', 'finishdayact');
+                updateDay('launchdate', 'launchday');
+            }
+
+            fetchDay();
         });
     </script>
 
@@ -609,41 +615,6 @@
                     }
                 });
 
-            });
-        });
-    </script>
-
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            // Attach event listeners to form elements
-            const form = document.querySelector('form');
-            const saveDraftButton = document.getElementById('saveDraftButton');
-            const nextButton = document.getElementById('nextButton');
-
-            // Add event listener for Save Draft button
-            saveDraftButton.addEventListener('click', function() {
-                const formData = new FormData(form);
-                // Retrieve data from form elements
-                const productID = formData.get('productID');
-                const toyName = formData.get('toyName');
-                const pe = formData.get('pe');
-                const designer = formData.get('designer');
-                // Retrieve more form data as needed
-
-                // Process the captured data
-                console.log('Product ID:', productID);
-                console.log('Toy Name:', toyName);
-                console.log('Product Engineering:', pe);
-                console.log('Designer:', designer);
-                // Process more data as needed
-
-                // Perform action with the captured data, such as sending it to the server
-            });
-
-            // Add event listener for Next Step button
-            nextButton.addEventListener('click', function() {
-                const formData = new FormData(form);
-                // Retrieve and process data as needed
             });
         });
     </script>

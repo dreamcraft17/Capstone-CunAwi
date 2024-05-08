@@ -113,14 +113,28 @@
                                                 <p>{{ $project->category }}</p>
                                                 <h6 class="mt-4">Product Engineer</h6>
                                                 <p>{{ $project->pe }}</p>
+                                                <h6 class="mt-4">Product Design</h6>
+                                                <p>{{ $project->designer }}</p>
                                             </div>
                                             <div class="col rubik-font">
                                                 <h6>Launch Quantity</h6>
-                                                <p></p>
+                                                @if ($project->qty)
+                                                    {{ $project->qty }}
+                                                @else
+                                                    N/A
+                                                @endif
+                                                <h6 class="mt-4">Cost Budget</h6>
+                                                @if ($project->costbudget)
+                                                    {{ $project->costbudget }}
+                                                @else
+                                                    N/A
+                                                @endif
                                                 <h6 class="mt-4">Launch Avail</h6>
-                                                <p></p>
-                                                <h6 class="mt-4">Product Design</h6>
-                                                <p>{{ $project->designer }}</p>
+                                                @if ($project->launchdate)
+                                                    {{ $project->launchdate }}
+                                                @else
+                                                    N/A
+                                                @endif
                                             </div>
                                         </div>
                                     </div>
@@ -131,12 +145,23 @@
                         <div class="card border-1 mt-4">
                             <div class="container">
                                 <div class="card-body p-3 rubik-font toy-note">
-                                    <h4 class="mt-2"><b style="color: #5e72e4;">Adherence</b></h4>
-                                    <p class="rubik-font mt-2" style="white-space: pre-line;" id="">{{$project->adherence}}</p>
-                                    <p class="rubik-font mt-2"><i></i></p>
-                                    <h4 class="mt-5"><b style="color: #5e72e4;">Lead Time</b></h4>
-                                    <p class="rubik-font mt-2" style="white-space: pre-line;" id="">{{$project->lead_time}}</p>
-                                    <p class="rubik-font mt-2"><i></i></p>
+                                    <h4 class="mt-1" style="color: #5e72e4;">Adherence</h4>
+                                    <p class="rubik-font mt-1">
+                                        @if ($project->adherence)
+                                            {{ $project->adherence }}
+                                        @else
+                                            0
+                                        @endif
+                                    </p>
+                                    <h4 class="mt-2" style="color: #5e72e4;">Lead Time</h4>
+                                    <p class="rubik-font mt-1 mb-2">
+                                        @if ($project->lead_time)
+                                            {{ $project->lead_time }}
+                                        @else
+                                            N/A
+                                        @endif
+                                    </p>
+
                                 </div>
                             </div>
                         </div>
@@ -149,8 +174,10 @@
                                 <thead class="table-primary">
                                     <tr>
                                         <th class="pl-2 rubik-font text-center" style="color: #5e72e4;">Start Date</th>
-                                        <th class="pl-2 rubik-font text-center" style="color: #5e72e4;">Finish Date CMT</th>
-                                        <th class="pl-2 rubik-font text-center" style="color: #5e72e4;">Finish Date ACT</th>
+                                        <th class="pl-2 rubik-font text-center" style="color: #5e72e4;">Finish Date CMT
+                                        </th>
+                                        <th class="pl-2 rubik-font text-center" style="color: #5e72e4;">Finish Date ACT
+                                        </th>
                                         <th class="pl-2 rubik-font text-center" style="color: #5e72e4;">Delay Reason</th>
                                         <th class="pl-2 rubik-font text-center" style="color: #5e72e4;">Status</th>
                                     </tr>
@@ -159,8 +186,20 @@
                                     <tr class="text-dark activity-row">
                                         <td class="rubik-font activity-name">{{ $project->start_date }}</td>
                                         <td class="rubik-font">{{ $project->finish_cmt }}</td>
-                                        <td class="rubik-font"></td>
-                                        <td class="rubik-font"></td>
+                                        <td class="rubik-font">
+                                            @if ($project->finishact)
+                                                {{ $project->finishact }}
+                                            @else
+                                                N/A
+                                            @endif
+                                        </td>
+                                        <td class="rubik-font">
+                                            @if ($project->delayreason)
+                                                {{ $project->delayreason }}
+                                            @else
+                                                N/A
+                                            @endif
+                                        </td>
                                         <td class="rubik-font">{{ $project->status }}</td>
                                     </tr>
                                     <tr>
@@ -171,19 +210,24 @@
                     </div>
 
                     <div style="text-align: left;" class="mt-5 mb-0">
-                        <div style="display: flex; gap: 10px;">
-                            <a href="{{ route('editproject', ['id' => $project->ID]) }}" class="btn btn-warning rubik-font">Edit</a>
-                            
-                            <form action="{{ route('project.drop', ['id' => $project->ID]) }}" method="post">
-                                @csrf
-                                <input type="submit" class="btn btn-danger rubik-font" value="Drop" />
-                            </form>
-                            
-                            <form action="/projects/{{ $project->ID }}" method="POST">
-                                @csrf
-                                @method('DELETE')
-                                <input type="submit" class="btn btn-danger rubik-font" value="Delete" />
-                            </form>
+                        <div class="row">
+                            <div class="col-1">
+                                <a href="{{ route('editproject', ['id' => $project->id]) }}"
+                                    class="btn btn-warning rubik-font">Edit</a>
+                            </div>
+                            <div class="col-1" style="margin-right: 6px;">
+                                <form action="{{ route('project.drop', ['id' => $project->id]) }}" method="post">
+                                    @csrf
+                                    <input type="submit" class="btn btn-danger rubik-font" value="Drop" />
+                                </form>
+                            </div>
+                            <div class="col-1">
+                                <form action="/projects/{{ $project->id }}" method="POST">
+                                    @csrf
+                                    @method('DELETE')
+                                    <input type="submit" class="btn btn-danger rubik-font" value="Delete" />
+                                </form>
+                            </div>
                         </div>
                     </div>
 

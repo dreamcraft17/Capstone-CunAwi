@@ -14,31 +14,22 @@ class ProjectListController extends Controller
     public function projectlist(Request $request){
         // Mendapatkan nilai dari dropdown select
         $selectedDesigner = $request->input('designer');
-        $filterStatus = $request->query('status');
-
         // Mengambil data semua desainer
         $designers = Data::pluck('designer')->unique();
-        $projects = $filterStatus ? Data::where('status', $filterStatus)->get() : Data::all();
 
         // Query untuk mendapatkan data berdasarkan nilai dropdown select
         $projectsQuery = Data::query();
         if($selectedDesigner){
             $projectsQuery->where('designer', $selectedDesigner);
         }
-        $projects = $projectsQuery->get();
 
-        // $projects->transform(function ($project) {
-        //     if (is_null($project->status)) {
-        //         $project->status = " - ";
-        //     }
-        //     return $project;
-        // });
-
-
+        // Retrieve projects excluding those with status 'Draft'
+        $projects = $projectsQuery->where('status', '!==', 'Draft')->get();
 
         // Mengirim data desainer dan data proyek ke tampilan
         return view("pages.projectlist", compact('projects', 'designers'));
     }
+
 
     public function showProjectDetail($id)
 {
@@ -59,7 +50,7 @@ class ProjectListController extends Controller
 
 
 
-     public function newproject(){
+    public function newproject(){
         return view("pages.newproject");
     }
 
@@ -78,53 +69,52 @@ class ProjectListController extends Controller
     }
 
     public function editProject($id)
-{
-    $project = Data::findOrFail($id);
-    return view('pages.editproject', compact('project', 'id')); // Menambahkan variabel $id ke compact
-}
+    {
+        $project = Data::findOrFail($id);
+        return view('pages.editproject', compact('project', 'id')); // Menambahkan variabel $id ke compact
+    }
 
-public function update(Request $request, $id)
-{
-    $validatedData = $request->validate([
-        'productID' => 'required',
-        'toyName' => 'required',
-        'pe' => 'required',
-        'designer' => 'required',
-        'category' => 'required',
-        'description' => 'required',
-        'meeting' => 'required|date',
-        'start_date' => 'required|date',
-        'finish_cmt' => 'required|date',
-        'remarks' => 'nullable',
-    ]);
+    public function update(Request $request, $id)
+    {
+        $validatedData = $request->validate([
+            'productID' => 'required',
+            'toyName' => 'required',
+            'pe' => 'required',
+            'designer' => 'required',
+            'category' => 'required',
+            'description' => 'required',
+            'meeting' => 'required|date',
+            'start_date' => 'required|date',
+            'finish_cmt' => 'required|date',
+            'remarks' => 'nullable',
+        ]);
 
-    $project = Data::findOrFail($id);
+        $project = Data::findOrFail($id);
 
-    // Set nilai atribut berdasarkan data yang diterima dari request
-    $project->productID = $request->productID;
-    $project->toyName = $request->toyName;
-    $project->pe = $request->pe;
-    $project->designer = $request->designer;
-    $project->category = $request->category;
-    $project->description = $request->description;
-    $project->meeting = $request->meeting;
-    $project->start_date = $request->start_date;
-    $project->finish_cmt = $request->finish_cmt;
-    $project->remarks = $request->remarks;
+        // Set nilai atribut berdasarkan data yang diterima dari request
+        $project->productID = $request->productID;
+        $project->toyName = $request->toyName;
+        $project->pe = $request->pe;
+        $project->designer = $request->designer;
+        $project->category = $request->category;
+        $project->description = $request->description;
+        $project->meeting = $request->meeting;
+        $project->start_date = $request->start_date;
+        $project->finish_cmt = $request->finish_cmt;
+        $project->remarks = $request->remarks;
 
-    // Simpan perubahan ke database
-    $project->save();
+        // Simpan perubahan ke database
+        $project->save();
 
-    // dd($project);
-    // Redirect kembali ke halaman detail proyek dengan pesan sukses
-    return redirect()->route('projectdetail', ['project' => $id])->with('success', 'Project updated successfully.');
-}
-
+        // dd($project);
+        // Redirect kembali ke halaman detail proyek dengan pesan sukses
+        return redirect()->route('projectdetail', ['project' => $id])->with('success', 'Project updated successfully.');
+    }
 
     public function projectdetail($id){
-        
+
         $project = Data::find($id);
-    
+
         if (!$project) {
             return response()->json(['error' => 'Project not found'], 404);
         }
@@ -133,18 +123,6 @@ public function update(Request $request, $id)
     }
 
 
-    
-  
-
-
-    
-    // public function delete($project)
-    // {
-    //     $project = Data::findOrFail($project);
-    //     $project->delete();
-
-    //     return redirect()->route('projectlist')->with('success', 'Project deleted successfully');
-    // }
 
     public function storeNewProject(Request $request)
     {
@@ -169,18 +147,18 @@ public function update(Request $request, $id)
             $image = $request->file('image');
             $imageName = time() . '.' . $image->getClientOriginalExtension();
             // Sebelum penyimpanan gambar
-Log::info('Before saving image');
+            Log::info('Before saving image');
 
-// Proses penyimpanan gambar
-$image->move(public_path('img'), $imageName);
+            // Proses penyimpanan gambar
+            $image->move(public_path('img'), $imageName);
 
-// Setelah penyimpanan gambar
-Log::info('After saving image');
+            // Setelah penyimpanan gambar
+            Log::info('After saving image');
         }
 
-        
+
         $projectID = rand(100000, 999999);
-        $status = $request->input('draft') ? null : "On going";
+        $status = $request->has('draft') ? "Draft" : "Ongoing";
 
         $startDate = new \DateTime($request->meeting_date);
         $finishCMT = new \DateTime($request->start_date);
@@ -188,7 +166,7 @@ Log::info('After saving image');
         $months = $interval->m + ($interval->y * 12);
 
 
-        $adherence = ($status === "On going") ? 0 : null;
+        $adherence = ($status === "Ongoing") ? 0 : null;
 
         Data::create([
             'projectID' => $projectID,
@@ -199,19 +177,19 @@ Log::info('After saving image');
             'designer'=> $request->designer,
             'category'=> $request->category,
             'description'=> $request->description,
-            'meeting'=> $request->meeting,  
+            'meeting'=> $request->meeting,
             'start_date'=> $request->start_date,
             'finish_cmt'=> $request->finish_cmt,
             'remarks'=> $request->remarks,
             'status'=> $status,
             'adherence' => $adherence,
             'month' => $months,
-            'image' => $imageName, 
+            'image' => $imageName,
 
         ]);
 
         Alert::success('Success', 'Project Added!!');
-        
+
         return redirect()->route('projectlist')->with('success', 'New project has been created successfully.');
     }
 
@@ -229,48 +207,47 @@ Log::info('After saving image');
 
     public function displayProject()
     {
-        $projects = Data::whereNotNull('status')
-                        ->where('status', '!=', 'DROP')
-                        ->get();
-    
+        $projects = Data::whereNotIn('status', ['Draft', 'Drop'])->get();
+
         return response()->json($projects);
     }
-    
+
+
 
     public function dropProject($id)
     {
-        
+
         $project = Data::find($id);
-    
-      
+
+
         if (!$project) {
             return redirect()->back()->with('error', 'Project not found.');
         }
-    
-       
+
+
         $project->status = 'DROP';
         $project->save();
-    
-       
+
+
         if ($project->status !== 'DROP') {
             return redirect()->back()->with('error', 'Failed to drop project.');
         }
-    
-      
+
+
         return redirect()->route('projectdetail', ['project' => $id])->with('success', 'Project dropped successfully.');
     }
-    
-    
+
+
     public function delete($id)
-{
-    $project = Data::findOrFail($id);
-    $project->delete();
+    {
+        $project = Data::findOrFail($id);
+        $project->delete();
 
-    return redirect()->route('projectlist')->with('success', 'Project deleted successfully');
-}
+        return redirect()->route('projectlist')->with('success', 'Project deleted successfully');
+    }
 
-    
-    
+
+
 
 
 }

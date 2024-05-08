@@ -10,7 +10,7 @@ class DraftController extends Controller
 {
     public function draft(Request $request)
     {
-        
+
         $selectedDesigner = $request->input('designer');
 
         $designers = Data::pluck('designer')->unique();
@@ -23,12 +23,12 @@ class DraftController extends Controller
         $data = $projectsQuery->get();
 
 
-        
+
         return view("pages.draft",compact('data','designers'));
     }
 
     public function displaydraft(){
-        $data = Data::where('status', null)->get();
+        $data = Data::where('status', 'Draft')->get();
 
         return response()->json($data);
     }
