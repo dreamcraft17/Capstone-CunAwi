@@ -42,11 +42,11 @@
             <div class="card mt-4">
                 <div class="card-body">
                     <div class="card-body">
-                    <!-- {{ dump($project->ID) }} -->
-                    <form method="POST" action="{{ route('update.project', ['id' => $project->ID]) }}">
+                    <!-- {{ dump($project->id) }} -->
+                    <form method="POST" action="{{ route('update.project', ['id' => $project->id]) }}">
                             @csrf
                             @method('PUT')
-                            <input type="hidden" name="id" value="{{ $project->ID }}">
+                            <input type="hidden" name="id" value="{{ $project->id }}">
                             <div class="row mb-4">
                                 <div class="row">
                                     <div class="col">

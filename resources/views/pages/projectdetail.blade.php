@@ -172,14 +172,14 @@
 
                     <div style="text-align: left;" class="mt-5 mb-0">
                         <div style="display: flex; gap: 10px;">
-                            <a href="{{ route('editproject', ['id' => $project->ID]) }}" class="btn btn-warning rubik-font">Edit</a>
+                            <a href="{{ route('editproject', ['id' => $project->id]) }}" class="btn btn-warning rubik-font">Edit</a>
                             
-                            <form action="{{ route('project.drop', ['id' => $project->ID]) }}" method="post">
+                            <form action="{{ route('project.drop', ['id' => $project->id]) }}" method="post">
                                 @csrf
                                 <input type="submit" class="btn btn-danger rubik-font" value="Drop" />
                             </form>
                             
-                            <form action="/projects/{{ $project->ID }}" method="POST">
+                            <form action="/projects/{{ $project->id }}" method="POST">
                                 @csrf
                                 @method('DELETE')
                                 <input type="submit" class="btn btn-danger rubik-font" value="Delete" />

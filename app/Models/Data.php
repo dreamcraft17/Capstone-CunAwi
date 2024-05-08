@@ -10,7 +10,7 @@ class Data extends Model
     use HasFactory;
 
     protected $table = 'data';
-    protected $primaryKey = 'ID';
+    protected $primaryKey = 'id';
 
     protected $fillable = [
         'projectID',
