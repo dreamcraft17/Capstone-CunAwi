@@ -190,11 +190,11 @@ https://cdn.datatables.net/1.13.1/css/jquery.dataTables.min.css" rel="stylesheet
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script> <!-- Include jQuery before your script -->
     <script
         src="
-                                                                                                                                                                                                                                                                                                                                                        https://cdn.datatables.net/1.13.1/js/jquery.dataTables.min.js">
+                                                                                                                                                                                                                                                                                                                                                                                    https://cdn.datatables.net/1.13.1/js/jquery.dataTables.min.js">
     </script>
     <script type="text/javascript" charset="utf8"
         src="
-                                                                                                                                                                                                                                                                                                                                                        https://cdn.datatables.net/fixedheader/3.2.1/js/dataTables.fixedHeader.min.js">
+                                                                                                                                                                                                                                                                                                                                                                                    https://cdn.datatables.net/fixedheader/3.2.1/js/dataTables.fixedHeader.min.js">
     </script>
 
     <script>
@@ -225,8 +225,8 @@ https://cdn.datatables.net/1.13.1/css/jquery.dataTables.min.css" rel="stylesheet
                         if (item.finish_act === null) {
                             item.finish_act = ' - ';
                         }
-                        
-                        if (item.status === null){
+
+                        if (item.status === null) {
                             item.status = 'Draft';
                         }
                         var row = '<tr data-id="' + item.id + '">' +
@@ -269,7 +269,7 @@ https://cdn.datatables.net/1.13.1/css/jquery.dataTables.min.css" rel="stylesheet
                                     title: 'A',
                                     render: function(data, type, row) {
                                         var projectId = row
-                                            .ID; // Access the 'ID' attribute directly from the 'row' object
+                                            .id; // Access the 'ID' attribute directly from the 'row' object
                                         console.log("Project ID:",
                                             projectId
                                         ); // Check the project ID in the console
@@ -288,8 +288,8 @@ https://cdn.datatables.net/1.13.1/css/jquery.dataTables.min.css" rel="stylesheet
                                     }
                                 },
                                 {
-                                    data: 'ID',
-                                    title: 'ID',
+                                    data: 'id',
+                                    title: 'id',
                                     visible: false
                                 },
                                 {
@@ -337,8 +337,10 @@ https://cdn.datatables.net/1.13.1/css/jquery.dataTables.min.css" rel="stylesheet
                                         if (data === 'Finished') {
                                             return '<span class="badge badge-soft-success rounded-pill d-inline">' +
                                                 data + '</span>';
-                                        } else if (data === 'On going' || data ===
-                                            'on going') {
+                                        } else if (data === 'Ongoing') {
+                                            return '<span class="badge badge-secondary-subtle rounded-pill d-inline">' +
+                                                data + '</span>';
+                                        } else if (data === 'Draft') {
                                             return '<span class="badge badge-soft-warning rounded-pill d-inline">' +
                                                 data + '</span>';
                                         } else if (data === 'Drop') {

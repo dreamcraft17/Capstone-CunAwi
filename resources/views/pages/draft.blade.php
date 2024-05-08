@@ -218,15 +218,15 @@ https://cdn.datatables.net/1.13.1/css/jquery.dataTables.min.css" rel="stylesheet
                         if (item.finish_act === null) {
                             item.finish_act = ' - ';
                         }
-                        
-                        if (item.status === null){
+
+                        if (item.status === null) {
                             item.status = 'Draft';
                         }
 
 
-                        var row = '<tr data-id="' + item.ID + '">' +
+                        var row = '<tr data-id="' + item.id + '">' +
                             '<td></td>' +
-                            '<td>' + item.ID + '</td>' +
+                            '<td>' + item.id + '</td>' +
                             '<td class="project-number-cell">' + item.projectID + '</td>' +
                             '<td>' + item.productID + '</td>' +
                             '<td>' + item.toyName + '</td>' +
@@ -263,10 +263,10 @@ https://cdn.datatables.net/1.13.1/css/jquery.dataTables.min.css" rel="stylesheet
                                     title: 'A',
                                     render: function(data, type, row) {
                                         var projectId = row
-                                            .ID; 
+                                            .ID;
                                         console.log("Project ID:",
                                             projectId
-                                        ); 
+                                        );
 
                                         var projectDetailURL = projectId ?
                                             '/projectdetail/' + projectId : '#';
