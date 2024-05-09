@@ -118,20 +118,20 @@
                                             </div>
                                             <div class="col rubik-font">
                                                 <h6>Launch Quantity</h6>
-                                                @if ($project->qty)
-                                                    {{ $project->qty }}
+                                                @if ($project->cost)
+                                                    {{ $project->cost->qty }}
                                                 @else
                                                     N/A
                                                 @endif
                                                 <h6 class="mt-4">Cost Budget</h6>
-                                                @if ($project->costbudget)
-                                                    {{ $project->costbudget }}
+                                                @if ($project->cost)
+                                                    {{ $project->cost->cost }}
                                                 @else
                                                     N/A
                                                 @endif
                                                 <h6 class="mt-4">Launch Avail</h6>
-                                                @if ($project->launchdate)
-                                                    {{ $project->launchdate }}
+                                                @if ($project->cost)
+                                                    {{ $project->cost->launch_avail }}
                                                 @else
                                                     N/A
                                                 @endif
@@ -155,8 +155,8 @@
                                     </p>
                                     <h4 class="mt-2" style="color: #5e72e4;">Lead Time</h4>
                                     <p class="rubik-font mt-1 mb-2">
-                                        @if ($project->lead_time)
-                                            {{ $project->lead_time }}
+                                        @if ($project->cost)
+                                            {{ $project->cost->lead_time }}
                                         @else
                                             N/A
                                         @endif
@@ -169,9 +169,9 @@
 
                     <div class="container">
                         <div class="px-3 pt-2 pb-3">
-                            <table id="activitiesTable" class="table table-bordered mt-3 table-responsive"
+                            <table id="activitiesTable" class="table table-bordered mt-3 table-responsive text-center"
                                 style="vertical-align: middle;">
-                                <thead class="table-primary">
+                                <thead class="table-primary text-center">
                                     <tr>
                                         <th class="pl-2 rubik-font text-center" style="color: #5e72e4;">Start Date</th>
                                         <th class="pl-2 rubik-font text-center" style="color: #5e72e4;">Finish Date CMT
@@ -187,15 +187,15 @@
                                         <td class="rubik-font activity-name">{{ $project->start_date }}</td>
                                         <td class="rubik-font">{{ $project->finish_cmt }}</td>
                                         <td class="rubik-font">
-                                            @if ($project->finishact)
-                                                {{ $project->finishact }}
+                                            @if ($project->finish_act)
+                                                {{ $project->finish_act }}
                                             @else
                                                 N/A
                                             @endif
                                         </td>
                                         <td class="rubik-font">
-                                            @if ($project->delayreason)
-                                                {{ $project->delayreason }}
+                                            @if ($project->cost)
+                                                 {{ $project->cost->delay_reason ?? 'N/A' }}
                                             @else
                                                 N/A
                                             @endif

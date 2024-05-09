@@ -18,18 +18,18 @@ return new class extends Migration
             $table->string('productID');
             $table->string('toyName');
             $table->string('category');
+            $table->string('description');
             $table->string('designer');
             $table->string('pe');
-            $table->string('meeting');
+            $table->string('meeting')->nullable();
             $table->string('start_date');
             $table->integer('month');
             $table->date('finish_cmt');
             $table->date('finish_act')->nullable();
-            $table->string('adherence');
+            $table->integer('adherence')->nullable();
             $table->string('status');
-            $table->double('lead_time');
             $table->string('remarks');
-            $table->string('image');
+            $table->string('image')->nullable();
             $table->timestamps();
         });
     }

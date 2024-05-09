@@ -129,14 +129,14 @@
                                         <label>Quantity</label>
                                         <input type="number" class="form-control" name="qty" id="quantity"
                                             autocomplete="off" placeholder="Input Toy Quota"
-                                            value="{{ $project->qty }}" />
+                                            value="{{ $project->cost->qty }}" />
                                     </div>
 
                                     <div class="col">
                                         <label>Cost Budget</label>
                                         <input type="number" step="0.01" class="form-control" name="costbudget"
                                             id="costbudget" autocomplete="off" placeholder="Input Cost Budget"
-                                            value="" />
+                                            value="{{ $project->cost->cost }}" />
                                     </div>
                                 </div>
 
@@ -202,7 +202,7 @@
                                         </div>
                                         <div class="col">
                                             <label>Date</label>
-                                            <input type="date" class="form-control" id="finish_act" />
+                                            <input type="date" class="form-control" id="finish_act" name="finish_act" value="{{$project->finish_act}}"/>
                                         </div>
                                         <div class="col">
                                             <label>Day</label>
@@ -219,7 +219,7 @@
                                         </div>
                                         <div class="col">
                                             <label>Date</label>
-                                            <input type="date" class="form-control" id="launchdate" />
+                                            <input type="date" class="form-control" id="launchdate" name="launchdate"  value="{{$project->cost->launch_avail}}"/>
                                         </div>
                                         <div class="col">
                                             <label>Day</label>
@@ -232,12 +232,12 @@
                                     <div class="col">
                                         <label>Delay Reason</label>
                                         <input type="text" class="form-control" id="delayreason"
-                                            placeholder="Enter Remarks" name="delayreason">
+                                            placeholder="Enter Remarks" name="delayreason" value="{{$project->cost->delay_reason}}">
                                     </div>
 
                                     <div class="col">
                                         <label>Status</label>
-                                        <select id="status_up" class="form-control" name="designer">
+                                        <select id="status_up" class="form-control" name="status">
                                             <option selected> -- Select Here -- </option>
                                             <option value="Finished">Finished</option>
                                             <option value="On Going">On Going</option>
@@ -255,7 +255,7 @@
                                 <div style="text-align: right;" class="mt-4">
                                     <input type="button" id="cancel" class="btn btn-danger rubik-font"
                                         value="Cancel" />
-                                    <input type="submit" id="" class=" btn btn-primary rubik-font"
+                                    <input type="submit" id="saveEdit" class=" btn btn-primary rubik-font"
                                         value="Save" />
                                 </div>
 
@@ -548,7 +548,9 @@
                     'Meeting Date': $('#meeting').val(),
                     'Start Date': $('#start_date').val(),
                     'Finish Date (CMT)': $('#finish_cmt').val(),
-                    'Remarks': $('#remarks').val()
+                    'Remarks': $('#remarks').val(),
+                    'Cost Budget': $('#costbudget').val(),
+                    'Quantity':$('#quantity').val()
                 };
 
                 // Display the filled data
@@ -595,27 +597,5 @@
         });
     </script>
 
-    <script>
-        $(document).ready(function() {
-            $("#submitNewProjectButton").click(function(e) {
-                alert("dsasd");
-                e.preventDefault();
-
-                $.ajax({
-                    url: "{{ route('storeNewProject') }}",
-                    type: "POST",
-                    data: $("form").serialize(),
-                    success: function(response) {
-                        console.log(response);
-                        // Redirect to project list page
-                        window.location.href = "{{ route('projectlist') }}";
-                    },
-                    error: function(xhr, status, error) {
-                        console.error(xhr.responseText);
-                    }
-                });
-
-            });
-        });
-    </script>
+   
 @endsection

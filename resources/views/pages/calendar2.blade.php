@@ -8,13 +8,28 @@
 <link href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/5.10.0/main.min.css" rel="stylesheet">
 <script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.11/index.global.min.js'></script>
 <script>
-    document.addEventListener('DOMContentLoaded', function() {
-        var calendarEl = document.getElementById('calendar');
-        var calendar = new FullCalendar.Calendar(calendarEl, {
-            initialView: 'dayGridMonth'
-        });
-        calendar.render();
+document.addEventListener('DOMContentLoaded', function() {
+    var calendarEl = document.getElementById('calendar');
+    var calendar = new FullCalendar.Calendar(calendarEl, {
+        initialView: 'dayGridMonth',
+        events: {!! json_encode($events) !!},
+        eventRender: function(info) {
+            var title = info.event.title;
+            var date = info.event.start;
+            var dayCell = calendar.getDateCell(date);
+            if (dayCell) {
+                var dayNumberEl = dayCell.querySelector('.fc-daygrid-day-number');
+                if (dayNumberEl) {
+                    var titleEl = document.createElement('div');
+                    titleEl.textContent = title;
+                    dayNumberEl.appendChild(titleEl);
+                }
+            }
+        }
     });
+    calendar.render();
+});
+
 </script>
 <style>
     .calendar {

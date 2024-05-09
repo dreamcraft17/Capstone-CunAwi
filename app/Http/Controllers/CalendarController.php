@@ -11,13 +11,17 @@ use App\Models\Data;
 class CalendarController extends Controller
 {
     public function index(){
-        return view("pages.calendar2");
-    }
-
-    public function getProjectsByDate($date) {
-        // Ambil nama proyek berdasarkan tanggal
-        $projects = Data::whereDate('start_date', $date)->pluck('toyName')->toArray();
-    
-        return response()->json($projects);
+        $projects = Data::all();
+        
+        $events = [];
+        foreach ($projects as $project) {
+            $events[] = [
+                'title' => $project->toyName . ' - ' . $project->status,
+                'start' => $project->start_date,
+            ];
+        }
+        
+        return view("pages.calendar2", compact('events'));
     }
 }
+

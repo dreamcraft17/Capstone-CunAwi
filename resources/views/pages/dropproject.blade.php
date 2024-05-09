@@ -216,9 +216,9 @@ https://cdn.datatables.net/1.13.1/css/jquery.dataTables.min.css" rel="stylesheet
                     tableBody.empty();
 
                     filteredProjects.forEach(function(item) {
-                        var row = '<tr data-id="' + item.ID + '">' +
+                        var row = '<tr data-id="' + item.id + '">' +
                             '<td></td>' +
-                            '<td>' + item.ID + '</td>' +
+                            '<td>' + item.id + '</td>' +
                             '<td class="project-number-cell">' + item.projectID + '</td>' +
                             '<td>' + item.productID + '</td>' +
                             '<td>' + item.toyName + '</td>' +

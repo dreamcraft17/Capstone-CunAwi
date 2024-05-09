@@ -19,8 +19,12 @@ class Cost extends Model
         'material',
         'cost',
         'labor',
+        'qty',
         'total',
         'remarks',
+        'delay_reason',
+        'lead_time',
+        'launch_avail',
     ];
 
 

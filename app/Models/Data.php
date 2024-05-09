@@ -27,11 +27,14 @@ class Data extends Model
         'finish_act',
         'adherence',
         'status',
-        'lead_time',
         'remarks',
         'image',
         'description',
     ];
 
-
+    // Define the relationship with the Cost model
+    public function cost()
+    {
+        return $this->hasOne(Cost::class, 'projectID', 'projectID');
+    }
 }

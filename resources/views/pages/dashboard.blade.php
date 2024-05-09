@@ -48,7 +48,7 @@
                             <div class="card" style="background-color: #fbe4ef;">
                                 <a href="{{ route('draft') }}" class="card-body">
                                     <h5 class="card-title">Draft </h5>
-                                    <h1 class="card-text text-center p-5">12 <span style="font-size: 13px;"
+                                    <h1 class="card-text text-center p-5">{{ $projectCount }}<span style="font-size: 13px;"
                                             class="text-dark">Project(s)</span></h1>
                                 </a>
                             </div>

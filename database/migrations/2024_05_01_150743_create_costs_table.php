@@ -12,16 +12,20 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('cost', function (Blueprint $table) {
-            // $table->id();
+            $table->id();
             $table->integer('projectID');
             $table->string('assortment');
             $table->string('productID');
             $table->string('category');
-            $table->integer('material');
-            $table->integer('cost');
-            $table->integer('labor');
-            $table->string('total');
+            $table->string('material')->nullable();
+            $table->integer('cost')->nullable();
+            $table->integer('labor')->nullable();
+            $table->integer('qty')->nullable();
+            $table->integer('total')->nullable();
             $table->string('remarks');
+            $table->date('launch_avail')->nullable();
+            $table->string('delay_reason')->nullable();
+            $table->double('lead_time')->nullable();
             $table->timestamps();
         });
     }

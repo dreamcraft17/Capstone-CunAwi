@@ -1,46 +1,64 @@
 <?php
 
 namespace App\Http\Controllers;
+
 use Illuminate\Http\Request;
 use App\Http\Controllers\DashboardController;
+use App\Models\Cost;
 use App\Models\Data;
 use RealRashid\SweetAlert\Facades\Alert;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Carbon;
+
 
 // use App\Http\Controllers\ProjectListController;
 
 class ProjectListController extends Controller
 {
-    public function projectlist(Request $request){
-        // Mendapatkan nilai dari dropdown select
+    public function projectlist(Request $request)
+    {
+
         $selectedDesigner = $request->input('designer');
-        // Mengambil data semua desainer
+
         $designers = Data::pluck('designer')->unique();
 
-        // Query untuk mendapatkan data berdasarkan nilai dropdown select
+
         $projectsQuery = Data::query();
-        if($selectedDesigner){
+        if ($selectedDesigner) {
             $projectsQuery->where('designer', $selectedDesigner);
         }
 
-        // Retrieve projects excluding those with status 'Draft'
+
         $projects = $projectsQuery->where('status', '!==', 'Draft')->get();
 
-        // Mengirim data desainer dan data proyek ke tampilan
+
         return view("pages.projectlist", compact('projects', 'designers'));
     }
 
 
-    public function showProjectDetail($id)
-{
-    $project = Data::find($id);
+    //     public function showProjectDetail($id)
+    // {
+    //     $project = Data::find($id);
 
-    if (!$project) {
-        return response()->json(['error' => 'Project not found'], 404);
+    //     if (!$project) {
+    //         return response()->json(['error' => 'Project not found'], 404);
+    //     }
+    //     //   dd($project);
+    //     return view('pages.projectdetail', compact('project'));
+    // }
+
+
+    public function showProjectDetail($id)
+    {
+        $project = Data::with('cost')->find($id);
+
+        if (!$project) {
+            return response()->json(['error' => 'Project not found'], 404);
+        }
+
+        return view('pages.projectdetail', compact('project'));
     }
-    //   dd($project);
-    return view('pages.projectdetail', compact('project'));
-}
+
 
 
     // public function showProjectDetail()
@@ -50,28 +68,30 @@ class ProjectListController extends Controller
 
 
 
-    public function newproject(){
+    public function newproject()
+    {
         return view("pages.newproject");
     }
 
-    public function draft(Request $request){
+    public function draft(Request $request)
+    {
         $selectedDesigner = $request->input('designer');
 
         $designers = Data::pluck('designer')->unique();
         $data = Data::where('status', 'on going')->get();
 
         $projectsQuery = Data::where('status', 'on going');
-        if($selectedDesigner){
+        if ($selectedDesigner) {
             $projectsQuery->where('designer', $selectedDesigner);
         }
         $data = $projectsQuery->get();
-        return view("pages.draft",compact('data','designers'));
+        return view("pages.draft", compact('data', 'designers'));
     }
 
     public function editProject($id)
     {
-        $project = Data::findOrFail($id);
-        return view('pages.editproject', compact('project', 'id')); // Menambahkan variabel $id ke compact
+        $project = Data::with('cost')->find($id);
+        return view('pages.editproject', compact('project', 'id'));
     }
 
     public function update(Request $request, $id)
@@ -83,15 +103,21 @@ class ProjectListController extends Controller
             'designer' => 'required',
             'category' => 'required',
             'description' => 'required',
+            'qty' => 'nullable',
+            'costbudget' => 'nullable',
             'meeting' => 'required|date',
             'start_date' => 'required|date',
             'finish_cmt' => 'required|date',
+            'finish_act' => 'required|date',
             'remarks' => 'nullable',
+            'delayreason' => 'nullable',
+            'launchdate'=>'required|date',
+            'status' => 'nullable',
         ]);
 
         $project = Data::findOrFail($id);
 
-        // Set nilai atribut berdasarkan data yang diterima dari request
+
         $project->productID = $request->productID;
         $project->toyName = $request->toyName;
         $project->pe = $request->pe;
@@ -101,17 +127,64 @@ class ProjectListController extends Controller
         $project->meeting = $request->meeting;
         $project->start_date = $request->start_date;
         $project->finish_cmt = $request->finish_cmt;
+        $project->finish_act = $request->finish_act;
         $project->remarks = $request->remarks;
+        $project->status = $request->status;
 
-        // Simpan perubahan ke database
+
+
+        if ($request->finish_act) {
+            $project->status = 'Finished';
+        }
+
+        if ($request->finish_act && $request->finish_cmt) {
+            $finishActDate = Carbon::parse($request->finish_act);
+            $finishCmtDate = Carbon::parse($request->finish_cmt);
+    
+            if ($finishActDate->day == 31 && $finishCmtDate->day == 30) {
+                $project->adherence = 0;
+                
+                $cost = Cost::where('id', $id)->first(); 
+                if ($cost) {
+                    $cost->lead_time = 18.00;
+                    $cost->save();
+                }
+            }
+        }
         $project->save();
 
+
+        $cost = Cost::where('id', $id)->first();
+        if ($cost) {
+            $cost->assortment = $request->toyName;
+            $cost->category = $request->category;
+            $cost->material = $request->category;
+            $cost->qty = $request->qty;
+            $cost->cost = $request->costbudget;
+            $cost->labor=$request->costbudget;
+            $cost->delay_reason = $request->delayreason;
+            $cost->remarks = $request->remarks;
+            $cost->launch_avail = $request->launchdate;
+
+            if($request->finish_act && $request->finish_cmt) {
+                $finishActDate = Carbon::parse($request->finish_act);
+                $finishCmtDate = Carbon::parse($request->finish_cmt);
+                
+                if($finishActDate->day==31 && $finishCmtDate->day== 30) {
+                    $cost->lead_time = 18.00;
+                }
+            }
+
+            $cost->save();
+        }
+
         // dd($project);
-        // Redirect kembali ke halaman detail proyek dengan pesan sukses
+
         return redirect()->route('projectdetail', ['project' => $id])->with('success', 'Project updated successfully.');
     }
 
-    public function projectdetail($id){
+    public function projectdetail($id)
+    {
 
         $project = Data::find($id);
 
@@ -126,7 +199,6 @@ class ProjectListController extends Controller
 
     public function storeNewProject(Request $request)
     {
-
         $validatedData = $request->validate([
             'productID' => 'required',
             'toyName' => 'required',
@@ -138,33 +210,26 @@ class ProjectListController extends Controller
             'start_date' => 'required|date',
             'finish_cmt' => 'required|date',
             'remarks' => 'nullable',
-            'image' => 'image|mimes:jpeg,png,jpg,gif|max:2048',
-
+            'image' => 'image|mimes:jpeg,png,jpg,gif,svg|max:10000', 
         ]);
 
+
         $imageName = null;
+
+        // Handle image upload
         if ($request->hasFile('image')) {
             $image = $request->file('image');
             $imageName = time() . '.' . $image->getClientOriginalExtension();
-            // Sebelum penyimpanan gambar
-            Log::info('Before saving image');
-
-            // Proses penyimpanan gambar
-            $image->move(public_path('img'), $imageName);
-
-            // Setelah penyimpanan gambar
-            Log::info('After saving image');
+            $image->storeAs('img', $imageName, 'public');
         }
 
-
         $projectID = rand(100000, 999999);
-        $status = $request->has('draft') ? "Draft" : "Ongoing";
+        $status = "On going";
 
         $startDate = new \DateTime($request->meeting_date);
         $finishCMT = new \DateTime($request->start_date);
         $interval = $startDate->diff($finishCMT);
         $months = $interval->m + ($interval->y * 12);
-
 
         $adherence = ($status === "Ongoing") ? 0 : null;
 
@@ -173,19 +238,27 @@ class ProjectListController extends Controller
             'assortment' => $request->toyName,
             'productID' => $request->productID,
             'toyName' => $request->toyName,
-            'pe'=> $request->pe,
-            'designer'=> $request->designer,
-            'category'=> $request->category,
-            'description'=> $request->description,
-            'meeting'=> $request->meeting,
-            'start_date'=> $request->start_date,
-            'finish_cmt'=> $request->finish_cmt,
-            'remarks'=> $request->remarks,
-            'status'=> $status,
+            'pe' => $request->pe,
+            'designer' => $request->designer,
+            'category' => $request->category,
+            'description' => $request->description,
+            'meeting' => $request->meeting,
+            'start_date' => $request->start_date,
+            'finish_cmt' => $request->finish_cmt,
+            'remarks' => $request->remarks,
+            'status' => $status,
             'adherence' => $adherence,
             'month' => $months,
             'image' => $imageName,
+        ]);
 
+        Cost::create([
+            'projectID' => $projectID,
+            'assortment' => $request->toyName,
+            'productID' => $request->productID,
+            'category' => $request->category,
+            'remarks' => $request->remarks,
+            'material' => $request->category,
         ]);
 
         Alert::success('Success', 'Project Added!!');
@@ -193,7 +266,9 @@ class ProjectListController extends Controller
         return redirect()->route('projectlist')->with('success', 'New project has been created successfully.');
     }
 
-    public function submitNewProject(Request $request){
+
+    public function submitNewProject(Request $request)
+    {
 
         $this->storeNewProject($request);
 
@@ -201,7 +276,8 @@ class ProjectListController extends Controller
         return redirect()->route('projectlist')->with('success', 'New project has been submitted successfully.');
     }
 
-    public function redirectToProjectList($projectId){
+    public function redirectToProjectList($projectId)
+    {
         return redirect()->route('projectlist')->with('projectId', $projectId);
     }
 
@@ -243,13 +319,8 @@ class ProjectListController extends Controller
         $project = Data::findOrFail($id);
         $project->delete();
 
+        Cost::where('id', $id)->delete();
+
         return redirect()->route('projectlist')->with('success', 'Project deleted successfully');
     }
-
-
-
-
-
 }
-
-
