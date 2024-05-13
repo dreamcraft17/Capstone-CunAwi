@@ -42,7 +42,7 @@ class DssController extends Controller
         $ongoingCount = Data::where('status', 'On Going')->count();
         $dropCount = Data::where('status', 'Drop')->count();
 
-        // Data untuk digunakan dalam grafik
+        
         $statusData = [$finishCount, $ongoingCount, $dropCount];
         $statusLabels = ['Finished', 'On Going', 'Drop'];
         $statusColors = ['#36DC56', '#FFA600', '#FF2525'];

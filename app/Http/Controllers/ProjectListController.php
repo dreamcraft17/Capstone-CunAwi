@@ -210,22 +210,30 @@ class ProjectListController extends Controller
             'start_date' => 'required|date',
             'finish_cmt' => 'required|date',
             'remarks' => 'nullable',
-            'image' => 'image|mimes:jpeg,png,jpg,gif,svg|max:10000', 
+            'image' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
 
-
-        $imageName = null;
-
-        // Handle image upload
+        
+    
         if ($request->hasFile('image')) {
-            $image = $request->file('image');
-            $imageName = time() . '.' . $image->getClientOriginalExtension();
-            $image->storeAs('img', $imageName, 'public');
+            $images = [];
+            foreach ($request->file('image') as $image) {
+                if ($image->isValid()) {
+                    $imageName = time() . '_' . $image->getClientOriginalName();
+                    $image->storeAs('public/images', $imageName);
+                    $images[] = $imageName;
+                } else {
+                    return redirect()->back()->withInput()->withErrors(['image' => 'The image is not valid.']);
+                }
+            }
+        } else {
+            return redirect()->back()->withInput()->withErrors(['image' => 'The image field is required.']);
         }
+        
+   
 
         $projectID = rand(100000, 999999);
-        $status = "On going";
-
+        $status = $request->input('draft') == "1" ? "Draft" : "On going";
         $startDate = new \DateTime($request->meeting_date);
         $finishCMT = new \DateTime($request->start_date);
         $interval = $startDate->diff($finishCMT);
@@ -249,7 +257,7 @@ class ProjectListController extends Controller
             'status' => $status,
             'adherence' => $adherence,
             'month' => $months,
-            'image' => $imageName,
+            'image' => json_encode($images),
         ]);
 
         Cost::create([
@@ -263,8 +271,80 @@ class ProjectListController extends Controller
 
         Alert::success('Success', 'Project Added!!');
 
+        
         return redirect()->route('projectlist')->with('success', 'New project has been created successfully.');
     }
+
+
+    // public function storeNewProject(Request $request)
+    // {
+    //     $validatedData = $request->validate([
+    //         'productID' => 'required',
+    //         'toyName' => 'required',
+    //         'pe' => 'required',
+    //         'designer' => 'required',
+    //         'category' => 'required',
+    //         'description' => 'required',
+    //         'meeting' => 'required|date',
+    //         'start_date' => 'required|date',
+    //         'finish_cmt' => 'required|date',
+    //         'remarks' => 'nullable', 
+    //     ]);
+
+    //     $imagePaths = [];
+    //     if ($request->hasFile('image')) {
+    //         foreach ($request->file('image') as $image) {
+    //             $imageName = $image->getClientOriginalName();
+    //             $imagePath = 'images/' . $imageName; 
+    //             $image->move(public_path('images'), $imageName);
+    //             $imagePaths[] = $imagePath;
+    //         }
+    //     }
+
+    //     $projectID = rand(100000, 999999);
+    //     $status = "On going";
+    //     $startDate = new \DateTime($request->meeting_date);
+    //     $finishCMT = new \DateTime($request->start_date);
+    //     $interval = $startDate->diff($finishCMT);
+    //     $months = $interval->m + ($interval->y * 12);
+    //     $adherence = ($status === "Ongoing") ? 0 : null;
+
+    //     $project = Data::create([
+    //         'projectID' => $projectID,
+    //         'assortment' => $request->toyName,
+    //         'productID' => $request->productID,
+    //         'toyName' => $request->toyName,
+    //         'pe' => $request->pe,
+    //         'designer' => $request->designer,
+    //         'category' => $request->category,
+    //         'description' => $request->description,
+    //         'meeting' => $request->meeting,
+    //         'start_date' => $request->start_date,
+    //         'finish_cmt' => $request->finish_cmt,
+    //         'remarks' => $request->remarks,
+    //         'status' => $status,
+    //         'adherence' => $adherence,
+    //         'month' => $months,
+    //         'image' => json_encode($imagePaths), 
+    //     ]);
+
+
+    //     Cost::create([
+    //                 'projectID' => $projectID,
+    //                 'assortment' => $request->toyName,
+    //                 'productID' => $request->productID,
+    //                 'category' => $request->category,
+    //                 'remarks' => $request->remarks,
+    //                 'material' => $request->category,
+    //             ]);
+
+
+    //             Alert::success('Success', 'Project Added!!');
+
+    
+    //                 return redirect()->route('projectlist')->with('success', 'New project has been created successfully.');
+
+    // }
 
 
     public function submitNewProject(Request $request)

@@ -42,7 +42,7 @@
     <fieldset>
         <form action="{{ route('storeNewProject') }}" method="POST" enctype="multipart/form-data">
             @csrf
-            <input type="hidden" name="draft" value="0" id="draftField">
+            <input type="hidden" name="draft" value="1" id="draftField">
             <div class="row">
                 <div class="card mt-4">
                     <div class="card-body">
@@ -91,7 +91,7 @@
                                         <div id="id-input-div" class="mt-2">
                                             <label class="text-dark text-bold">Insert Picture(s) <span class="text-danger">*</span></label>
                                             <label>Drag & drop photos here or click to browse</label>
-                                            <input name="image" id="input_image" type="file" class="form-control" />
+                                            <input name="image" id="image" type="file" class="form-control" />
                                         </div>
                                     </div>
                                 </div>
@@ -210,7 +210,7 @@
                                         <div class="slide-content" style="max-width: 850px; text-align: center;">
                                             <div id="slideshow-container fade">
                                                 <div class="image-container">
-                                                    <img id="uploadedImage" class="mySlides img-fluid border-radius-md" width="300" src="https://cdn3d.iconscout.com/3d/premium/thumb/no-photo-5590994-4652997.png" style="display:block;" />
+                                                    <img id="uploadedImage" class="mySlides img-fluid border-radius-md" width="300" src="https://cdn3d.iconscout.com/3d/premium/thumb/no-photo-5590994-4652997.png" style="display:block;" name="image"/>
                                                 </div>
                                             </div>
                                         </div>
@@ -384,7 +384,7 @@
         // Function to preview images when selected
         function previewImage() {
             var previewContainer = document.getElementById('imagePreviewContainer');
-            var files = document.getElementById('input_image').files;
+            var files = document.getElementById('image').files;
 
             previewContainer.innerHTML = ''; // Clear previous previews
 
@@ -404,7 +404,7 @@
         }
 
         // Attach the previewImage function to the change event of the file input element
-        document.getElementById('input_image').addEventListener('change', previewImage);
+        document.getElementById('image').addEventListener('change', previewImage);
 
 
         // Function to handle the "Save as Draft" button
@@ -440,7 +440,7 @@
         }
 
         // Trigger the displayUploadedImage function when a file is selected
-        $('#input_image').change(function() {
+        $('#image').change(function() {
             displayUploadedImage(this);
         });
 
@@ -448,7 +448,7 @@
         function displayFilledData() {
             // You can include other form data processing here
             // For now, let's just display the uploaded image
-            displayUploadedImage($('#input_image')[0]);
+            displayUploadedImage($('#image')[0]);
         }
 
         // Attach the displayFilledData function to the click event of the "Next Step" button
@@ -574,7 +574,8 @@
                 'Meeting Date': $('#meeting').val(),
                 'Start Date': $('#start_date').val(),
                 'Finish Date (CMT)': $('#finish_cmt').val(),
-                'Remarks': $('#remarks').val()
+                'Remarks': $('#remarks').val(),
+                'Image':$('#image').val(),
             };
 
             // Display the filled data
@@ -626,42 +627,54 @@
 
 
 <script>
-    $(document).ready(function() {
-        $("#submitNewProjectButton").click(function(e) {
-            e.preventDefault();
+  $(document).ready(function() {
+    $("#submitNewProjectButton").click(function(e) {
+        e.preventDefault();
+        // Mengubah nilai input draft menjadi 0 (bukan draft)
+        $("#draftField").val("0");
 
-            $.ajax({
-                url: "{{ route('storeNewProject') }}",
-                type: "POST",
-                data: $("form").serialize(),
-                success: function(response) {
-                    console.log(response);
-                    window.location.href = "{{ route('projectlist') }}";
-                },
-                error: function(xhr, status, error) {
-                    console.error(xhr.responseText);
-                }
-            });
+        var formData = new FormData($("form")[0]);
 
-        });
-
-        $("#saveDraftButton").click(function(e) {
-            e.preventDefault();
-
-            $.ajax({
-                url: "{{ route('storeNewProject') }}",
-                type: "POST",
-                data: $("form").serialize(),
-                success: function(response) {
-                    console.log(response);
-                    window.location.href = "{{ route('projectlist') }}";
-                },
-                error: function(xhr, status, error) {
-                    console.error(xhr.responseText);
-                }
-            });
+        $.ajax({
+            url: "{{ route('storeNewProject') }}",
+            type: "POST",
+            data: formData,
+            contentType: false,
+            processData: false,
+            success: function(response) {
+                console.log(response);
+                window.location.href = "{{ route('projectlist') }}";
+            },
+            error: function(xhr, status, error) {
+                console.error(xhr.responseText);
+            }
         });
     });
+
+    $("#saveDraftButton").click(function(e) {
+        e.preventDefault();
+        // Mengubah nilai input draft menjadi 1 (draft)
+        $("#draftField").val("1");
+
+        var formData = new FormData($("form")[0]);
+
+        $.ajax({
+            url: "{{ route('storeNewProject') }}",
+            type: "POST",
+            data: formData,
+            contentType: false,
+            processData: false,
+            success: function(response) {
+                console.log(response);
+                window.location.href = "{{ route('projectlist') }}";
+            },
+            error: function(xhr, status, error) {
+                console.error(xhr.responseText);
+            }
+        });
+    });
+});
+
 </script>
 
 <script>
