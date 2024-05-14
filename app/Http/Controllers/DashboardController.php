@@ -11,7 +11,8 @@ class DashboardController extends Controller
     public function dashboard(){
         $user = Auth::user();
         $name = $user->name;
-        $projectCount = Data::count();
+        $projectCount = Data::where('status', '!=', 'draft')->count();
+        $draftCount = Data::where('status','Draft')->count();
 
         $productionByMonth = Data::selectRaw('DATE_FORMAT(created_at, "%Y-%m") as month, COUNT(*) as total')
         ->groupByRaw('DATE_FORMAT(created_at, "%Y-%m")')
@@ -31,6 +32,6 @@ class DashboardController extends Controller
     $totaldrop = ($projectCount != 0) ? (($dropCount / $projectCount) * 100) : 0;       
 
 
-        return view("pages.dashboard", ['name' => $name, 'projectCount' => $projectCount], compact('productionByMonth','statusData','statusLabels','statusColors','totalfinish','totalongoing','totaldrop'));
+        return view("pages.dashboard", ['name' => $name, 'projectCount' => $projectCount], compact('productionByMonth','statusData','statusLabels','statusColors','totalfinish','totalongoing','totaldrop','draftCount'));
     }
 }

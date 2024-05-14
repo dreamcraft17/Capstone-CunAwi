@@ -40,7 +40,7 @@
     </div>
 
     <fieldset>
-        <form action="{{ route('storeNewProject') }}" method="POST" enctype="multipart/form-data">
+     <form action="{{ route('storeNewProject') }}" method="POST" enctype="multipart/form-data">
             @csrf
             <input type="hidden" name="draft" value="0" id="draftField">
             <div class="row">
@@ -84,17 +84,17 @@
                                 </div>
 
                                 <div class="row g-2 mt-4">
-                                    <div class="col-sm-12">
-                                        <div id="queuedImages" class="queued-div p-2">
-                                            <div id="imagePreviewContainer" class="d-flex flex-wrap mr-3"></div>
-                                        </div>
-                                        <div id="id-input-div" class="mt-2">
-                                            <label class="text-dark text-bold">Insert Picture(s) <span class="text-danger">*</span></label>
-                                            <label>Drag & drop photos here or click to browse</label>
-                                            <input name="image" id="image" type="file" class="form-control" />
-                                        </div>
-                                    </div>
-                                </div>
+                        <div class="col-sm-12">
+                            <div id="queuedImages" class="queued-div p-2">
+                                <div id="imagePreviewContainer" class="d-flex flex-wrap mr-3"></div>
+                            </div>
+                            <div id="id-input-div" class="mt-2">
+                                <label class="text-dark text-bold">Insert Picture(s) <span class="text-danger">*</span></label>
+                                <label>Drag & drop photos here or click to browse</label>
+                                <input name="image[]" id="image" type="file" class="form-control" multiple />
+                            </div>
+                        </div>
+                    </div>
 
 
                                 <div class="row mt-4">
@@ -382,25 +382,25 @@
 
         // Function to preview images when selected
         function previewImage() {
-            var previewContainer = document.getElementById('imagePreviewContainer');
-            var files = document.getElementById('image').files;
+        var previewContainer = document.getElementById('imagePreviewContainer');
+        var files = document.getElementById('image').files;
 
-            previewContainer.innerHTML = ''; // Clear previous previews
+        previewContainer.innerHTML = ''; // Clear previous previews
 
-            for (var i = 0; i < files.length; i++) {
-                var file = files[i];
-                var reader = new FileReader();
+        for (var i = 0; i < files.length; i++) {
+            var file = files[i];
+            var reader = new FileReader();
 
-                reader.onload = function(e) {
-                    var img = document.createElement('img');
-                    img.src = e.target.result;
-                    img.classList.add('preview-image');
-                    previewContainer.appendChild(img);
-                };
+            reader.onload = function(e) {
+                var img = document.createElement('img');
+                img.src = e.target.result;
+                img.classList.add('preview-image');
+                previewContainer.appendChild(img);
+            };
 
-                reader.readAsDataURL(file);
-            }
+            reader.readAsDataURL(file);
         }
+    }
 
         // Attach the previewImage function to the change event of the file input element
         document.getElementById('image').addEventListener('change', previewImage);
