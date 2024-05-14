@@ -14,15 +14,15 @@ return new class extends Migration
         Schema::create('cost', function (Blueprint $table) {
             $table->id();
             $table->integer('projectID');
-            $table->string('assortment');
-            $table->string('productID');
-            $table->string('category');
+            $table->string('assortment')->nullable();;
+            $table->string('productID')->nullable();;
+            $table->string('category')->nullable();;
             $table->string('material')->nullable();
             $table->integer('cost')->nullable();
             $table->integer('labor')->nullable();
             $table->integer('qty')->nullable();
             $table->integer('total')->nullable();
-            $table->string('remarks');
+            $table->string('remarks')->nullable();;
             $table->date('launch_avail')->nullable();
             $table->string('delay_reason')->nullable();
             $table->double('lead_time')->nullable();

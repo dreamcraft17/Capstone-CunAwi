@@ -199,6 +199,8 @@ class ProjectListController extends Controller
 
     public function storeNewProject(Request $request)
     {
+        $isDraft = $request->input('draft') == "1";
+
         $validatedData = $request->validate([
             'productID' => 'required',
             'toyName' => 'required',
@@ -206,9 +208,9 @@ class ProjectListController extends Controller
             'designer' => 'required',
             'category' => 'required',
             'description' => 'required',
-            'meeting' => 'required|date',
-            'start_date' => 'required|date',
-            'finish_cmt' => 'required|date',
+            'meeting' => $isDraft ? 'nullable|date' : 'required|date',
+            'start_date' => $isDraft ? 'nullable|date' : 'required|date',
+            'finish_cmt' => $isDraft ? 'nullable|date' : 'required|date',
             'remarks' => 'nullable',
             'image' => 'image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
