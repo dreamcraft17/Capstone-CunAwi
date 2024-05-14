@@ -210,30 +210,26 @@ class ProjectListController extends Controller
             'start_date' => 'required|date',
             'finish_cmt' => 'required|date',
             'remarks' => 'nullable',
-            'image' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'image' => 'image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
 
         
     
+        $images = [];
         if ($request->hasFile('image')) {
-            $images = [];
             foreach ($request->file('image') as $image) {
-                if ($image->isValid()) {
-                    $imageName = time() . '_' . $image->getClientOriginalName();
-                    $image->storeAs('public/images', $imageName);
-                    $images[] = $imageName;
-                } else {
-                    return redirect()->back()->withInput()->withErrors(['image' => 'The image is not valid.']);
-                }
+                $imageName = time() . '_' . $image->getClientOriginalName();
+                $image->storeAs('public/images', $imageName);
+                $images[] = $imageName;
             }
-        } else {
-            return redirect()->back()->withInput()->withErrors(['image' => 'The image field is required.']);
         }
         
    
 
         $projectID = rand(100000, 999999);
         $status = $request->input('draft') == "1" ? "Draft" : "On going";
+
+
         $startDate = new \DateTime($request->meeting_date);
         $finishCMT = new \DateTime($request->start_date);
         $interval = $startDate->diff($finishCMT);

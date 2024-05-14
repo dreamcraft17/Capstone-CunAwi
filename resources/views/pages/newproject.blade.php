@@ -42,7 +42,7 @@
     <fieldset>
         <form action="{{ route('storeNewProject') }}" method="POST" enctype="multipart/form-data">
             @csrf
-            <input type="hidden" name="draft" value="1" id="draftField">
+            <input type="hidden" name="draft" value="0" id="draftField">
             <div class="row">
                 <div class="card mt-4">
                     <div class="card-body">
@@ -210,7 +210,7 @@
                                         <div class="slide-content" style="max-width: 850px; text-align: center;">
                                             <div id="slideshow-container fade">
                                                 <div class="image-container">
-                                                    <img id="uploadedImage" class="mySlides img-fluid border-radius-md" width="300" src="https://cdn3d.iconscout.com/3d/premium/thumb/no-photo-5590994-4652997.png" style="display:block;" name="image"/>
+                                                    <img id="uploadedImage" class="mySlides img-fluid border-radius-md" width="300" src="https://cdn3d.iconscout.com/3d/premium/thumb/no-photo-5590994-4652997.png" style="display:block;" />
                                                 </div>
                                             </div>
                                         </div>
@@ -301,7 +301,6 @@
                 </div>
             </div>
     </fieldset>
-
     @include('layouts.footer')
 </div>
 {{-- Nambahin footer dari layout || footer di akhir --}}
@@ -627,20 +626,16 @@
 
 
 <script>
-  $(document).ready(function() {
+    $(document).ready(function() {
     $("#submitNewProjectButton").click(function(e) {
         e.preventDefault();
         // Mengubah nilai input draft menjadi 0 (bukan draft)
         $("#draftField").val("0");
 
-        var formData = new FormData($("form")[0]);
-
         $.ajax({
             url: "{{ route('storeNewProject') }}",
             type: "POST",
-            data: formData,
-            contentType: false,
-            processData: false,
+            data: $("form").serialize(),
             success: function(response) {
                 console.log(response);
                 window.location.href = "{{ route('projectlist') }}";
@@ -656,14 +651,10 @@
         // Mengubah nilai input draft menjadi 1 (draft)
         $("#draftField").val("1");
 
-        var formData = new FormData($("form")[0]);
-
         $.ajax({
             url: "{{ route('storeNewProject') }}",
             type: "POST",
-            data: formData,
-            contentType: false,
-            processData: false,
+            data: $("form").serialize(),
             success: function(response) {
                 console.log(response);
                 window.location.href = "{{ route('projectlist') }}";
