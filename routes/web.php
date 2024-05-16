@@ -63,7 +63,7 @@ Route::middleware('auth')->group(function () {
     Route::put('/projects/{id}', [ProjectListController::class, 'update'])->name('update.project');
     Route::post('/project/drop/{id}', [ProjectListController::class, 'dropProject'])->name('project.drop');
     Route::delete('/projects/{id}', [ProjectListController::class, 'delete']);
-
+    Route::post('/dashboard', [DashboardController::class, 'store'])->name('dashboard.store');
 
 
 

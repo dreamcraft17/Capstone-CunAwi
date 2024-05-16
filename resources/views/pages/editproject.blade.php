@@ -235,7 +235,7 @@
                                             placeholder="Enter Remarks" name="delayreason" value="{{$project->cost->delay_reason}}">
                                     </div>
 
-                                    <div class="col">
+                                    <!-- <div class="col">
                                         <label>Status</label>
                                         <select id="status_up" class="form-control" name="status">
                                             <option selected> -- Select Here -- </option>
@@ -243,7 +243,7 @@
                                             <option value="On Going">On Going</option>
                                             <option value="Drop">Drop</option>
                                         </select>
-                                    </div>
+                                    </div> -->
                                 </div>
 
                                 <div class="row mt-4">

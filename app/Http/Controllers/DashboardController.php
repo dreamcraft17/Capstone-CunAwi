@@ -34,4 +34,21 @@ class DashboardController extends Controller
 
         return view("pages.dashboard", ['name' => $name, 'projectCount' => $projectCount], compact('productionByMonth','statusData','statusLabels','statusColors','totalfinish','totalongoing','totaldrop','draftCount'));
     }
+
+    public function store(Request $request)
+    {
+        $data = new Data([
+            'image'=> $request->get('image'),
+            
+        ]);
+
+        if ($request->hasFile('image')) {
+            $image = $request->file('image');
+            $data->saveImage($image);
+        }
+
+        $data->save();
+
+        return redirect()->route('dashboard')->with('success', 'Data added successfully.');
+    }
 }

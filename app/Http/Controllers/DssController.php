@@ -94,32 +94,43 @@ class DssController extends Controller
     // }
 
     private function evaluateProductionDecisionLogic($totalToys, $months)
-    {
-    
-        $thisYearData = Cost::whereYear('created_at', now()->year)->get();
-    
-        $totalProductionThisYear = $thisYearData->count();
-        $totalLaborCostThisYear = $thisYearData->sum('labor');
-        $totalMachineCostThisYear = $thisYearData->sum('cost');
-        $totalCostThisYear = $totalLaborCostThisYear + $totalMachineCostThisYear;
-    
-        if ($totalCostThisYear == 0) {
-            return "Unable to calculate efficiency. Total cost this year is zero.";
-        }
-    
-        $efficiency = $totalProductionThisYear / $totalCostThisYear;
-    
-        $totalProductionCost = $totalToys * ($totalLaborCostThisYear / $totalProductionThisYear) * $months;
-    
-        if ($totalProductionCost < $efficiency) {
-            return "Suggestion: Add labor.";
+{
+    $thisYearData = Cost::whereYear('created_at', now()->year)->get();
+
+    $totalProductionThisYear = $thisYearData->count();
+    $totalLaborCostThisYear = $thisYearData->sum('labor');
+    $totalMachineCostThisYear = $thisYearData->sum('cost');
+    $totalCostThisYear = $totalLaborCostThisYear + $totalMachineCostThisYear;
+
+    if ($totalCostThisYear == 0) {
+        return "Unable to calculate efficiency. Total cost this year is zero.";
+    }
+
+    $efficiency = $totalProductionThisYear / $totalCostThisYear;
+    $totalProductionCost = $totalToys * ($totalLaborCostThisYear / $totalProductionThisYear) * $months;
+
+    // Asumsi bahwa satu unit produksi menggunakan rata-rata biaya labor dan mesin saat ini
+    $averageLaborCostPerUnit = $totalLaborCostThisYear / $totalProductionThisYear;
+    $averageMachineCostPerUnit = $totalMachineCostThisYear / $totalProductionThisYear;
+
+    // Estimasi tambahan mesin dan labor yang dibutuhkan
+    $additionalLaborNeeded = 0;
+    $additionalMachinesNeeded = 0;
+
+    if ($totalProductionCost < $efficiency) {
+        $additionalLaborNeeded = ceil(($totalProductionCost / $averageLaborCostPerUnit) - $totalProductionThisYear);
+        return "Suggestion: Add labor. Additional labor needed: {$additionalLaborNeeded}";
+    } else {
+        if ($totalMachineCostThisYear < ($totalCostThisYear * 0.3)) {
+            $additionalMachinesNeeded = ceil(($totalProductionCost / $averageMachineCostPerUnit) - $totalProductionThisYear);
+            return "Suggestion: Add machine. Additional machines needed: {$additionalMachinesNeeded}";
         } else {
-            if ($totalMachineCostThisYear < ($totalCostThisYear * 0.3)) {
-                return "Suggestion: Add Machine.";
-            } else {
-                return "Suggestion: Add machine and labor.";
-            }
+            $additionalLaborNeeded = ceil(($totalProductionCost / $averageLaborCostPerUnit) - $totalProductionThisYear);
+            $additionalMachinesNeeded = ceil(($totalProductionCost / $averageMachineCostPerUnit) - $totalProductionThisYear);
+            return "Suggestion: Add machine and labor. Additional labor needed: {$additionalLaborNeeded}, Additional machines needed: {$additionalMachinesNeeded}";
         }
     }
+}
+
     
 }

@@ -119,6 +119,15 @@
 
             </div>
         </div>
+        <form action="{{ route('dashboard.store') }}" method="POST" enctype="multipart/form-data">
+    @csrf
+    <!-- Other form fields -->
+    <div class="form-group">
+        <label for="image">Image</label>
+        <input type="file" class="form-control-file" id="image" name="image">
+    </div>
+    <button type="submit" class="btn btn-primary">Submit</button>
+</form>
 
         @include('layouts.footer')
     </div>
