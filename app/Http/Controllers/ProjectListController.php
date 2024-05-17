@@ -212,18 +212,16 @@ class ProjectListController extends Controller
             'start_date' => $isDraft ? 'nullable|date' : 'required|date',
             'finish_cmt' => $isDraft ? 'nullable|date' : 'required|date',
             'remarks' => 'nullable',
-            'image' => 'image|mimes:jpeg,png,jpg,gif|max:2048',
+            'image' => 'nullable|max:2048',
         ]);
 
         
     
-        $images = [];
+        $imageName = null;
         if ($request->hasFile('image')) {
-            foreach ($request->file('image') as $image) {
-                $imageName = time() . '_' . $image->getClientOriginalName();
-                $image->storeAs('public/images', $imageName);
-                $images[] = $imageName;
-            }
+            $image = $request->file('image');  
+            $imageName = time() . '_' . $image->getClientOriginalName();
+            $image->move(public_path('images'), $imageName);
         }
         
    
@@ -255,7 +253,7 @@ class ProjectListController extends Controller
             'status' => $status,
             'adherence' => $adherence,
             'month' => $months,
-            'image' => json_encode($images),
+            'image' => $imageName,
         ]);
 
         Cost::create([

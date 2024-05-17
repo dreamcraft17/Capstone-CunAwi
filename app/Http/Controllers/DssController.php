@@ -25,7 +25,7 @@ class DssController extends Controller
         $totalcost = $totalcost ?? 0;
 
         $totalAdherence = $data->sum('adherence');
-        $totalLead = $data->sum('lead_time');
+        $totalLead = $cost->sum('lead_time');
 
         $totalAdherence = $totalAdherence ?? 0;
         $totalLead = $totalLead ?? 0;
@@ -118,19 +118,30 @@ class DssController extends Controller
     $additionalMachinesNeeded = 0;
 
     if ($totalProductionCost < $efficiency) {
+        if ($averageLaborCostPerUnit == 0) {
+            return "Error: Average labor cost per unit is zero. Cannot calculate additional labor.";
+        }
         $additionalLaborNeeded = ceil(($totalProductionCost / $averageLaborCostPerUnit) - $totalProductionThisYear);
         return "Suggestion: Add labor. Additional labor needed: {$additionalLaborNeeded}";
     } else {
         if ($totalMachineCostThisYear < ($totalCostThisYear * 0.3)) {
+            if ($averageMachineCostPerUnit == 0) {
+                return "Error: Average machine cost per unit is zero. Cannot calculate additional machines.";
+            }
             $additionalMachinesNeeded = ceil(($totalProductionCost / $averageMachineCostPerUnit) - $totalProductionThisYear);
             return "Suggestion: Add machine. Additional machines needed: {$additionalMachinesNeeded}";
         } else {
+            if ($averageLaborCostPerUnit == 0 || $averageMachineCostPerUnit == 0) {
+                return "Error: Average labor cost per unit or average machine cost per unit is zero. Cannot calculate additional labor and machines.";
+            }
             $additionalLaborNeeded = ceil(($totalProductionCost / $averageLaborCostPerUnit) - $totalProductionThisYear);
             $additionalMachinesNeeded = ceil(($totalProductionCost / $averageMachineCostPerUnit) - $totalProductionThisYear);
             return "Suggestion: Add machine and labor. Additional labor needed: {$additionalLaborNeeded}, Additional machines needed: {$additionalMachinesNeeded}";
         }
     }
+    
+    }
 }
 
     
-}
+

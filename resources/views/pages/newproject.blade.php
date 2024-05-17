@@ -204,18 +204,17 @@
                     <div class="col">
                         <div class="row">
                             <div class="row">
-                                <div class="col-md-6">
-                                    <!-- Image slideshow -->
-                                    <div style="padding:10px; position: relative;">
-                                        <div class="slide-content" style="max-width: 850px; text-align: center;">
-                                            <div id="slideshow-container fade">
-                                                <div class="image-container">
-                                                    <img id="uploadedImage" class="mySlides img-fluid border-radius-md" width="300" src="https://cdn3d.iconscout.com/3d/premium/thumb/no-photo-5590994-4652997.png" style="display:block;" />
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
+                            <div class="col-sm-12">
+                            <div id="queuedImages" class="queued-div p-2">
+                                <div id="imagePreviewContainer" class="d-flex flex-wrap mr-3"></div>
+                            </div>
+                            <div id="id-input-div" class="mt-2">
+                                <label class="text-dark text-bold">Insert Picture(s) <span class="text-danger">*</span></label>
+                                <label>Drag & drop photos here or click to browse</label>
+                                <input name="image[]" id="image" type="file" class="form-control" multiple />
+                            </div>
+                        </div>
+                    </div>
 
                                 <div class="col-md-6">
                                     <!-- Content catalog -->
@@ -421,33 +420,33 @@
 <script>
     $(document).ready(function() {
         // Function to display the uploaded image
-        function displayUploadedImage(input) {
-            if (input.files && input.files[0]) {
-                var reader = new FileReader();
+        // function displayUploadedImage(input) {
+        //     if (input.files && input.files[0]) {
+        //         var reader = new FileReader();
 
-                reader.onload = function(e) {
-                    $('#uploadedImage').attr('src', e.target.result);
-                }
+        //         reader.onload = function(e) {
+        //             $('#uploadedImage').attr('src', e.target.result);
+        //         }
 
-                reader.readAsDataURL(input.files[0]);
-            } else {
-                // If no image is selected, display the default image and log a message
-                $('#uploadedImage').attr('src',
-                    'https://cdn3d.iconscout.com/3d/premium/thumb/no-photo-5590994-4652997.png');
-                console.log('No image selected. Displaying default image.');
-            }
-        }
+        //         reader.readAsDataURL(input.files[0]);
+        //     } else {
+        //         // If no image is selected, display the default image and log a message
+        //         $('#uploadedImage').attr('src',
+        //             'https://cdn3d.iconscout.com/3d/premium/thumb/no-photo-5590994-4652997.png');
+        //         console.log('No image selected. Displaying default image.');
+        //     }
+        // }
 
         // Trigger the displayUploadedImage function when a file is selected
-        $('#image').change(function() {
-            displayUploadedImage(this);
-        });
+        // $('#image').change(function() {
+        //     displayUploadedImage(this);
+        // });
 
         // Function to display filled data
         function displayFilledData() {
             // You can include other form data processing here
             // For now, let's just display the uploaded image
-            displayUploadedImage($('#image')[0]);
+            // displayUploadedImage($('#image')[0]);
         }
 
         // Attach the displayFilledData function to the click event of the "Next Step" button
