@@ -40,7 +40,7 @@
     </div>
 
     <fieldset>
-     <form action="{{ route('storeNewProject') }}" method="POST" enctype="multipart/form-data">
+        <form action="{{ route('storeNewProject') }}" method="POST" enctype="multipart/form-data">
             @csrf
             <input type="hidden" name="draft" value="0" id="draftField">
             <div class="row">
@@ -84,17 +84,17 @@
                                 </div>
 
                                 <div class="row g-2 mt-4">
-                        <div class="col-sm-12">
-                            <div id="queuedImages" class="queued-div p-2">
-                                <div id="imagePreviewContainer" class="d-flex flex-wrap mr-3"></div>
-                            </div>
-                            <div id="id-input-div" class="mt-2">
-                                <label class="text-dark text-bold">Insert Picture(s) <span class="text-danger">*</span></label>
-                                <label>Drag & drop photos here or click to browse</label>
-                                <input name="image[]" id="image" type="file" class="form-control" multiple />
-                            </div>
-                        </div>
-                    </div>
+                                    <div class="col-sm-12">
+                                        <div id="queuedImages" class="queued-div p-2">
+                                            <div id="imagePreviewContainer" class="d-flex flex-wrap mr-3"></div>
+                                        </div>
+                                        <div id="id-input-div" class="mt-2">
+                                            <label class="text-dark text-bold">Insert Picture(s) <span class="text-danger">*</span></label>
+                                            <label>Drag & drop photos here or click to browse</label>
+                                            <input name="image[]" id="image" type="file" class="form-control" multiple />
+                                        </div>
+                                    </div>
+                                </div>
 
 
                                 <div class="row mt-4">
@@ -204,101 +204,102 @@
                     <div class="col">
                         <div class="row">
                             <div class="row">
-                            <div class="col-sm-12">
-                            <div id="queuedImages" class="queued-div p-2">
-                                <div id="imagePreviewContainer" class="d-flex flex-wrap mr-3"></div>
-                            </div>
-                            <div id="id-input-div" class="mt-2">
-                                <label class="text-dark text-bold">Insert Picture(s) <span class="text-danger">*</span></label>
-                                <label>Drag & drop photos here or click to browse</label>
-                                <input name="image[]" id="image" type="file" class="form-control" multiple />
-                            </div>
-                        </div>
-                    </div>
-
-                                <div class="col-md-6">
-                                    <!-- Content catalog -->
-                                    <div class="content-catalog">
-                                        <hr />
-                                        <!-- Add more content here -->
-                                        <div class="row">
-                                            <div class="col rubik-font">
-                                                <a style="text-align: left;">
-                                                    <h6 style="opacity: 0.8;">PRODUCT ID</h6>
-                                                    <p id="displayProductID"></p>
-
-                                                    <h6 style="opacity: 0.8;">PRODUCT DESCRIPTION</h6>
-                                                    <p id="displayProductDescription"></p>
-                                                </a>
+                            <div class="col-md-6">
+                                    <div style="padding:10px; position: relative;">
+                                        <div class="slide-content" style="max-width: 850px; text-align: center;">
+                                            <div id="slideshow-container fade">
+                                                <div class="image-container">
+                                                    <img id="uploadedImage" class="mySlides img-fluid border-radius-md" width="300" src="https://cdn3d.iconscout.com/3d/premium/thumb/no-photo-5590994-4652997.png" style="display:block;" />
+                                                </div>
                                             </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
 
-                                            <div class="col rubik-font">
-                                                <a style="text-align: left;">
+                            <div class="col-md-6">
+                                <!-- Content catalog -->
+                                <div class="content-catalog">
+                                    <hr />
+                                    <!-- Add more content here -->
+                                    <div class="row">
+                                        <div class="col rubik-font">
+                                            <a style="text-align: left;">
+                                                <h6 style="opacity: 0.8;">PRODUCT ID</h6>
+                                                <p id="displayProductID"></p>
+
+                                                <h6 style="opacity: 0.8;">PRODUCT DESCRIPTION</h6>
+                                                <p id="displayProductDescription"></p>
+                                            </a>
+                                        </div>
+
+                                        <div class="col rubik-font">
+                                            <a style="text-align: left;">
 
 
 
-                                                    <h6 style="opacity: 0.8;">PRODUCT ENGINEER</h6>
-                                                    <p id="displayProductEngineering"></p>
+                                                <h6 style="opacity: 0.8;">PRODUCT ENGINEER</h6>
+                                                <p id="displayProductEngineering"></p>
 
-                                                    <h6 style="opacity: 0.8;">PRODUCT DESIGN</h6>
-                                                    <p id="displayProductDesign"></p>
-                                                </a>
-                                            </div>
+                                                <h6 style="opacity: 0.8;">PRODUCT DESIGN</h6>
+                                                <p id="displayProductDesign"></p>
+                                            </a>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
+                </div>
 
-                    <hr class="bg-dark" />
+                <hr class="bg-dark" />
 
-                    <h3 class="mt-3 text-center"><b style="color: #5e72e4;">Schedule</b></h3>
-                    <div class="container">
-                        <div class="px-3 pt-2 pb-3">
-                            <table id="activitiesTable" class="table table-bordered mt-3 table-responsive" style="vertical-align: middle;">
-                                <thead class="table-primary">
-                                    <tr>
-                                        <th class="pl-2 rubik-font" style="color: #5e72e4;">Meeting Date</th>
-                                        <th class="pl-2 rubik-font" style="color: #5e72e4;">Start Date</th>
-                                        <th class="pl-2 rubik-font" style="color: #5e72e4;">Finish Date CMT</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr class="text-dark activity-row">
-                                        <td class="rubik-font">
-                                            <p id="displayMeetingDate"></p>
-                                        </td>
-                                        <td class="rubik-font">
-                                            <p id="displaystart_date"></p>
-                                        </td>
-                                        <td class="rubik-font">
-                                            <p id="displayfinish_cmtCMT"></p>
-                                        </td>
-                                    <tr>
-                                    </tr>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
+                <h3 class="mt-3 text-center"><b style="color: #5e72e4;">Schedule</b></h3>
+                <div class="container">
+                    <div class="px-3 pt-2 pb-3">
+                        <table id="activitiesTable" class="table table-bordered mt-3 table-responsive" style="vertical-align: middle;">
+                            <thead class="table-primary">
+                                <tr>
+                                    <th class="pl-2 rubik-font" style="color: #5e72e4;">Meeting Date</th>
+                                    <th class="pl-2 rubik-font" style="color: #5e72e4;">Start Date</th>
+                                    <th class="pl-2 rubik-font" style="color: #5e72e4;">Finish Date CMT</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr class="text-dark activity-row">
+                                    <td class="rubik-font">
+                                        <p id="displayMeetingDate"></p>
+                                    </td>
+                                    <td class="rubik-font">
+                                        <p id="displaystart_date"></p>
+                                    </td>
+                                    <td class="rubik-font">
+                                        <p id="displayfinish_cmtCMT"></p>
+                                    </td>
+                                <tr>
+                                </tr>
+                                </tr>
+                            </tbody>
+                        </table>
                     </div>
+                </div>
 
-                    <h3><b style="color: #5e72e4;">Remarks</b></h3>
-                    <div class="card-body p-3 rubik-font toy-note remarks-container">
-                        <p class="rubik-font mt-2" style="white-space: pre-line;" id="displayRemarks"></p>
-                    </div>
+                <h3><b style="color: #5e72e4;">Remarks</b></h3>
+                <div class="card-body p-3 rubik-font toy-note remarks-container">
+                    <p class="rubik-font mt-2" style="white-space: pre-line;" id="displayRemarks"></p>
+                </div>
 
-                    <!-- <input type="hidden" name="draft" id="statusField" value="0"> -->
+                <!-- <input type="hidden" name="draft" id="statusField" value="0"> -->
 
-                    <div style="text-align: right;" class="mt-4">
-                        <input type="button" id="prevButton" class="previous btn btn-secondary rubik-font" value="Previous" />
-                        <input type="submit" id="submitNewProjectButton" name="submit" class="btn btn-primary rubik-font" value="Submit" />
-                        <input type="submit" id="saveDraftButton" name="draft" class="btn btn-secondary rubik-font" value="Draft" />
-
-                    </div>
+                <div style="text-align: right;" class="mt-4">
+                    <input type="button" id="prevButton" class="previous btn btn-secondary rubik-font" value="Previous" />
+                    <input type="submit" id="submitNewProjectButton" name="submit" class="btn btn-primary rubik-font" value="Submit" />
+                    <input type="submit" id="saveDraftButton" name="draft" class="btn btn-secondary rubik-font" value="Draft" />
 
                 </div>
+
             </div>
+        </div>
     </fieldset>
     @include('layouts.footer')
 </div>
@@ -381,34 +382,34 @@
 
         // Function to preview images when selected
         function previewImage() {
-        var previewContainer = document.getElementById('imagePreviewContainer');
-        var files = document.getElementById('image').files;
+            var previewContainer = document.getElementById('imagePreviewContainer');
+            var files = document.getElementById('image').files;
 
-        previewContainer.innerHTML = ''; // Clear previous previews
+            previewContainer.innerHTML = ''; // Clear previous previews
 
-        for (var i = 0; i < files.length; i++) {
-            var file = files[i];
-            var reader = new FileReader();
+            for (var i = 0; i < files.length; i++) {
+                var file = files[i];
+                var reader = new FileReader();
 
-            reader.onload = function(e) {
-                var img = document.createElement('img');
-                img.src = e.target.result;
-                img.classList.add('preview-image');
-                previewContainer.appendChild(img);
-            };
+                reader.onload = function(e) {
+                    var img = document.createElement('img');
+                    img.src = e.target.result;
+                    img.classList.add('preview-image');
+                    previewContainer.appendChild(img);
+                };
 
-            reader.readAsDataURL(file);
+                reader.readAsDataURL(file);
+            }
         }
-    }
 
         // Attach the previewImage function to the change event of the file input element
         document.getElementById('image').addEventListener('change', previewImage);
 
 
         // Function to handle the "Save as Draft" button
-        // $("#saveDraftButton").click(function() {
-        //     // Add your logic to save the form as a draft
-        // });
+        $("#saveDraftButton").click(function() {
+            // Add your logic to save the form as a draft
+        });
 
         // Function to handle the "Save Changes" button
         $("#saveChangesButton").click(function() {
@@ -420,33 +421,33 @@
 <script>
     $(document).ready(function() {
         // Function to display the uploaded image
-        // function displayUploadedImage(input) {
-        //     if (input.files && input.files[0]) {
-        //         var reader = new FileReader();
+        function displayUploadedImage(input) {
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
 
-        //         reader.onload = function(e) {
-        //             $('#uploadedImage').attr('src', e.target.result);
-        //         }
+                reader.onload = function(e) {
+                    $('#uploadedImage').attr('src', e.target.result);
+                }
 
-        //         reader.readAsDataURL(input.files[0]);
-        //     } else {
-        //         // If no image is selected, display the default image and log a message
-        //         $('#uploadedImage').attr('src',
-        //             'https://cdn3d.iconscout.com/3d/premium/thumb/no-photo-5590994-4652997.png');
-        //         console.log('No image selected. Displaying default image.');
-        //     }
-        // }
+                reader.readAsDataURL(input.files[0]);
+            } else {
+                // If no image is selected, display the default image and log a message
+                $('#uploadedImage').attr('src',
+                    'https://cdn3d.iconscout.com/3d/premium/thumb/no-photo-5590994-4652997.png');
+                console.log('No image selected. Displaying default image.');
+            }
+        }
 
         // Trigger the displayUploadedImage function when a file is selected
-        // $('#image').change(function() {
-        //     displayUploadedImage(this);
-        // });
+        $('#image').change(function() {
+            displayUploadedImage(this);
+        });
 
         // Function to display filled data
         function displayFilledData() {
             // You can include other form data processing here
             // For now, let's just display the uploaded image
-            // displayUploadedImage($('#image')[0]);
+            displayUploadedImage($('#image')[0]);
         }
 
         // Attach the displayFilledData function to the click event of the "Next Step" button
@@ -573,7 +574,7 @@
                 'Start Date': $('#start_date').val(),
                 'Finish Date (CMT)': $('#finish_cmt').val(),
                 'Remarks': $('#remarks').val(),
-                'Image':$('#image').val(),
+                'Image': $('#image').val(),
             };
 
             // Display the filled data
@@ -626,45 +627,44 @@
 
 <script>
     $(document).ready(function() {
-    $("#submitNewProjectButton").click(function(e) {
-        e.preventDefault();
-        // Mengubah nilai input draft menjadi 0 (bukan draft)
-        $("#draftField").val("0");
+        $("#submitNewProjectButton").click(function(e) {
+            e.preventDefault();
+            // Mengubah nilai input draft menjadi 0 (bukan draft)
+            $("#draftField").val("0");
 
-        $.ajax({
-            url: "{{ route('storeNewProject') }}",
-            type: "POST",
-            data: $("form").serialize(),
-            success: function(response) {
-                console.log(response);
-                window.location.href = "{{ route('projectlist') }}";
-            },
-            error: function(xhr, status, error) {
-                console.error(xhr.responseText);
-            }
+            $.ajax({
+                url: "{{ route('storeNewProject') }}",
+                type: "POST",
+                data: $("form").serialize(),
+                success: function(response) {
+                    console.log(response);
+                    window.location.href = "{{ route('projectlist') }}";
+                },
+                error: function(xhr, status, error) {
+                    console.error(xhr.responseText);
+                }
+            });
+        });
+
+        $("#saveDraftButton").click(function(e) {
+            e.preventDefault();
+            // Mengubah nilai input draft menjadi 1 (draft)
+            $("#draftField").val("1");
+
+            $.ajax({
+                url: "{{ route('storeNewProject') }}",
+                type: "POST",
+                data: $("form").serialize(),
+                success: function(response) {
+                    console.log(response);
+                    window.location.href = "{{ route('projectlist') }}";
+                },
+                error: function(xhr, status, error) {
+                    console.error(xhr.responseText);
+                }
+            });
         });
     });
-
-    $("#saveDraftButton").click(function(e) {
-        e.preventDefault();
-        // Mengubah nilai input draft menjadi 1 (draft)
-        $("#draftField").val("1");
-
-        $.ajax({
-            url: "{{ route('storeNewProject') }}",
-            type: "POST",
-            data: $("form").serialize(),
-            success: function(response) {
-                console.log(response);
-                window.location.href = "{{ route('projectlist') }}";
-            },
-            error: function(xhr, status, error) {
-                console.error(xhr.responseText);
-            }
-        });
-    });
-});
-
 </script>
 
 <script>
