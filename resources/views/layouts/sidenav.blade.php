@@ -120,7 +120,7 @@
                         <span class="nav-link-text ms-1">Calendar</span>
                     </a>
                 </li>
-                @if (session('role') == 'manager')
+                @if (session('role') == 'manager' || session('role') == 'Admin')
                 <li class="nav-item">
                     <a class="nav-link {{ Route::currentRouteName() == 'dss' ? 'active' : '' }}" href="{{ route('dss') }}">
                         <i class="fa fa-plus"></i>

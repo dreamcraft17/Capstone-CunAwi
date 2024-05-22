@@ -39,13 +39,13 @@
                                 <div class="form-group mb-4">
                                     <label for="name">Name</label>
                                     <div class="input-group">
-                                        <input type="text" class="form-control" placeholder="Input Name" name="name" value="{{ old('name') }}"> <!-- Tambahkan 'value="{{ old('name') }}"' untuk mempertahankan nilai saat validasi gagal -->
+                                    <input type="text" class="form-control" placeholder="Input Name" name="name" value="{{ old('name') }}" oninput="capitalizeWords(this)"> 
                                     </div>
                                 </div>
                                 <div class="form-group mb-4">
                                     <label for="username">Username</label>
                                     <div class="input-group">
-                                        <input type="text" class="form-control" placeholder="Input username" name="username" value="{{ old('username') }}"> <!-- Tambahkan 'value="{{ old('username') }}"' untuk mempertahankan nilai saat validasi gagal -->
+                                        <input type="text" class="form-control" placeholder="Input username" name="username" value="{{ old('username') }}"> 
                                     </div>
                                 </div>
                                 <div class="form-group mb-4">
@@ -98,7 +98,19 @@
     </main>
 </body>
 
+
 <script>
+    function capitalizeWords(input) {
+    let words = input.value.split(' ');
+    for (let i = 0; i < words.length; i++) {
+        if (words[i].length > 0) {
+            words[i] = words[i][0].toUpperCase() + words[i].substr(1).toLowerCase();
+        }
+    }
+    input.value = words.join(' ');
+}
+</script>
+<!-- <script>
     function capitalizeFirstLetter(input) {
         let words = input.value.split(' ');
 
@@ -107,4 +119,4 @@
         }
         input.value = words.join(' ');
     }
-</script>
+</script> -->
