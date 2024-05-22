@@ -20,6 +20,7 @@ class DssController extends Controller
 
         $totalproduction = $data->count();
         $totalcost = $cost->sum("cost");
+        $averageCost = Cost::whereNotNull('cost')->avg('cost');
 
         $totalproduction = $totalproduction ?? 0;
         $totalcost = $totalcost ?? 0;
@@ -32,8 +33,8 @@ class DssController extends Controller
 
         $averageAdherence = $totalproduction != 0 ? $totalAdherence / $totalproduction : 0;
         $averageLead = $totalproduction != 0 ? $totalLead / $totalproduction : 0;
-        $averageCost = $totalcost != 0 ? $totalproduction / $totalcost : 0;
-
+        // $averageCost = $totalcost != 0 ? $totalproduction / $totalcost : 0;
+        // dd($averageCost);
         $productionByMonth = Data::selectRaw('DATE_FORMAT(created_at, "%Y-%m") as month, COUNT(*) as total')
             ->groupByRaw('DATE_FORMAT(created_at, "%Y-%m")')
             ->get();
@@ -42,7 +43,7 @@ class DssController extends Controller
         $ongoingCount = Data::where('status', 'On Going')->count();
         $dropCount = Data::where('status', 'Drop')->count();
 
-        
+
         $statusData = [$finishCount, $ongoingCount, $dropCount];
         $statusLabels = ['Finished', 'On Going', 'Drop'];
         $statusColors = ['#36DC56', '#FFA600', '#FF2525'];
@@ -139,9 +140,9 @@ class DssController extends Controller
             return "Suggestion: Add machine and labor. Additional labor needed: {$additionalLaborNeeded}, Additional machines needed: {$additionalMachinesNeeded}";
         }
     }
-    
+
     }
 }
 
-    
+
 

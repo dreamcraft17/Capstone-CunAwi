@@ -72,10 +72,6 @@
                                     <h5 class="font-weight-bolder">
                                         {{ $totalproduction }}
                                     </h5>
-                                    <p class="mb-0">
-                                        <span class="text-success text-sm font-weight-bolder">+13</span>
-                                        since last month
-                                    </p>
                                 </div>
                             </div>
                             <div class="col-4 text-end">
@@ -97,10 +93,6 @@
                                     <h5 class="font-weight-bolder">
                                         {{ number_format($averageAdherence, 2) }}%
                                     </h5>
-                                    <p class="mb-0">
-                                        <span class="text-success text-sm font-weight-bolder">+3%</span>
-                                        since last week
-                                    </p>
                                 </div>
                             </div>
                             <div class="col-4 text-end">
@@ -122,10 +114,6 @@
                                     <h5 class="font-weight-bolder">
                                         {{ number_format($averageLead, 2) }} Weeks
                                     </h5>
-                                    <p class="mb-0">
-                                        <span class="text-danger text-sm font-weight-bolder">-2%</span>
-                                        since last week
-                                    </p>
                                 </div>
                             </div>
                             <div class="col-4 text-end">
@@ -147,9 +135,6 @@
                                     <h5 class="font-weight-bolder">
                                         $ {{ number_format($averageCost, 2) }}
                                     </h5>
-                                    <p class="mb-0">
-                                        <span class="text-success text-sm font-weight-bolder">+5%</span> than last month
-                                    </p>
                                 </div>
                             </div>
                             <div class="col-4 text-end">

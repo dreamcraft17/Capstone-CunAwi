@@ -275,7 +275,7 @@ https://cdn.datatables.net/1.13.1/css/jquery.dataTables.min.css" rel="stylesheet
                                         ); // Check the project detail URL in the console
 
                                         // Create the link with the generated URL
-                                        return '<a style="margin-bottom: 0px; background-color: #FFE5F1; color: #E2328B;" class="btn" title="See Project Detail" href="' +
+                                        return '<a style="margin-bottom: 0px; background-color: #527CB2; color: white;" class="btn" title="See Project Detail" href="' +
                                             projectDetailURL +
                                             '"><i class="fa fa-info" aria-hidden="true"></i></a>';
                                     }

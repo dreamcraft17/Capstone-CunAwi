@@ -138,21 +138,33 @@ class ProjectListController extends Controller
         }
 
         if ($request->finish_act && $request->finish_cmt) {
+            $startDate = Carbon::parse($request->start_date);
             $finishActDate = Carbon::parse($request->finish_act);
             $finishCmtDate = Carbon::parse($request->finish_cmt);
-    
-            if ($finishActDate->day == 31 && $finishCmtDate->day == 30) {
-                $project->adherence = 0;
-                
-                $cost = Cost::where('id', $id)->first(); 
-                if ($cost) {
-                    $cost->lead_time = 18.00;
-                    $cost->save();
-                }
-            }
-        }
-        $project->save();
 
+            // Compare dates to calculate adherence
+            if ($finishActDate->gt($finishCmtDate) ) {
+                $project->adherence = 0; // 0%
+                // Calculate the lead time as days past the committed date
+                $daysPastCommitDate = $finishActDate->diffInDays($startDate);
+                $leadTime = $daysPastCommitDate; // Number of days past the committed date + 17 days goal
+            } else {
+                $project->adherence = 100; // 100%
+                // Calculate the lead time as the total days from start to committed date
+                $leadTime = $finishActDate->diffInDays($startDate); // Total days from start to committed date
+            }
+
+            // Update the lead time in the Cost model
+            $cost = Cost::where('id', $id)->first();
+            if ($cost) {
+                $cost->lead_time = $leadTime;
+                $cost->save();
+            }
+
+        }
+
+
+        $project->save();
 
         $cost = Cost::where('id', $id)->first();
         if ($cost) {
@@ -169,7 +181,7 @@ class ProjectListController extends Controller
             if($request->finish_act && $request->finish_cmt) {
                 $finishActDate = Carbon::parse($request->finish_act);
                 $finishCmtDate = Carbon::parse($request->finish_cmt);
-                
+
                 if($finishActDate->day==31 && $finishCmtDate->day== 30) {
                     $cost->lead_time = 18.00;
                 }
@@ -215,16 +227,16 @@ class ProjectListController extends Controller
             'image' => 'nullable|max:2048',
         ]);
 
-        
-    
+
+
         $imageName = null;
         if ($request->hasFile('image')) {
-            $image = $request->file('image');  
+            $image = $request->file('image');
             $imageName = time() . '_' . $image->getClientOriginalName();
             $image->move(public_path('images'), $imageName);
         }
-        
-   
+
+
 
         $projectID = rand(100000, 999999);
         $status = $request->input('draft') == "1" ? "Draft" : "On going";
@@ -267,7 +279,7 @@ class ProjectListController extends Controller
 
         Alert::success('Success', 'Project Added!!');
 
-        
+
         return redirect()->route('projectlist')->with('success', 'New project has been created successfully.');
     }
 
@@ -284,14 +296,14 @@ class ProjectListController extends Controller
     //         'meeting' => 'required|date',
     //         'start_date' => 'required|date',
     //         'finish_cmt' => 'required|date',
-    //         'remarks' => 'nullable', 
+    //         'remarks' => 'nullable',
     //     ]);
 
     //     $imagePaths = [];
     //     if ($request->hasFile('image')) {
     //         foreach ($request->file('image') as $image) {
     //             $imageName = $image->getClientOriginalName();
-    //             $imagePath = 'images/' . $imageName; 
+    //             $imagePath = 'images/' . $imageName;
     //             $image->move(public_path('images'), $imageName);
     //             $imagePaths[] = $imagePath;
     //         }
@@ -321,7 +333,7 @@ class ProjectListController extends Controller
     //         'status' => $status,
     //         'adherence' => $adherence,
     //         'month' => $months,
-    //         'image' => json_encode($imagePaths), 
+    //         'image' => json_encode($imagePaths),
     //     ]);
 
 
@@ -337,7 +349,7 @@ class ProjectListController extends Controller
 
     //             Alert::success('Success', 'Project Added!!');
 
-    
+
     //                 return redirect()->route('projectlist')->with('success', 'New project has been created successfully.');
 
     // }

@@ -42,8 +42,8 @@
             <div class="card mt-4">
                 <div class="card-body">
                     <div class="card-body">
-                    <!-- {{ dump($project->id) }} -->
-                    <form method="POST" action="{{ route('update.project', ['id' => $project->id]) }}">
+                        <!-- {{ dump($project->id) }} -->
+                        <form method="POST" action="{{ route('update.project', ['id' => $project->id]) }}">
                             @csrf
                             @method('PUT')
                             <input type="hidden" name="id" value="{{ $project->id }}">
@@ -84,21 +84,6 @@
                                     </div>
 
 
-                                </div>
-
-                                <div class="row g-2 mt-4">
-                                    <div class="col-sm-12">
-                                        <div id="queuedImages" class="queued-div p-2">
-                                            <div id="imagePreviewContainer" class="d-flex flex-wrap mr-3"></div>
-                                        </div>
-                                        <div id="id-input-div" class="mt-2">
-                                            <label class="text-dark text-bold">Insert Picture(s) <span
-                                                    class="text-danger">*</span></label>
-                                            <label>Drag & drop photos here or click to browse</label>
-                                            <input name="images" id="input_image" type="file" class="form-control"
-                                                accept="image/jpeg, image/png, image/jpg" />
-                                        </div>
-                                    </div>
                                 </div>
 
                                 <div class="row mt-4">
@@ -202,7 +187,8 @@
                                         </div>
                                         <div class="col">
                                             <label>Date</label>
-                                            <input type="date" class="form-control" id="finish_act" name="finish_act" value="{{$project->finish_act}}"/>
+                                            <input type="date" class="form-control" id="finish_act" name="finish_act"
+                                                value="{{ $project->finish_act }}" />
                                         </div>
                                         <div class="col">
                                             <label>Day</label>
@@ -219,7 +205,8 @@
                                         </div>
                                         <div class="col">
                                             <label>Date</label>
-                                            <input type="date" class="form-control" id="launchdate" name="launchdate"  value="{{$project->cost->launch_avail}}"/>
+                                            <input type="date" class="form-control" id="launchdate" name="launchdate"
+                                                value="{{ $project->cost->launch_avail }}" />
                                         </div>
                                         <div class="col">
                                             <label>Day</label>
@@ -232,29 +219,21 @@
                                     <div class="col">
                                         <label>Delay Reason</label>
                                         <input type="text" class="form-control" id="delayreason"
-                                            placeholder="Enter Remarks" name="delayreason" value="{{$project->cost->delay_reason}}">
+                                            placeholder="Enter Remarks" name="delayreason"
+                                            value="{{ $project->cost->delay_reason }}">
                                     </div>
 
-                                    <!-- <div class="col">
-                                        <label>Status</label>
-                                        <select id="status_up" class="form-control" name="status">
-                                            <option selected> -- Select Here -- </option>
-                                            <option value="Finished">Finished</option>
-                                            <option value="On Going">On Going</option>
-                                            <option value="Drop">Drop</option>
-                                        </select>
-                                    </div> -->
-                                </div>
+                                    <div class="col">
+                                        <label>Remarks</label>
+                                        <input type="text" class="form-control" id="remarks"
+                                            placeholder="Enter Remarks" name="remarks" value="{{ $project->remarks }}">
+                                    </div>
 
-                                <div class="row mt-4">
-                                    <label>Remarks</label>
-                                    <input type="text" class="form-control" id="remarks"
-                                        placeholder="Enter Remarks" name="remarks" value="{{ $project->remarks }}">
                                 </div>
 
                                 <div style="text-align: right;" class="mt-4">
-                                    <input type="button" id="cancel" class="btn btn-danger rubik-font"
-                                        value="Cancel" />
+                                    <a href="{{ route('projectdetail', ['project' => $project->id]) }}" type="button"
+                                        id="cancel" class="btn btn-danger rubik-font" value="Cancel">Cancel</a>
                                     <input type="submit" id="saveEdit" class=" btn btn-primary rubik-font"
                                         value="Save" />
                                 </div>
@@ -550,7 +529,7 @@
                     'Finish Date (CMT)': $('#finish_cmt').val(),
                     'Remarks': $('#remarks').val(),
                     'Cost Budget': $('#costbudget').val(),
-                    'Quantity':$('#quantity').val()
+                    'Quantity': $('#quantity').val()
                 };
 
                 // Display the filled data
@@ -596,6 +575,4 @@
             displayFormData();
         });
     </script>
-
-   
 @endsection

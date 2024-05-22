@@ -84,49 +84,57 @@
         <span class="mask bg-dark opacity-6"></span>
     </div>
 
-    <aside class="sidenav bg-dark navbar navbar-vertical navbar-expand-xs border-0 border-radius-xl my-3 fixed-start ms-4 shadow-lg" id="sidenav-main">
+    <aside
+        class="sidenav bg-dark navbar navbar-vertical navbar-expand-xs border-0 border-radius-xl my-3 fixed-start ms-4 shadow-lg"
+        id="sidenav-main">
         <div class="sidenav-header">
-            <i class="fas fa-times p-3 cursor-pointer text-secondary opacity-5 position-absolute end-0 top-0 d-none d-xl-none" aria-hidden="true" id="iconSidenav"></i>
+            <i class="fas fa-times p-3 cursor-pointer text-secondary opacity-5 position-absolute end-0 top-0 d-none d-xl-none"
+                aria-hidden="true" id="iconSidenav"></i>
             {{-- <a class="navbar-brand m-0" href="{{ route('home') }}"
             target="_blank">
             <img src="./img/logo-ct-dark.png" class="navbar-brand-img h-100" alt="main_logo">
             <span class="ms-1 font-weight-bold">Argon Dashboard 2 Laravel</span>
             </a> --}}
         </div>
-        <hr class="horizontal dark mt-0">
+        <hr class="horizontal light mt-0">
         <div class="collapse navbar-collapse  w-auto " id="sidenav-collapse-main">
             <ul class="navbar-nav">
                 <li class="nav-item">
-                    <a class="nav-link {{ Route::currentRouteName() == 'home' ? 'active' : '' }}" href="{{ route('dashboard') }}">
-                        <i class="fa fa-home"></i>
-                        <span class="nav-link-text ms-1">Dashboard</span>
+                    <a class="nav-link {{ Route::currentRouteName() == 'home' ? 'active' : '' }}"
+                        href="{{ route('dashboard') }}">
+                        <i class="fa fa-home text-white"></i>
+                        <span class="nav-link-text ms-1 text-white">Dashboard</span>
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link {{ Route::currentRouteName() == 'projectlist' ? 'active' : '' }}" href="{{ route('projectlist') }}">
-                        <i class="fa fa-list"></i>
-                        <span class="nav-link-text ms-1">Project List</span>
+                    <a class="nav-link {{ Route::currentRouteName() == 'projectlist' ? 'active' : '' }}"
+                        href="{{ route('projectlist') }}">
+                        <i class="fa fa-list text-white"></i>
+                        <span class="nav-link-text ms-1 text-white">Project List</span>
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link {{ Route::currentRouteName() == 'taskmanager' ? 'active' : '' }}" href="{{ route('taskmanager') }}">
-                        <i class="fa fa-book"></i>
-                        <span class="nav-link-text ms-1">Task Manager</span>
+                    <a class="nav-link {{ Route::currentRouteName() == 'taskmanager' ? 'active' : '' }}"
+                        href="{{ route('taskmanager') }}">
+                        <i class="fa fa-book text-white"></i>
+                        <span class="nav-link-text ms-1 text-white">Task Manager</span>
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link {{ Route::currentRouteName() == 'calendar' ? 'active' : '' }}" href="{{ route('calendar') }}">
-                        <i class="fa fa-calendar"></i>
-                        <span class="nav-link-text ms-1">Calendar</span>
+                    <a class="nav-link {{ Route::currentRouteName() == 'calendar' ? 'active' : '' }}"
+                        href="{{ route('calendar') }}">
+                        <i class="fa fa-calendar text-white"></i>
+                        <span class="nav-link-text ms-1 text-white">Calendar</span>
                     </a>
                 </li>
                 @if (session('role') == 'manager' || session('role') == 'Admin')
-                <li class="nav-item">
-                    <a class="nav-link {{ Route::currentRouteName() == 'dss' ? 'active' : '' }}" href="{{ route('dss') }}">
-                        <i class="fa fa-plus"></i>
-                        <span class="nav-link-text ms-1">Decision Support System</span>
-                    </a>
-                </li>
+                    <li class="nav-item">
+                        <a class="nav-link {{ Route::currentRouteName() == 'dss' ? 'active' : '' }}"
+                            href="{{ route('dss') }}">
+                            <i class="fa fa-plus text-white"></i>
+                            <span class="nav-link-text ms-1 text-white">Decision Support System</span>
+                        </a>
+                    </li>
                 @endif
 
                 {{-- <li class="nav-item mt-3 d-flex align-items-center">

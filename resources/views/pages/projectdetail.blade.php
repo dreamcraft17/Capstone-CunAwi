@@ -30,8 +30,6 @@
                             <h3 class="mt-3 text-center"><b style="color: #5e72e4;">Product Photo</b></h3>
                             <hr class="bg-dark" />
                             <div style="padding:10px; position: relative;">
-                                <!-- Left arrow -->
-                                <button class="slider-arrow left-arrow" onclick="showPrevImage()">&#8249;</button>
                                 <div class="slide-content" style="max-width: 850px; text-align: center;">
                                     <CENTER>
                                         <div id="slideshow-container fade">
@@ -40,20 +38,6 @@
                                                     <img class="mySlides img-fluid border-radius-md shadow-lg product-photo"
                                                         height="300" src="" style="display:block;" />
                                                 </a>
-                                                <!-- Overlay div for icons -->
-
-                                                <div class="image-overlay">
-                                                    <ul class="icon-left">
-                                                        <!-- Use the "data-mfp-src" attribute instead of "href" -->
-                                                        <li><a class="magnific-popup text-white" data-mfp-src=""><i
-                                                                    class="fa fa-search"></i></a></li>
-                                                    </ul>
-                                                    <ul class="icon-right">
-                                                        <li><a class="text-white" onclick=""><i
-                                                                    class="fa fa-trash"></i></a></li>
-                                                    </ul>
-                                                </div>
-
                                             </div>
 
                                             <div class="image-container">
@@ -65,8 +49,6 @@
                                         </div>
                                     </CENTER>
                                 </div>
-                                <!-- Right arrow -->
-                                <button class="slider-arrow right-arrow" onclick="showNextImage()">&#8250;</button>
                             </div>
                             <hr class="bg-dark" />
                             <CENTER>
@@ -78,9 +60,23 @@
                         <div class="card border-1 mt-4">
                             <div class="container">
                                 <div class="card-body p-3 rubik-font toy-note">
-                                    <h3><b style="color: #5e72e4;">Remarks</b></h3>
-                                    <p class="rubik-font mt-2" style="white-space: pre-line;" id=""></p>
-                                    <p class="rubik-font mt-2"><i>{{ $project->remarks }}</i></p>
+                                    <h4 class="mt-1" style="color: #5e72e4;">Adherence</h4>
+                                    <p class="rubik-font mt-1">
+
+                                        {{ $project->adherence }}%
+
+                                    </p>
+                                    <h4 class="mt-2" style="color: #5e72e4;">Lead Time</h4>
+                                    <p class="rubik-font mt-1 mb-2">
+                                        @if ($project->cost)
+                                            {{ $project->cost->lead_time }}
+                                        @else
+                                            N/A
+                                        @endif
+                                    </p>
+
+                                    <p class="rubik-font mt-3 mb-2"> <i>Lead Time Goals: 17 Days</i></p>
+
                                 </div>
                             </div>
                         </div>
@@ -145,26 +141,13 @@
                         <div class="card border-1 mt-4">
                             <div class="container">
                                 <div class="card-body p-3 rubik-font toy-note">
-                                    <h4 class="mt-1" style="color: #5e72e4;">Adherence</h4>
-                                    <p class="rubik-font mt-1">
-                                        @if ($project->adherence)
-                                            {{ $project->adherence }}
-                                        @else
-                                            0
-                                        @endif
-                                    </p>
-                                    <h4 class="mt-2" style="color: #5e72e4;">Lead Time</h4>
-                                    <p class="rubik-font mt-1 mb-2">
-                                        @if ($project->cost)
-                                            {{ $project->cost->lead_time }}
-                                        @else
-                                            N/A
-                                        @endif
-                                    </p>
-
+                                    <h3><b style="color: #5e72e4;">Remarks</b></h3>
+                                    <p class="rubik-font mt-2" style="white-space: pre-line;" id=""></p>
+                                    <p class="rubik-font mt-2"><i>{{ $project->remarks }}</i></p>
                                 </div>
                             </div>
                         </div>
+
                     </div>
 
                     <div class="container">
@@ -195,7 +178,7 @@
                                         </td>
                                         <td class="rubik-font">
                                             @if ($project->cost)
-                                                 {{ $project->cost->delay_reason ?? 'N/A' }}
+                                                {{ $project->cost->delay_reason ?? 'N/A' }}
                                             @else
                                                 N/A
                                             @endif
@@ -209,15 +192,18 @@
                         </div>
                     </div>
 
-                    <div style="text-align: left;" class="mt-5 mb-0">
-                        <div style="display: flex; gap: 10px;">
-                            <a href="{{ route('editproject', ['id' => $project->id]) }}" class="btn btn-warning rubik-font">Edit</a>
-                            
+                    <div class="row">
+                        <div class="col-1">
+                            <a href="{{ route('editproject', ['id' => $project->id]) }}"
+                                class="btn btn-warning rubik-font">Edit</a>
+                        </div>
+                        <div class="col-1" style="margin-right: 6px;">
                             <form action="{{ route('project.drop', ['id' => $project->id]) }}" method="post">
                                 @csrf
                                 <input type="submit" class="btn btn-danger rubik-font" value="Drop" />
                             </form>
-                            
+                        </div>
+                        <div class="col-1">
                             <form action="/projects/{{ $project->id }}" method="POST">
                                 @csrf
                                 @method('DELETE')
@@ -225,8 +211,6 @@
                             </form>
                         </div>
                     </div>
-
-
                 </div>
             </div>
         </div>

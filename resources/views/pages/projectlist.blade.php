@@ -190,11 +190,11 @@ https://cdn.datatables.net/1.13.1/css/jquery.dataTables.min.css" rel="stylesheet
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script> <!-- Include jQuery before your script -->
     <script
         src="
-                                                                                                                                                                                                                                                                                                                                                                                    https://cdn.datatables.net/1.13.1/js/jquery.dataTables.min.js">
+                                                                                                                                                                                                                                                                                                                                                                                                            https://cdn.datatables.net/1.13.1/js/jquery.dataTables.min.js">
     </script>
     <script type="text/javascript" charset="utf8"
         src="
-                                                                                                                                                                                                                                                                                                                                                                                    https://cdn.datatables.net/fixedheader/3.2.1/js/dataTables.fixedHeader.min.js">
+                                                                                                                                                                                                                                                                                                                                                                                                            https://cdn.datatables.net/fixedheader/3.2.1/js/dataTables.fixedHeader.min.js">
     </script>
 
     <script>
@@ -282,7 +282,7 @@ https://cdn.datatables.net/1.13.1/css/jquery.dataTables.min.css" rel="stylesheet
                                         ); // Check the project detail URL in the console
 
                                         // Create the link with the generated URL
-                                        return '<a style="margin-bottom: 0px; background-color: #FFE5F1; color: #E2328B;" class="btn" title="See Project Detail" href="' +
+                                        return '<a style="margin-bottom: 0px; background-color: #527CB2; color: white;" class="btn" title="See Project Detail" href="' +
                                             projectDetailURL +
                                             '"><i class="fa fa-info" aria-hidden="true"></i></a>';
                                     }
@@ -337,7 +337,7 @@ https://cdn.datatables.net/1.13.1/css/jquery.dataTables.min.css" rel="stylesheet
                                         if (data === 'Finished') {
                                             return '<span class="badge badge-soft-success rounded-pill d-inline">' +
                                                 data + '</span>';
-                                        } else if (data === 'Ongoing') {
+                                        } else if (data === 'On going') {
                                             return '<span class="badge badge-secondary-subtle rounded-pill d-inline">' +
                                                 data + '</span>';
                                         } else if (data === 'Draft') {
