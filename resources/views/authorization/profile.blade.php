@@ -47,12 +47,12 @@
                                     </span>
                                 </div>
                             </li>
-                            <li class="nav-item">
+                            <!-- <li class="nav-item">
                                 <a class="nav-link mb-0 px-0 py-1 d-flex align-items-center justify-content-center " data-bs-toggle="tab" href="javascript:;" role="tab" aria-selected="false">
                                     <i class="ni ni-email-83"></i>
                                     <span class="ms-2">Setting</span>
                                 </a>
-                            </li>
+                            </li> -->
                         </ul>
                     </div>
                 </div>
@@ -115,7 +115,7 @@
             </div>
         </div>
 
-
+        @if (session('role') == 'Admin')
         <div class="row mt-4 mx-2">
             <div class="col-12">
                 <div class="card mb-4">
@@ -163,7 +163,7 @@
                 </div>
             </div>
         </div>
-
+        @endif
         @include('layouts.footer')
     </div>
     {{-- Nambahin footer dari layout || footer di akhir --}}
