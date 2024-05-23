@@ -45,15 +45,19 @@
                     <div class="card-body">
                         <form action="{{ route('production.decision') }}" method="POST">
                             @csrf
-                            <div class="form-group">
-                                <label for="totalToys">Total Toys to Produce:</label>
-                                <input type="number" class="form-control" id="totalToys" name="totalToys" required>
+                            <div class="row">
+                                <div class="col form-group">
+                                    <label for="totalToys">Total Toys to Produce:</label>
+                                    <input type="number" class="form-control" id="totalToys" name="totalToys" required>
+                                </div>
+                                <div class="col form-group">
+                                    <label for="months">Production Duration (Months):</label>
+                                    <input type="number" class="form-control" id="months" name="months" required>
+                                </div>
                             </div>
-                            <div class="form-group">
-                                <label for="months">Production Duration (Months):</label>
-                                <input type="number" class="form-control" id="months" name="months" required>
-                            </div>
-                            <button type="submit" class="btn btn-primary">Evaluate Production Decision</button>
+                            <CENTER class="mt-4 mb-1">
+                                <button type="submit" class="btn btn-primary">Evaluate Production Decision</button>
+                            </CENTER>
                         </form>
                     </div>
                 </div>
@@ -153,10 +157,6 @@
                 <div class="card z-index-2 h-100">
                     <div class="card-header pb-0 pt-3 bg-transparent">
                         <h6 class="text-capitalize">Production Overview by Months</h6>
-                        <p class="text-sm mb-0">
-                            <i class="fa fa-arrow-up text-success"></i>
-                            <span class="font-weight-bold">4% more</span> in 2024
-                        </p>
                     </div>
                     <div class="card-body p-3">
                         {{-- Bar Chart --}}

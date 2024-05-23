@@ -295,14 +295,14 @@
                                     </tr>
                                 </tbody>
                             </table>
+
+                            <h3 class="mt-4"><b style="color: #5e72e4;">Remarks</b></h3>
+                            <div class="card-body p-3 rubik-font toy-note remarks-container">
+                                <p class="rubik-font mt-2" style="white-space: pre-line;" id="displayRemarks"></p>
+                            </div>
+
                         </div>
                     </div>
-
-                    <h3><b style="color: #5e72e4;">Remarks</b></h3>
-                    <div class="card-body p-3 rubik-font toy-note remarks-container">
-                        <p class="rubik-font mt-2" style="white-space: pre-line;" id="displayRemarks"></p>
-                    </div>
-
                     <!-- <input type="hidden" name="draft" id="statusField" value="0"> -->
 
                     <div style="text-align: right;" class="mt-4">
