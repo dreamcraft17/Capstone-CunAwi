@@ -2,7 +2,7 @@
     <link rel="stylesheet" href="/argon/assets/css/argon-dashboard.css">
     <link rel="stylesheet" href="/font-awesome/css/font-awesome.min.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
-    <title>Kelompok 8</title>
+    <title>StreamFlow</title>
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://cdn.datatables.net/1.13.1/css/jquery.dataTables.min.css" rel="stylesheet" />
     <link href="https://fonts.googleapis.com/css2?family=Rubik&display=swap" rel="stylesheet">

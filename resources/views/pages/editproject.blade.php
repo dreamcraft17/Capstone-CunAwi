@@ -111,14 +111,14 @@
                                     </div>
 
                                     <div class="col">
-                                        <label>Quantity</label>
+                                        <label>Quantity<span class="text-danger">*</span></label>
                                         <input type="number" class="form-control" name="qty" id="quantity"
                                             autocomplete="off" placeholder="Input Toy Quota"
                                             value="{{ $project->cost->qty }}" />
                                     </div>
 
                                     <div class="col">
-                                        <label>Cost Budget</label>
+                                        <label>Cost Budget<span class="text-danger">*</span></label>
                                         <input type="number" step="0.01" class="form-control" name="costbudget"
                                             id="costbudget" autocomplete="off" placeholder="Input Cost Budget"
                                             value="{{ $project->cost->cost }}" />
@@ -183,7 +183,8 @@
                                     <div class="row">
                                         <div class="col">
                                             <br />
-                                            <p class="text-dark mt-2">Finish Date (ACT)</p>
+                                            <p class="text-dark mt-2">Finish Date (ACT)<span class="text-danger">*</span>
+                                            </p>
                                         </div>
                                         <div class="col">
                                             <label>Date</label>
@@ -201,7 +202,7 @@
                                     <div class="row">
                                         <div class="col">
                                             <br />
-                                            <p class="text-dark mt-2">Launch Avail</p>
+                                            <p class="text-dark mt-2">Launch Avail<span class="text-danger">*</span></p>
                                         </div>
                                         <div class="col">
                                             <label>Date</label>
@@ -219,7 +220,7 @@
                                     <div class="col">
                                         <label>Delay Reason</label>
                                         <input type="text" class="form-control" id="delayreason"
-                                            placeholder="Enter Remarks" name="delayreason"
+                                            placeholder="Enter Delay Reason" name="delayreason"
                                             value="{{ $project->cost->delay_reason }}">
                                     </div>
 
