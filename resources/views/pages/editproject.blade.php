@@ -281,6 +281,32 @@
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
+    document.getElementById('image').addEventListener('change', function(event) {
+        var imagePreviewContainer = document.getElementById('imagePreviewContainer');
+
+        // Remove any existing image preview
+        while (imagePreviewContainer.firstChild) {
+            imagePreviewContainer.removeChild(imagePreviewContainer.firstChild);
+        }
+
+        // Get the selected file
+        var file = event.target.files[0];
+        if (file) {
+            var reader = new FileReader();
+            reader.onload = function(e) {
+                var img = document.createElement('img');
+                img.src = e.target.result;
+                img.alt = 'Project Image';
+                img.className = 'mr-2 mb-2';
+                img.width = 100;
+                imagePreviewContainer.appendChild(img);
+            }
+            reader.readAsDataURL(file);
+        }
+    });
+</script>
+
+<script>
     $(document).ready(function() {
             // Add a click event handler to the "Add New" button
             $("#append").click(function() {
