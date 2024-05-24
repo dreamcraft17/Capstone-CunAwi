@@ -1,289 +1,287 @@
 @extends('layouts.sidenav')
 
 @section('head')
-    {{-- style, script, manggil library script cdn --}}
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.min.js"></script>
-    <link rel="stylesheet" href="argon/assets/css/argon-dashboard.css">
-    <link rel="stylesheet" href="argon/assets/css/font-awesome.min.css">
-    <meta name="csrf-token" content="{{ csrf_token() }}">
+{{-- style, script, manggil library script cdn --}}
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.min.js"></script>
+<link rel="stylesheet" href="argon/assets/css/argon-dashboard.css">
+<link rel="stylesheet" href="argon/assets/css/font-awesome.min.css">
+<meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <style>
-        .preview-image {
-            max-width: 100px;
-            max-height: 100px;
-            margin-right: 10px;
-            margin-bottom: 10px;
-        }
+<style>
+    .preview-image {
+        max-width: 100px;
+        max-height: 100px;
+        margin-right: 10px;
+        margin-bottom: 10px;
+    }
 
-        .remarks-container {
-            border: 2px solid #cbcbcb;
-            border-radius: 2px;
-            padding: 10px;
-        }
-    </style>
+    .remarks-container {
+        border: 2px solid #cbcbcb;
+        border-radius: 2px;
+        padding: 10px;
+    }
+</style>
 @endsection
 
 @section('content')
-    @include('layouts.topnav', ['title' => 'Edit Project'])
+@include('layouts.topnav', ['title' => 'Edit Project'])
 
-    {{-- Di sini baru ngoding, buatla apa gitu --}}
-    <div class="container">
+{{-- Di sini baru ngoding, buatla apa gitu --}}
+<div class="container">
 
-        <div class="card overflow-hidden">
-            <div class="bg-soft">
-                <div class="row">
-                    <div class="col m-4">
-                        <h2 style="color: black; text-align: center;"> Edit Project Form </h2>
-                    </div>
+    <div class="card overflow-hidden">
+        <div class="bg-soft">
+            <div class="row">
+                <div class="col m-4">
+                    <h2 style="color: black; text-align: center;"> Edit Project Form </h2>
                 </div>
             </div>
         </div>
-        <div class="row">
-            <div class="card mt-4">
+    </div>
+    <div class="row">
+        <div class="card mt-4">
+            <div class="card-body">
                 <div class="card-body">
-                    <div class="card-body">
-                        <!-- {{ dump($project->id) }} -->
-                        <form method="POST" action="{{ route('update.project', ['id' => $project->id]) }}"
-                            enctype="multipart/form-data">
-                            @csrf
-                            <input type="hidden" name="id" value="{{ $project->id }}">
-                            <div class="row mb-4">
+                    <!-- {{ dump($project->id) }} -->
+                    <form method="POST" action="{{ route('update.project', ['id' => $project->id]) }}"
+                        enctype="multipart/form-data">
+                        @csrf
+                        <input type="hidden" name="id" value="{{ $project->id }}">
+                        <div class="row mb-4">
+                            <div class="row">
+                                <div class="col">
+                                    <label>Product ID <span class="text-danger">*</span></label>
+                                    <input type="text" class="form-control" id="productID" name="productID"
+                                        placeholder="Click Here to Enter" value="{{ $project->productID }}" />
+                                </div>
+
+                                <div class="col">
+                                    <label>Toy Name <span class="text-danger">*</span></label>
+                                    <input type="text" class="form-control" id="toyName"
+                                        placeholder="Click Here to Enter" name="toyName"
+                                        value="{{ $project->toyName }}">
+                                </div>
+
+                                <div class="col">
+                                    <label>Product Engineering<span class="text-danger">*</span></label>
+                                    <select id="pe" class="form-control" name="pe">
+                                        <option selected value="{{ $project->pe }}"> {{ $project->pe }}</option>
+                                        <option value="Emily Jhonson">Emily Johnson</option>
+                                        <option value="Jessica Lee">Jessica Lee</option>
+                                        <option value="Ryan Johnson">Ryan Johnson</option>
+                                    </select>
+                                </div>
+
+                                <div class="col">
+                                    <label>Product Design<span class="text-danger">*</span></label>
+                                    <select id="designer" class="form-control" name="designer">
+                                        <option selected value="{{ $project->designer }}">{{ $project->designer }}
+                                        </option>
+                                        <option value="Sarah Davis">Sarah Davis</option>
+                                        <option value="Dnaiel Kim">Daniel Kim</option>
+                                        <option value="Ethan Chen">Ethan Chen</option>
+                                    </select>
+                                </div>
+
+
+                            </div>
+
+                            <div class="row mt-4">
+                                <div class="col">
+                                    <label>Category Material <span class="text-danger">*</span></label>
+                                    <select id="category" class="form-control" name="category">
+                                        <option selected value="{{ $project->category }}">{{ $project->category }}
+                                        </option>
+                                        <option value="Plastic">Plastic</option>
+                                        <option value="Rubber">Rubber</option>
+                                        <option value="Metal">Metal</option>
+                                        <option value="Plastic, Rubber">Plastic, Rubber</option>
+                                        <option value="Plastic, Metal">Plastic, Metal</option>
+                                        <option value="Rubber, Metal">Rubber, Metal</option>
+                                        <option value="Plastic, Rubber, Metal">Plastic, Rubber, Metal</option>
+                                        <option value="Cardboard">Cardboard</option>
+                                    </select>
+                                </div>
+
+                                <div class="col">
+                                    <label>Product Description <span class="text-danger">*</span></label>
+                                    <input type="text" class="form-control" id="description"
+                                        placeholder="Enter Description" name="description"
+                                        value="{{ $project->description }}">
+                                </div>
+
+                                <div class="col">
+                                    <label>Quantity<span class="text-danger">*</span></label>
+                                    <input type="number" class="form-control" name="qty" id="quantity"
+                                        autocomplete="off" placeholder="Input Toy Quota"
+                                        value="{{ $project->cost->qty }}" />
+                                </div>
+
+                                <div class="col">
+                                    <label>Cost Budget<span class="text-danger">*</span></label>
+                                    <input type="number" step="0.01" class="form-control" name="costbudget"
+                                        id="costbudget" autocomplete="off" placeholder="Input Cost Budget"
+                                        value="{{ $project->cost->cost }}" />
+                                </div>
+                            </div>
+
+                            <div class="row g-2 mt-4">
+                                <div class="col-sm-12">
+                                    <div id="queuedImages" class="queued-div p-2">
+                                        <div id="imagePreviewContainer" class="d-flex flex-wrap mr-3">
+                                            @if ($project->image)
+                                            <img src="{{ asset('product_img/' . $project->image) }}" alt="Project Image"
+                                                class="mr-2 mb-2" width="100">
+                                            @endif
+                                        </div>
+                                    </div>
+                                    <div id="id-input-div" class="mt-2">
+                                        <label class="text-dark text-bold">Insert Picture(s) <span
+                                                class="text-danger">*</span></label>
+                                        <label>Drag & drop photos here or click to browse</label>
+                                        <input name="image" id="image" type="file" class="form-control" />
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="container mt-4">
                                 <div class="row">
                                     <div class="col">
-                                        <label>Product ID <span class="text-danger">*</span></label>
-                                        <input type="text" class="form-control" id="productID" name="productID"
-                                            placeholder="Click Here to Enter" value="{{ $project->productID }}" />
+                                        <br />
+                                        <p class="text-dark mt-2">Meeting Date</p>
                                     </div>
-
                                     <div class="col">
-                                        <label>Toy Name <span class="text-danger">*</span></label>
-                                        <input type="text" class="form-control" id="toyName"
-                                            placeholder="Click Here to Enter" name="toyName"
-                                            value="{{ $project->toyName }}">
+                                        <label>Date</label>
+                                        <input type="date" class="form-control" id="meeting" name="meeting"
+                                            value="{{ $project->meeting }}" {{ $project->status === 'Draft' ? '' :
+                                        'readonly' }} />
                                     </div>
-
                                     <div class="col">
-                                        <label>Product Engineering<span class="text-danger">*</span></label>
-                                        <select id="pe" class="form-control" name="pe">
-                                            <option selected value="{{ $project->pe }}"> {{ $project->pe }}</option>
-                                            <option value="Emily Jhonson">Emily Johnson</option>
-                                            <option value="Jessica Lee">Jessica Lee</option>
-                                            <option value="Ryan Johnson">Ryan Johnson</option>
-                                        </select>
-                                    </div>
-
-                                    <div class="col">
-                                        <label>Product Design<span class="text-danger">*</span></label>
-                                        <select id="designer" class="form-control" name="designer">
-                                            <option selected value="{{ $project->designer }}">{{ $project->designer }}
-                                            </option>
-                                            <option value="Sarah Davis">Sarah Davis</option>
-                                            <option value="Dnaiel Kim">Daniel Kim</option>
-                                            <option value="Ethan Chen">Ethan Chen</option>
-                                        </select>
-                                    </div>
-
-
-                                </div>
-
-                                <div class="row mt-4">
-                                    <div class="col">
-                                        <label>Category Material <span class="text-danger">*</span></label>
-                                        <select id="category" class="form-control" name="category">
-                                            <option selected value="{{ $project->category }}">{{ $project->category }}
-                                            </option>
-                                            <option value="Plastic">Plastic</option>
-                                            <option value="Rubber">Rubber</option>
-                                            <option value="Metal">Metal</option>
-                                            <option value="Plastic, Rubber">Plastic, Rubber</option>
-                                            <option value="Plastic, Metal">Plastic, Metal</option>
-                                            <option value="Rubber, Metal">Rubber, Metal</option>
-                                            <option value="Plastic, Rubber, Metal">Plastic, Rubber, Metal</option>
-                                            <option value="Cardboard">Cardboard</option>
-                                        </select>
-                                    </div>
-
-                                    <div class="col">
-                                        <label>Product Description <span class="text-danger">*</span></label>
-                                        <input type="text" class="form-control" id="description"
-                                            placeholder="Enter Description" name="description"
-                                            value="{{ $project->description }}">
-                                    </div>
-
-                                    <div class="col">
-                                        <label>Quantity<span class="text-danger">*</span></label>
-                                        <input type="number" class="form-control" name="qty" id="quantity"
-                                            autocomplete="off" placeholder="Input Toy Quota"
-                                            value="{{ $project->cost->qty }}" />
-                                    </div>
-
-                                    <div class="col">
-                                        <label>Cost Budget<span class="text-danger">*</span></label>
-                                        <input type="number" step="0.01" class="form-control" name="costbudget"
-                                            id="costbudget" autocomplete="off" placeholder="Input Cost Budget"
-                                            value="{{ $project->cost->cost }}" />
+                                        <label>Day</label>
+                                        <input type="text" class="form-control" id="koday" readonly />
                                     </div>
                                 </div>
+                            </div>
 
-                                <div class="row g-2 mt-4">
-                                    <div class="col-sm-12">
-                                        <div id="queuedImages" class="queued-div p-2">
-                                            <div id="imagePreviewContainer" class="d-flex flex-wrap mr-3">
-                                                @if ($project->image)
-                                                    <img src="{{ asset('product_img/' . $project->image) }}"
-                                                        alt="Project Image" class="mr-2 mb-2" width="100">
-                                                @endif
-                                            </div>
-                                        </div>
-                                        <div id="id-input-div" class="mt-2">
-                                            <label class="text-dark text-bold">Insert Picture(s) <span
-                                                    class="text-danger">*</span></label>
-                                            <label>Drag & drop photos here or click to browse</label>
-                                            <input name="image" id="image" type="file" class="form-control" />
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="container mt-4">
-                                    <div class="row">
-                                        <div class="col">
-                                            <br />
-                                            <p class="text-dark mt-2">Meeting Date</p>
-                                        </div>
-                                        <div class="col">
-                                            <label>Date</label>
-                                            <input type="date" class="form-control" id="meeting" name="meeting"
-                                                value="{{ $project->meeting }}"
-                                                {{ $project->status === 'Draft' ? '' : 'readonly' }} />
-                                        </div>
-                                        <div class="col">
-                                            <label>Day</label>
-                                            <input type="text" class="form-control" id="koday" readonly />
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="container mt-4">
-                                    <div class="row">
-                                        <div class="col">
-                                            <br />
-                                            <p class="text-dark mt-2">Start Date</p>
-                                        </div>
-                                        <div class="col">
-                                            <label>Date</label>
-                                            <input type="date" class="form-control" id="start_date" name="start_date"
-                                                value="{{ $project->start_date }}"
-                                                {{ $project->status === 'Draft' ? '' : 'readonly' }} />
-                                        </div>
-                                        <div class="col">
-                                            <label>Day</label>
-                                            <input type="text" class="form-control" id="startday" readonly />
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="container mt-4">
-                                    <div class="row">
-                                        <div class="col">
-                                            <br />
-                                            <p class="text-dark mt-2">Finish Date (CMT)</p>
-                                        </div>
-                                        <div class="col">
-                                            <label>Date</label>
-                                            <input type="date" class="form-control" id="finish_cmt" name="finish_cmt"
-                                                value="{{ $project->finish_cmt }}"
-                                                {{ $project->status === 'Draft' ? '' : 'readonly' }} />
-                                        </div>
-                                        <div class="col">
-                                            <label>Day</label>
-                                            <input type="text" class="form-control" id="finishday" readonly />
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="container mt-4">
-                                    <div class="row">
-                                        <div class="col">
-                                            <br />
-                                            <p class="text-dark mt-2">Finish Date (ACT)<span class="text-danger">*</span>
-                                            </p>
-                                        </div>
-                                        <div class="col">
-                                            <label>Date</label>
-                                            <input type="date" class="form-control" id="finish_act" name="finish_act"
-                                                value="{{ $project->finish_act }}" />
-                                        </div>
-                                        <div class="col">
-                                            <label>Day</label>
-                                            <input type="text" class="form-control" id="finishdayact" readonly />
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="container mt-4">
-                                    <div class="row">
-                                        <div class="col">
-                                            <br />
-                                            <p class="text-dark mt-2">Launch Avail<span class="text-danger">*</span></p>
-                                        </div>
-                                        <div class="col">
-                                            <label>Date</label>
-                                            <input type="date" class="form-control" id="launchdate" name="launchdate"
-                                                value="{{ $project->cost->launch_avail }}" />
-                                        </div>
-                                        <div class="col">
-                                            <label>Day</label>
-                                            <input type="text" class="form-control" id="launchday" readonly />
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="row mt-4">
+                            <div class="container mt-4">
+                                <div class="row">
                                     <div class="col">
-                                        <label>Delay Reason</label>
-                                        <input type="text" class="form-control" id="delayreason"
-                                            placeholder="Enter Delay Reason" name="delayreason"
-                                            value="{{ $project->cost->delay_reason }}">
+                                        <br />
+                                        <p class="text-dark mt-2">Start Date</p>
                                     </div>
-
                                     <div class="col">
-                                        <label>Remarks</label>
-                                        <input type="text" class="form-control" id="remarks"
-                                            placeholder="Enter Remarks" name="remarks" value="{{ $project->remarks }}">
+                                        <label>Date</label>
+                                        <input type="date" class="form-control" id="start_date" name="start_date"
+                                            value="{{ $project->start_date }}" {{ $project->status === 'Draft' ? '' :
+                                        'readonly' }} />
                                     </div>
+                                    <div class="col">
+                                        <label>Day</label>
+                                        <input type="text" class="form-control" id="startday" readonly />
+                                    </div>
+                                </div>
+                            </div>
 
+                            <div class="container mt-4">
+                                <div class="row">
+                                    <div class="col">
+                                        <br />
+                                        <p class="text-dark mt-2">Finish Date (CMT)</p>
+                                    </div>
+                                    <div class="col">
+                                        <label>Date</label>
+                                        <input type="date" class="form-control" id="finish_cmt" name="finish_cmt"
+                                            value="{{ $project->finish_cmt }}" {{ $project->status === 'Draft' ? '' :
+                                        'readonly' }} />
+                                    </div>
+                                    <div class="col">
+                                        <label>Day</label>
+                                        <input type="text" class="form-control" id="finishday" readonly />
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="container mt-4">
+                                <div class="row">
+                                    <div class="col">
+                                        <br />
+                                        <p class="text-dark mt-2">Finish Date (ACT)<span class="text-danger">*</span>
+                                        </p>
+                                    </div>
+                                    <div class="col">
+                                        <label>Date</label>
+                                        <input type="date" class="form-control" id="finish_act" name="finish_act"
+                                            value="{{ $project->finish_act }}" />
+                                    </div>
+                                    <div class="col">
+                                        <label>Day</label>
+                                        <input type="text" class="form-control" id="finishdayact" readonly />
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="container mt-4">
+                                <div class="row">
+                                    <div class="col">
+                                        <br />
+                                        <p class="text-dark mt-2">Launch Avail<span class="text-danger">*</span></p>
+                                    </div>
+                                    <div class="col">
+                                        <label>Date</label>
+                                        <input type="date" class="form-control" id="launchdate" name="launchdate"
+                                            value="{{ $project->cost->launch_avail }}" />
+                                    </div>
+                                    <div class="col">
+                                        <label>Day</label>
+                                        <input type="text" class="form-control" id="launchday" readonly />
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row mt-4">
+                                <div class="col">
+                                    <label>Delay Reason</label>
+                                    <input type="text" class="form-control" id="delayreason"
+                                        placeholder="Enter Delay Reason" name="delayreason"
+                                        value="{{ $project->cost->delay_reason }}">
                                 </div>
 
-                                <input type="hidden" name="status" value="On going">
-
-                                <div style="text-align: right;" class="mt-4">
-                                    <a href="{{ route('projectdetail', ['project' => $project->id]) }}" type="button"
-                                        id="cancel" class="btn btn-danger rubik-font" value="Cancel">Cancel</a>
-                                    <button type="button" id="saveEdit"
-                                        class="btn btn-primary rubik-font">Save</button>
-
+                                <div class="col">
+                                    <label>Remarks</label>
+                                    <input type="text" class="form-control" id="remarks" placeholder="Enter Remarks"
+                                        name="remarks" value="{{ $project->remarks }}">
                                 </div>
 
                             </div>
-                        </form>
-                    </div>
+
+                            <input type="hidden" name="status" value="On going">
+
+                            <div style="text-align: right;" class="mt-4">
+                                <a href="{{ route('projectdetail', ['project' => $project->id]) }}" type="button"
+                                    id="cancel" class="btn btn-danger rubik-font" value="Cancel">Cancel</a>
+                                <button type="button" id="saveEdit" class="btn btn-primary rubik-font">Save</button>
+
+                            </div>
+
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>
-
-
-        @include('layouts.footer')
     </div>
-    {{-- Nambahin footer dari layout || footer di akhir --}}
 
 
-    {{-- Modal harus di luar div --}}
+    @include('layouts.footer')
+</div>
+{{-- Nambahin footer dari layout || footer di akhir --}}
 
 
+{{-- Modal harus di luar div --}}
 
-    <script>
-        $(document).ready(function() {
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function() {
             // Add a click event handler to the "Add New" button
             $("#append").click(function() {
                 // Clone and append the hidden content
@@ -379,10 +377,10 @@
 
 
         });
-    </script>
+</script>
 
-    <script>
-        $(document).ready(function() {
+<script>
+    $(document).ready(function() {
             // Function to display the uploaded image
             function displayUploadedImage(input) {
                 if (input.files && input.files[0]) {
@@ -418,12 +416,10 @@
                 displayFilledData();
             });
         });
-    </script>
+</script>
 
-    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
-
-    <script>
-        $(document).ready(function() {
+<script>
+    $(document).ready(function() {
             // Function to calculate the finish date based on the start date
             function calculatefinish_cmt(start_date) {
                 // Create a Date object from the start date
@@ -534,10 +530,10 @@
 
             fetchDay();
         });
-    </script>
+</script>
 
-    <script>
-        $(document).ready(function() {
+<script>
+    $(document).ready(function() {
             // Declare formData variable
             var formData = {};
 
@@ -601,59 +597,56 @@
             // Call displayFormData initially to populate the form data
             displayFormData();
         });
-    </script>
+</script>
 
-    <script>
-        $(document).ready(function() {
-            $("#saveEdit").click(function(e) {
-                e.preventDefault(); // Prevent default form submission
+<script>
+    $(document).ready(function() {
+        $('#saveEdit').click(function() {
+            var formData = new FormData();
+            formData.append('_token', $('input[name="_token"]').val());
+            formData.append('productID', $('#productID').val());
+            formData.append('toyName', $('#toyName').val());
+            formData.append('pe', $('#pe').val());
+            formData.append('designer', $('#designer').val());
+            formData.append('category', $('#category').val());
+            formData.append('description', $('#description').val());
+            formData.append('qty', $('#quantity').val());
+            formData.append('costbudget', $('#costbudget').val());
+            formData.append('meeting', $('#meeting').val());
+            formData.append('start_date', $('#start_date').val());
+            formData.append('finish_cmt', $('#finish_cmt').val());
+            formData.append('finish_act', $('#finish_act').val());
+            formData.append('launchdate', $('#launchdate').val());
+            formData.append('delayreason', $('#delayreason').val());
+            formData.append('remarks', $('#remarks').val());
+            formData.append('status', 'On going');
 
-                var formData = new FormData();
-                formData.append('_token', '{{ csrf_token() }}');
-                formData.append('id', '{{ $project->id }}'); // Include the project ID if needed
-                formData.append('productID', $("#productID").val());
-                formData.append('toyName', $("#toyName").val());
-                formData.append('pe', $("#pe").val());
-                formData.append('designer', $("#designer").val());
-                formData.append('category', $("#category").val());
-                formData.append('description', $("#description").val());
-                formData.append('meeting', $("#meeting").val());
-                formData.append('start_date', $("#start_date").val());
-                formData.append('finish_cmt', $("#finish_cmt").val());
-                formData.append('remarks', $("#remarks").val());
+            // Append the image file if it exists
+            if ($('#image')[0].files.length > 0) {
+                formData.append('image', $('#image')[0].files[0]);
+            }
 
-                // Handle file input for image
-                var image = $("#image")[0].files[0];
-                if (image) {
-                    formData.append('image', image);
+            $.ajax({
+                url: "{{ route('update.project', ['id' => $project->id]) }}",
+                type: "POST",
+                data: formData,
+                processData: false,
+                contentType: false,
+                success: function(response) {
+                    console.log(response);
+                    if (response.success) {
+                        window.location.href = response.redirect_url;
+                    } else {
+                        // Handle errors
+                        console.error('Error:', response);
+                    }
+                },
+                error: function(xhr, status, error) {
+                    console.error(xhr.responseText);
                 }
-                console.log(formData);
-
-                $.ajaxSetup({
-                    headers: {
-                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                    }
-                });
-
-                $.ajax({
-                    url: "{{ route('update.project', ['id' => $project->id]) }}",
-                    type: "POST",
-                    data: formData,
-                    success: function(response) {
-                        console.log(response);
-                        // Optionally, redirect to another page after successful submission
-                        // window.location.href = "{{ route('projectdetail', ['project' => $project->id]) }}";
-                    },
-                    error: function(xhr, status, error) {
-                        console.error(xhr.responseText);
-                    }
-                });
             });
-
-
-
-
-
         });
-    </script>
+    });
+</script>
+
 @endsection

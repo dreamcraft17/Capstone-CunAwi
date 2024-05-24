@@ -10,6 +10,7 @@ use RealRashid\SweetAlert\Facades\Alert;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Storage;
 
 
 // use App\Http\Controllers\ProjectListController;
@@ -118,7 +119,6 @@ class ProjectListController extends Controller
 
         $project = Data::findOrFail($id);
 
-
         $project->productID = $request->productID;
         $project->toyName = $request->toyName;
         $project->pe = $request->pe;
@@ -132,8 +132,6 @@ class ProjectListController extends Controller
         $project->remarks = $request->remarks;
         $project->status = $request->status;
 
-
-
         if ($request->finish_act) {
             $project->status = 'Finished';
         }
@@ -143,43 +141,43 @@ class ProjectListController extends Controller
             $finishActDate = Carbon::parse($request->finish_act);
             $finishCmtDate = Carbon::parse($request->finish_cmt);
 
-            // Compare dates to calculate adherence
-            if ($finishActDate->gt($finishCmtDate) ) {
+            if ($finishActDate->gt($finishCmtDate)) {
                 $project->adherence = 0; // 0%
-                // Calculate the lead time as days past the committed date
                 $daysPastCommitDate = $finishActDate->diffInDays($startDate);
-                $leadTime = $daysPastCommitDate; // Number of days past the committed date + 17 days goal
+                $leadTime = $daysPastCommitDate;
             } else {
                 $project->adherence = 100; // 100%
-                // Calculate the lead time as the total days from start to committed date
-                $leadTime = $finishActDate->diffInDays($startDate); // Total days from start to committed date
+                $leadTime = $finishActDate->diffInDays($startDate);
             }
 
-            // Update the lead time in the Cost model
             $cost = Cost::where('id', $id)->first();
             if ($cost) {
                 $cost->lead_time = $leadTime;
                 $cost->save();
             }
-
         }
 
+        // Image handling
+        $imageName = null;
         if ($request->hasFile('image')) {
-            // Validate and store the new image
-            $validatedData = $request->validate([
-                'image' => 'image|mimes:jpeg,png,jpg,gif|max:2048', // Adjust max file size as needed
-            ]);
-
-            // Delete the old image file if it exists
+            // Delete the old image if it exists
             if ($project->image) {
-                Storage::delete('product_img/' . $project->image);
+                $imagePath = public_path('product_img/' . $project->image);
+                if (File::exists($imagePath)) {
+                    File::delete($imagePath);
+                }
             }
 
-            // Store the new image
-            $imagePath = $request->file('image')->store('product_img');
+            // Save the new image
+            $image = $request->file('image');
+            $toyName = str_replace(' ', '_', $request->toyName);
+            $timestamp = now()->timestamp;
+            $extension = $image->getClientOriginalExtension();
+            $imageName = $toyName . '_' . $timestamp . '.' . $extension;
+            $image->move(public_path('product_img'), $imageName);
 
-            // Update the project record with the new image path
-            $project->image = basename($imagePath);
+            // Update the project image field
+            $project->image = $imageName;
         }
 
         $project->save();
@@ -191,16 +189,16 @@ class ProjectListController extends Controller
             $cost->material = $request->category;
             $cost->qty = $request->qty;
             $cost->cost = $request->costbudget;
-            $cost->labor=$request->costbudget;
+            $cost->labor = $request->costbudget;
             $cost->delay_reason = $request->delayreason;
             $cost->remarks = $request->remarks;
             $cost->launch_avail = $request->launchdate;
 
-            if($request->finish_act && $request->finish_cmt) {
+            if ($request->finish_act && $request->finish_cmt) {
                 $finishActDate = Carbon::parse($request->finish_act);
                 $finishCmtDate = Carbon::parse($request->finish_cmt);
 
-                if($finishActDate->day==31 && $finishCmtDate->day== 30) {
+                if ($finishActDate->day == 31 && $finishCmtDate->day == 30) {
                     $cost->lead_time = 18.00;
                 }
             }
@@ -208,7 +206,9 @@ class ProjectListController extends Controller
             $cost->save();
         }
 
-        // dd($project);
+        if ($request->ajax()) {
+            return response()->json(['success' => true, 'redirect_url' => route('projectdetail', ['project' => $id])]);
+        }
 
         return redirect()->route('projectdetail', ['project' => $id])->with('success', 'Project updated successfully.');
     }
