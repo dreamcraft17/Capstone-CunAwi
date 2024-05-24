@@ -326,8 +326,8 @@ https://cdn.datatables.net/1.13.1/css/jquery.dataTables.min.css" rel="stylesheet
                                     data: 'status',
                                     title: 'Status',
                                     render: function(data, type, row) {
-                                        if (data === 'Finished') {
-                                            return '<span class="badge badge-soft-success rounded-pill d-inline">' +
+                                        if (data === 'Draft') {
+                                            return '<span class="badge badge-soft-warning rounded-pill d-inline">' +
                                                 data + '</span>';
                                         } else if (data === 'On going' || data ===
                                             'on going') {

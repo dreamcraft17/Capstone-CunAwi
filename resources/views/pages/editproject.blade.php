@@ -6,6 +6,7 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.min.js"></script>
     <link rel="stylesheet" href="argon/assets/css/argon-dashboard.css">
     <link rel="stylesheet" href="argon/assets/css/font-awesome.min.css">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <style>
         .preview-image {
@@ -43,9 +44,9 @@
                 <div class="card-body">
                     <div class="card-body">
                         <!-- {{ dump($project->id) }} -->
-                        <form method="POST" action="{{ route('update.project', ['id' => $project->id]) }}">
+                        <form method="POST" action="{{ route('update.project', ['id' => $project->id]) }}"
+                            enctype="multipart/form-data">
                             @csrf
-                            @method('PUT')
                             <input type="hidden" name="id" value="{{ $project->id }}">
                             <div class="row mb-4">
                                 <div class="row">
@@ -125,6 +126,25 @@
                                     </div>
                                 </div>
 
+                                <div class="row g-2 mt-4">
+                                    <div class="col-sm-12">
+                                        <div id="queuedImages" class="queued-div p-2">
+                                            <div id="imagePreviewContainer" class="d-flex flex-wrap mr-3">
+                                                @if ($project->image)
+                                                    <img src="{{ asset('product_img/' . $project->image) }}"
+                                                        alt="Project Image" class="mr-2 mb-2" width="100">
+                                                @endif
+                                            </div>
+                                        </div>
+                                        <div id="id-input-div" class="mt-2">
+                                            <label class="text-dark text-bold">Insert Picture(s) <span
+                                                    class="text-danger">*</span></label>
+                                            <label>Drag & drop photos here or click to browse</label>
+                                            <input name="image" id="image" type="file" class="form-control" />
+                                        </div>
+                                    </div>
+                                </div>
+
                                 <div class="container mt-4">
                                     <div class="row">
                                         <div class="col">
@@ -134,7 +154,8 @@
                                         <div class="col">
                                             <label>Date</label>
                                             <input type="date" class="form-control" id="meeting" name="meeting"
-                                                value="{{ $project->meeting }}" />
+                                                value="{{ $project->meeting }}"
+                                                {{ $project->status === 'Draft' ? '' : 'readonly' }} />
                                         </div>
                                         <div class="col">
                                             <label>Day</label>
@@ -152,7 +173,8 @@
                                         <div class="col">
                                             <label>Date</label>
                                             <input type="date" class="form-control" id="start_date" name="start_date"
-                                                value="{{ $project->start_date }}" readonly />
+                                                value="{{ $project->start_date }}"
+                                                {{ $project->status === 'Draft' ? '' : 'readonly' }} />
                                         </div>
                                         <div class="col">
                                             <label>Day</label>
@@ -170,7 +192,8 @@
                                         <div class="col">
                                             <label>Date</label>
                                             <input type="date" class="form-control" id="finish_cmt" name="finish_cmt"
-                                                value="{{ $project->finish_cmt }}" readonly />
+                                                value="{{ $project->finish_cmt }}"
+                                                {{ $project->status === 'Draft' ? '' : 'readonly' }} />
                                         </div>
                                         <div class="col">
                                             <label>Day</label>
@@ -232,11 +255,14 @@
 
                                 </div>
 
+                                <input type="hidden" name="status" value="On going">
+
                                 <div style="text-align: right;" class="mt-4">
                                     <a href="{{ route('projectdetail', ['project' => $project->id]) }}" type="button"
                                         id="cancel" class="btn btn-danger rubik-font" value="Cancel">Cancel</a>
-                                    <input type="submit" id="saveEdit" class=" btn btn-primary rubik-font"
-                                        value="Save" />
+                                    <button type="button" id="saveEdit"
+                                        class="btn btn-primary rubik-font">Save</button>
+
                                 </div>
 
                             </div>
@@ -574,6 +600,60 @@
 
             // Call displayFormData initially to populate the form data
             displayFormData();
+        });
+    </script>
+
+    <script>
+        $(document).ready(function() {
+            $("#saveEdit").click(function(e) {
+                e.preventDefault(); // Prevent default form submission
+
+                var formData = new FormData();
+                formData.append('_token', '{{ csrf_token() }}');
+                formData.append('id', '{{ $project->id }}'); // Include the project ID if needed
+                formData.append('productID', $("#productID").val());
+                formData.append('toyName', $("#toyName").val());
+                formData.append('pe', $("#pe").val());
+                formData.append('designer', $("#designer").val());
+                formData.append('category', $("#category").val());
+                formData.append('description', $("#description").val());
+                formData.append('meeting', $("#meeting").val());
+                formData.append('start_date', $("#start_date").val());
+                formData.append('finish_cmt', $("#finish_cmt").val());
+                formData.append('remarks', $("#remarks").val());
+
+                // Handle file input for image
+                var image = $("#image")[0].files[0];
+                if (image) {
+                    formData.append('image', image);
+                }
+                console.log(formData);
+
+                $.ajaxSetup({
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    }
+                });
+
+                $.ajax({
+                    url: "{{ route('update.project', ['id' => $project->id]) }}",
+                    type: "POST",
+                    data: formData,
+                    success: function(response) {
+                        console.log(response);
+                        // Optionally, redirect to another page after successful submission
+                        // window.location.href = "{{ route('projectdetail', ['project' => $project->id]) }}";
+                    },
+                    error: function(xhr, status, error) {
+                        console.error(xhr.responseText);
+                    }
+                });
+            });
+
+
+
+
+
         });
     </script>
 @endsection

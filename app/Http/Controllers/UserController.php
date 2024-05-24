@@ -27,6 +27,7 @@ class UserController extends Controller
             'role' => 'required|in:admin,manager,staff',
             'division' => 'required|in:ADMIN,PRODUCT ENGINEERING,PRODUCT DESIGN',
             'password' => 'required|min:8|confirmed',
+            'password_confirmation' => 'required|same:password'
         ]);
 
 
@@ -37,6 +38,7 @@ class UserController extends Controller
             'role' => $request->role,
             'division' => $request->division,
             'password' => Hash::make($request->password),
+            
         ]);
         $user->save();
 

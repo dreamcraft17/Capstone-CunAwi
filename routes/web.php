@@ -26,44 +26,57 @@ Route::post('login', [UserController::class, 'login_action'])->name('login.actio
 
 // Routes that require authentication
 Route::middleware('auth')->group(function () {
-    Route::get('/dashboard', [DashboardController::class, 'dashboard'])->name('dashboard');
+    // Authorization
+    Route::post('logout', [UserController::class, 'logout'])->name('logout');
     Route::get('/profile', [UserController::class, 'profile'])->name('profile');
-    Route::get('/taskmanager', [TaskManagerController::class, 'index'])->name('taskmanager');
+
+    // Main menu
+    Route::get('/dashboard', [DashboardController::class, 'dashboard'])->name('dashboard');
     Route::get('/projectlist', [ProjectListController::class, 'projectlist'])->name('projectlist');
-    Route::get('/newproject', [ProjectListController::class, 'newproject'])->name('newproject');
-    Route::get('/projectdetail/{id}', [ProjectListController::class, 'projectdetail'])->name('projectdetail');
+    Route::get('/taskmanager', [TaskManagerController::class, 'index'])->name('taskmanager');
     Route::get('/calendar', [CalendarController::class, 'index'])->name('calendar');
     Route::get('/dss', [DssController::class, 'index'])->name('dss');
-    Route::post('logout', [UserController::class, 'logout'])->name('logout');
+    Route::get('/draft', [ProjectListController::class, 'draft'])->name('draft');
+    Route::get('display-drop', [DropController::class, 'displaydrop'])->name('display.drop');
+
+    // Functions
+    Route::post('/dss', [DssController::class, 'evaluateProductionDecision'])->name('production.decision');
+    Route::get('display-project', [ProjectListController::class, 'displayProject'])->name('display.project');
+    Route::get('/dropproject', [DropController::class, 'drop'])->name('drop');
+    Route::get('/editproject/{id}', [ProjectListController::class, 'editproject'])->name('editproject');
+    Route::get('/events', [CalendarController::class, 'fetchEvents'])->name('calendar.events');
+    Route::get('/newproject', [ProjectListController::class, 'newproject'])->name('newproject');
+    Route::get('/projectdetail/{id}', [ProjectListController::class, 'projectdetail'])->name('projectdetail');
     Route::get('/profile/edit', [UserController::class, 'edit_profile'])->name('edit_profile');
     Route::post('/profile/update', [UserController::class, 'update_profile'])->name('update_profile');
-    Route::delete('/users/{id}', [UserController::class, 'delete'])->name('delete_user');
-    // Route::delete('/projects/{project}', [ProjectListController::class, 'delete'])->name('delete.project');
-    Route::post('/new-project', [ProjectListController::class, 'storeNewProject'])->name('storeNewProject');
-    Route::post('/new-project-submit', [ProjectListController::class, 'submitNewProject'])->name('submitNewProject');
-    Route::get('/draft', [ProjectListController::class, 'draft'])->name('draft');
-    Route::get('/events', [CalendarController::class, 'fetchEvents'])->name('calendar.events');
-    Route::get('/redirect-to-projectlist/{projectId}', [TaskManagerController::class, 'redirectToProjectList'])->name('redirect.projectlist');
-    Route::get('display-project', [ProjectListController::class, 'displayProject'])->name('display.project');
-    Route::get('display-draft', [DraftController::class, 'displaydraft'])->name('display.draft');
-    Route::get('display-drop', [DropController::class, 'displaydrop'])->name('display.drop');
-    // Route::get('/editproject', [ProjectListController::class, 'editproject'])->name('editproject');
-    Route::get('/editproject/{id}', [ProjectListController::class, 'editproject'])->name('editproject');
-    // Route::post('/updateproject/{id}', [ProjectListController::class, 'updateProject'])->name('updateProject');
-    Route::get('/dropproject', [DropController::class, 'drop'])->name('drop');
-    // Route::get('/projectdetail/{projectId}', [ProjectListController::class, 'showDataDetail'])->name('projectdetail');
     Route::get('/projectdetail/{project}', [ProjectListController::class, 'showProjectDetail'])->name('projectdetail');
     Route::get('/projects/{date}', 'CalendarController@getProjectsByDate');
-    // Route::get('/editproject/{id}', 'ProjectListController@editProject')->name('editproject');
-    // Route::post('/updateproject/{id}', 'ProjectListController@updateProject')->name('updateproject');
-    Route::post('/dss', [DssController::class, 'evaluateProductionDecision'])->name('production.decision');
-    // Route::post('updateProject/{id}', [ProjectListController::class, 'updateProject'])->name('updateProject');
-    // Route::put('/drop/{id}', 'ProjectListController@dropProject')->name('drop.project');
-    // Route::post('/project/delete/{id}', 'ProjectListController@delete')->name('project.delete');
-    Route::put('/projects/{id}', [ProjectListController::class, 'update'])->name('update.project');
+    Route::post('/projects/{id}', [ProjectListController::class, 'update'])->name('update.project');
     Route::post('/project/drop/{id}', [ProjectListController::class, 'dropProject'])->name('project.drop');
     Route::delete('/projects/{id}', [ProjectListController::class, 'delete']);
     Route::post('/dashboard', [DashboardController::class, 'store'])->name('dashboard.store');
+    Route::delete('/users/{id}', [UserController::class, 'delete'])->name('delete_user');
+    Route::post('/new-project', [ProjectListController::class, 'storeNewProject'])->name('storeNewProject');
+    Route::post('/new-project-submit', [ProjectListController::class, 'submitNewProject'])->name('submitNewProject');
+    Route::get('/redirect-to-projectlist/{projectId}', [TaskManagerController::class, 'redirectToProjectList'])->name('redirect.projectlist');
+
+
+
+    // Route::get('/editproject', [ProjectListController::class, 'editproject'])->name('editproject');
+
+    // Route::post('/updateproject/{id}', [ProjectListController::class, 'updateProject'])->name('updateProject');
+
+    // Route::get('/projectdetail/{projectId}', [ProjectListController::class, 'showDataDetail'])->name('projectdetail');
+
+    // Route::get('/editproject/{id}', 'ProjectListController@editProject')->name('editproject');
+    // Route::post('/updateproject/{id}', 'ProjectListController@updateProject')->name('updateproject');
+
+    // Route::post('updateProject/{id}', [ProjectListController::class, 'updateProject'])->name('updateProject');
+    // Route::put('/drop/{id}', 'ProjectListController@dropProject')->name('drop.project');
+    // Route::post('/project/delete/{id}', 'ProjectListController@delete')->name('project.delete');
+
+
+
 
 
 

@@ -29,32 +29,33 @@
                         <div class="card border-1 mb-3" id="toy-card-container">
                             <h3 class="mt-3 text-center"><b style="color: #5e72e4;">Product Photo</b></h3>
                             <hr class="bg-dark" />
-                            <div style="padding:10px; position: relative;">
+                            <div style="padding:10px; position: relative;" class="mb-5">
                                 <div class="slide-content" style="max-width: 850px; text-align: center;">
                                     <CENTER>
                                         <div id="slideshow-container fade">
                                             <div class="image-container" data-photo-name="">
                                                 <a class="image-link" data-mfp-src="" data-effect="mfp-zoom-in">
-                                                    <img class="mySlides img-fluid border-radius-md shadow-lg product-photo"
-                                                        height="300" src="" style="display:block;" />
+                                                    @if ($project->image)
+                                                        <img class="mySlides img-fluid border-radius-md shadow-lg product-photo"
+                                                            height="300"
+                                                            src="{{ asset('product_img/' . $project->image) }}"
+                                                            style="display:block;" />
+                                                    @else
+                                                        <img class="mySlides img-fluid border-radius-md shadow-lg product-photo"
+                                                            height="300"
+                                                            src="https://cdn3d.iconscout.com/3d/premium/thumb/no-photo-5590994-4652997.png"
+                                                            style="display:block;" />
+                                                    @endif
                                                 </a>
-                                            </div>
-
-                                            <div class="image-container">
-                                                <img id="uploadedImage" class="mySlides img-fluid border-radius-md"
-                                                    width="300"
-                                                    src="https://cdn3d.iconscout.com/3d/premium/thumb/no-photo-5590994-4652997.png"
-                                                    style="display:block;" />
                                             </div>
                                         </div>
                                     </CENTER>
                                 </div>
                             </div>
-                            <hr class="bg-dark" />
-                            <CENTER>
+                            {{-- <CENTER>
                                 <button class="btn btn-rounded btnPurple rubik-font" data-bs-toggle="modal"
                                     data-bs-target="#upfoto"> Add Photo </button>
-                            </CENTER>
+                            </CENTER> --}}
                         </div>
 
                         <div class="card border-1 mt-4">

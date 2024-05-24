@@ -9,6 +9,7 @@ use App\Models\Data;
 use RealRashid\SweetAlert\Facades\Alert;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\File;
 
 
 // use App\Http\Controllers\ProjectListController;
@@ -108,10 +109,10 @@ class ProjectListController extends Controller
             'meeting' => 'required|date',
             'start_date' => 'required|date',
             'finish_cmt' => 'required|date',
-            'finish_act' => 'required|date',
+            'finish_act' => 'nullable|date',
             'remarks' => 'nullable',
             'delayreason' => 'nullable',
-            'launchdate'=>'required|date',
+            'launchdate'=>'nullable|date',
             'status' => 'nullable',
         ]);
 
@@ -163,6 +164,23 @@ class ProjectListController extends Controller
 
         }
 
+        if ($request->hasFile('image')) {
+            // Validate and store the new image
+            $validatedData = $request->validate([
+                'image' => 'image|mimes:jpeg,png,jpg,gif|max:2048', // Adjust max file size as needed
+            ]);
+
+            // Delete the old image file if it exists
+            if ($project->image) {
+                Storage::delete('product_img/' . $project->image);
+            }
+
+            // Store the new image
+            $imagePath = $request->file('image')->store('product_img');
+
+            // Update the project record with the new image path
+            $project->image = basename($imagePath);
+        }
 
         $project->save();
 
@@ -224,65 +242,79 @@ class ProjectListController extends Controller
             'start_date' => $isDraft ? 'nullable|date' : 'required|date',
             'finish_cmt' => $isDraft ? 'nullable|date' : 'required|date',
             'remarks' => 'nullable',
-            'image' => 'nullable|max:2048',
+            'image' => 'required|image|mimes:jpeg,png,jpg|max:2048',
         ]);
-
-
-
-        $imageName = null;
-        if ($request->hasFile('image')) {
-            $image = $request->file('image');
-            $imageName = time() . '_' . $image->getClientOriginalName();
-            $image->move(public_path('images'), $imageName);
-        }
-
-
 
         $projectID = rand(100000, 999999);
         $status = $request->input('draft') == "1" ? "Draft" : "On going";
 
-
-        $startDate = new \DateTime($request->meeting_date);
-        $finishCMT = new \DateTime($request->start_date);
+        $startDate = new \DateTime($request->start_date);
+        $finishCMT = new \DateTime($request->finish_cmt);
         $interval = $startDate->diff($finishCMT);
         $months = $interval->m + ($interval->y * 12);
 
         $adherence = ($status === "Ongoing") ? 0 : null;
 
-        Data::create([
-            'projectID' => $projectID,
-            'assortment' => $request->toyName,
-            'productID' => $request->productID,
-            'toyName' => $request->toyName,
-            'pe' => $request->pe,
-            'designer' => $request->designer,
-            'category' => $request->category,
-            'description' => $request->description,
-            'meeting' => $request->meeting,
-            'start_date' => $request->start_date,
-            'finish_cmt' => $request->finish_cmt,
-            'remarks' => $request->remarks,
-            'status' => $status,
-            'adherence' => $adherence,
-            'month' => $months,
-            'image' => $imageName,
-        ]);
+        // Image handling
+        $imageName = null;
+        if ($request->hasFile('image')) {
+            // Check if the project already exists
+            $existingData = Data::where('projectID', $projectID)->first();
+            if ($existingData && $existingData->image) {
+                // Delete the old image
+                $imagePath = public_path('product_img/' . $existingData->image);
+                if (File::exists($imagePath)) {
+                    File::delete($imagePath);
+                }
+            }
 
-        Cost::create([
-            'projectID' => $projectID,
-            'assortment' => $request->toyName,
-            'productID' => $request->productID,
-            'category' => $request->category,
-            'remarks' => $request->remarks,
-            'material' => $request->category,
-        ]);
+            // Save the new image
+            $image = $request->file('image');
+            $toyName = str_replace(' ', '_', $request->toyName);
+            $timestamp = now()->timestamp;
+            $extension = $image->getClientOriginalExtension();
+            $imageName = $toyName . '_' . $timestamp . '.' . $extension;
+            $image->move(public_path('product_img'), $imageName);
+        }
+
+        // Create or update project data
+        Data::updateOrCreate(
+            ['projectID' => $projectID],
+            [
+                'assortment' => $request->toyName,
+                'productID' => $request->productID,
+                'toyName' => $request->toyName,
+                'pe' => $request->pe,
+                'designer' => $request->designer,
+                'category' => $request->category,
+                'description' => $request->description,
+                'meeting' => $request->meeting,
+                'start_date' => $request->start_date,
+                'finish_cmt' => $request->finish_cmt,
+                'remarks' => $request->remarks,
+                'status' => $status,
+                'adherence' => $adherence,
+                'month' => $months,
+                'image' => $imageName,
+            ]
+        );
+
+        // Create or update cost data
+        Cost::updateOrCreate(
+            ['projectID' => $projectID],
+            [
+                'assortment' => $request->toyName,
+                'productID' => $request->productID,
+                'category' => $request->category,
+                'remarks' => $request->remarks,
+                'material' => $request->category,
+            ]
+        );
 
         Alert::success('Success', 'Project Added!!');
 
-
         return redirect()->route('projectlist')->with('success', 'New project has been created successfully.');
     }
-
 
     // public function storeNewProject(Request $request)
     // {

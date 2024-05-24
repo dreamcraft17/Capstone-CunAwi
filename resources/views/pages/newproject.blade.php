@@ -94,8 +94,7 @@
                                                 <label class="text-dark text-bold">Insert Picture(s) <span
                                                         class="text-danger">*</span></label>
                                                 <label>Drag & drop photos here or click to browse</label>
-                                                <input name="image[]" id="image" type="file" class="form-control"
-                                                    multiple />
+                                                <input name="image" id="image" type="file" class="form-control" />
                                             </div>
                                         </div>
                                     </div>
@@ -644,15 +643,40 @@
 
     <script>
         $(document).ready(function() {
+            function collectFormData() {
+                var formData = new FormData();
+                formData.append('_token', '{{ csrf_token() }}');
+                formData.append('draft', $("#draftField").val());
+                formData.append('productID', $("#productID").val());
+                formData.append('toyName', $("#toyName").val());
+                formData.append('pe', $("#pe").val());
+                formData.append('designer', $("#designer").val());
+                formData.append('category', $("#category").val());
+                formData.append('description', $("#description").val());
+                formData.append('meeting', $("#meeting").val());
+                formData.append('start_date', $("#start_date").val());
+                formData.append('finish_cmt', $("#finish_cmt").val());
+                formData.append('remarks', $("#remarks").val());
+
+                // Handle file input for image
+                var image = $("#image")[0].files[0];
+                if (image) {
+                    formData.append('image', image);
+                }
+
+                return formData;
+            }
+
             $("#submitNewProjectButton").click(function(e) {
                 e.preventDefault();
-                // Mengubah nilai input draft menjadi 0 (bukan draft)
                 $("#draftField").val("0");
 
                 $.ajax({
                     url: "{{ route('storeNewProject') }}",
                     type: "POST",
-                    data: $("form").serialize(),
+                    data: collectFormData(),
+                    processData: false,
+                    contentType: false,
                     success: function(response) {
                         console.log(response);
                         window.location.href = "{{ route('projectlist') }}";
@@ -665,13 +689,14 @@
 
             $("#saveDraftButton").click(function(e) {
                 e.preventDefault();
-                // Mengubah nilai input draft menjadi 1 (draft)
                 $("#draftField").val("1");
 
                 $.ajax({
                     url: "{{ route('storeNewProject') }}",
                     type: "POST",
-                    data: $("form").serialize(),
+                    data: collectFormData(),
+                    processData: false,
+                    contentType: false,
                     success: function(response) {
                         console.log(response);
                         window.location.href = "{{ route('projectlist') }}";

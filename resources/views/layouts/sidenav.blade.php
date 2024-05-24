@@ -90,11 +90,10 @@
         <div class="sidenav-header">
             <i class="fas fa-times p-3 cursor-pointer text-secondary opacity-5 position-absolute end-0 top-0 d-none d-xl-none"
                 aria-hidden="true" id="iconSidenav"></i>
-            {{-- <a class="navbar-brand m-0" href="{{ route('home') }}"
-            target="_blank">
-            <img src="./img/logo-ct-dark.png" class="navbar-brand-img h-100" alt="main_logo">
-            <span class="ms-1 font-weight-bold">Argon Dashboard 2 Laravel</span>
-            </a> --}}
+            <a class="navbar-brand m-0" href="{{ route('dashboard') }}">
+                <img src="/img/streamflow.png" class="navbar-brand-img h-100" alt="main_logo">
+                <span class="ms-1 font-weight-bold text-white">StreamFlow</span>
+            </a>
         </div>
         <hr class="horizontal light mt-0">
         <div class="collapse navbar-collapse  w-auto " id="sidenav-collapse-main">
@@ -127,7 +126,7 @@
                         <span class="nav-link-text ms-1 text-white">Calendar</span>
                     </a>
                 </li>
-                @if (session('role') == 'manager' || session('role') == 'Admin')
+                @if (Auth::user()->role == 'manager')
                     <li class="nav-item">
                         <a class="nav-link {{ Route::currentRouteName() == 'dss' ? 'active' : '' }}"
                             href="{{ route('dss') }}">

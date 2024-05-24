@@ -31,7 +31,7 @@ class Data extends Model
         'image',
         'description',
     ];
-    
+
 
     // Define the relationship with the Cost model
     public function cost()
@@ -39,13 +39,13 @@ class Data extends Model
         return $this->hasOne(Cost::class, 'projectID', 'projectID');
     }
 
-    public function saveImage($image)
-    {
-        // Simpan gambar ke penyimpanan yang diinginkan, misalnya folder 'public/images'
-        $imageName = $image->store('images', 'public');
+    // public function saveImage($image)
+    // {
+    //     // Simpan gambar ke penyimpanan yang diinginkan, misalnya folder 'public/images'
+    //     $imageName = $image->store('images', 'public');
 
-        // Simpan nama file gambar ke kolom 'image'
-        $this->image = $imageName;
-        $this->save();
-    }
+    //     // Simpan nama file gambar ke kolom 'image'
+    //     $this->image = $imageName;
+    //     $this->save();
+    // }
 }
