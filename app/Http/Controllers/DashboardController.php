@@ -15,8 +15,8 @@ class DashboardController extends Controller
         $draftCount = Data::where('status','Draft')->count();
         $taskCount = Data::where('status','On Going')->count();
 
-        $productionByMonth = Data::selectRaw('DATE_FORMAT(created_at, "%Y-%m") as month, COUNT(*) as total')
-        ->groupByRaw('DATE_FORMAT(created_at, "%Y-%m")')
+        $productionByMonth = Data::selectRaw('DATE_FORMAT(meeting, "%Y-%m") as month, COUNT(*) as total')
+        ->groupByRaw('DATE_FORMAT(meeting, "%Y-%m")')
         ->get();
 
         $finishCount = Data::where('status', 'Finished')->count();

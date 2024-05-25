@@ -176,138 +176,12 @@
                 <div class="card ">
                     <div class="card-header pb-0 p-3">
                         <div class="d-flex justify-content-between">
-                            <h6 class="mb-2">Task Performance</h6>
+                            <h6 class="mb-2">Summary of Adherence & Lead Time</h6>
                         </div>
                     </div>
                     <div class="table-responsive">
-                        <table class="table align-items-center ">
-                            <tbody>
-                                <tr>
-                                    <td class="w-30">
-                                        <div class="d-flex px-2 py-1 align-items-center">
-                                            <div>
-                                                <img src="./img/icons/flags/US.png" alt="Country flag">
-                                            </div>
-                                            <div class="ms-4">
-                                                <p class="text-xs font-weight-bold mb-0">Country:</p>
-                                                <h6 class="text-sm mb-0">United States</h6>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <div class="text-center">
-                                            <p class="text-xs font-weight-bold mb-0">Sales:</p>
-                                            <h6 class="text-sm mb-0">2500</h6>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <div class="text-center">
-                                            <p class="text-xs font-weight-bold mb-0">Lead Time:</p>
-                                            <h6 class="text-sm mb-0">23,5</h6>
-                                        </div>
-                                    </td>
-                                    <td class="align-middle text-sm">
-                                        <div class="col text-center">
-                                            <p class="text-xs font-weight-bold mb-0">Adherence:</p>
-                                            <h6 class="text-sm mb-0">29.9%</h6>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="w-30">
-                                        <div class="d-flex px-2 py-1 align-items-center">
-                                            <div>
-                                                <img src="./img/icons/flags/DE.png" alt="Country flag">
-                                            </div>
-                                            <div class="ms-4">
-                                                <p class="text-xs font-weight-bold mb-0">Country:</p>
-                                                <h6 class="text-sm mb-0">Germany</h6>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <div class="text-center">
-                                            <p class="text-xs font-weight-bold mb-0">Sales:</p>
-                                            <h6 class="text-sm mb-0">3.900</h6>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <div class="text-center">
-                                            <p class="text-xs font-weight-bold mb-0">Lead Time:</p>
-                                            <h6 class="text-sm mb-0">17,2</h6>
-                                        </div>
-                                    </td>
-                                    <td class="align-middle text-sm">
-                                        <div class="col text-center">
-                                            <p class="text-xs font-weight-bold mb-0">Adherence:</p>
-                                            <h6 class="text-sm mb-0">40.22%</h6>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="w-30">
-                                        <div class="d-flex px-2 py-1 align-items-center">
-                                            <div>
-                                                <img src="./img/icons/flags/GB.png" alt="Country flag">
-                                            </div>
-                                            <div class="ms-4">
-                                                <p class="text-xs font-weight-bold mb-0">Country:</p>
-                                                <h6 class="text-sm mb-0">Great Britain</h6>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <div class="text-center">
-                                            <p class="text-xs font-weight-bold mb-0">Sales:</p>
-                                            <h6 class="text-sm mb-0">1.400</h6>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <div class="text-center">
-                                            <p class="text-xs font-weight-bold mb-0">Lead Time:</p>
-                                            <h6 class="text-sm mb-0">33,1</h6>
-                                        </div>
-                                    </td>
-                                    <td class="align-middle text-sm">
-                                        <div class="col text-center">
-                                            <p class="text-xs font-weight-bold mb-0">Adherence:</p>
-                                            <h6 class="text-sm mb-0">23.44%</h6>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="w-30">
-                                        <div class="d-flex px-2 py-1 align-items-center">
-                                            <div>
-                                                <img src="./img/icons/flags/BR.png" alt="Country flag">
-                                            </div>
-                                            <div class="ms-4">
-                                                <p class="text-xs font-weight-bold mb-0">Country:</p>
-                                                <h6 class="text-sm mb-0">Brasil</h6>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <div class="text-center">
-                                            <p class="text-xs font-weight-bold mb-0">Sales:</p>
-                                            <h6 class="text-sm mb-0">562</h6>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <div class="text-center">
-                                            <p class="text-xs font-weight-bold mb-0">Lead Time:</p>
-                                            <h6 class="text-sm mb-0">15,8</h6>
-                                        </div>
-                                    </td>
-                                    <td class="align-middle text-sm">
-                                        <div class="col text-center">
-                                            <p class="text-xs font-weight-bold mb-0">Adherence:</p>
-                                            <h6 class="text-sm mb-0">88.14%</h6>
-                                        </div>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
+                        <canvas id="adherenceChart" width="400" height="200"></canvas>
+                        <canvas id="leadTimeChart" width="400" height="200"></canvas>
                     </div>
                 </div>
             </div>
@@ -350,6 +224,8 @@
 
         @include('layouts.footer')
     </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels"></script>
 
     <script>
         function displayDecisionModal(message) {
@@ -490,6 +366,60 @@
                 type: 'pie',
                 data: data
             });
+        });
+    </script>
+
+    <script>
+        var averageAdherence = parseFloat("{{ number_format($averageAdherence, 2) }}");
+        var averageLead = parseFloat("{{ number_format($averageLead, 2) }}");
+
+        // Data for adherence chart
+        var adherenceData = {
+            labels: ['{{ number_format($averageAdherence, 2) }}%'],
+            datasets: [{
+                label: 'Adherence',
+                data: [averageAdherence],
+                backgroundColor: 'rgba(54, 162, 235, 0.5)', // Blue color with adjusted opacity
+                borderColor: 'rgba(54, 162, 235, 1)', // Border color if needed
+                borderWidth: 1
+            }]
+        };
+
+        // Data for lead time chart
+        var leadTimeData = {
+            labels: ['{{ number_format($averageLead, 2) }} Weeks'],
+            datasets: [{
+                label: 'Lead Time',
+                data: [averageLead],
+                backgroundColor: 'rgba(75, 192, 192, 0.5)', // Green color with adjusted opacity
+                borderColor: 'rgba(75, 192, 192, 1)', // Border color if needed
+                borderWidth: 1
+            }]
+        };
+
+        // Chart configuration
+        var options = {
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            }
+        };
+
+        // Adherence chart
+        var ctxAdherence = document.getElementById('adherenceChart').getContext('2d');
+        var adherenceChart = new Chart(ctxAdherence, {
+            type: 'bar',
+            data: adherenceData,
+            options: options
+        });
+
+        // Lead time chart
+        var ctxLeadTime = document.getElementById('leadTimeChart').getContext('2d');
+        var leadTimeChart = new Chart(ctxLeadTime, {
+            type: 'bar',
+            data: leadTimeData,
+            options: options
         });
     </script>
 

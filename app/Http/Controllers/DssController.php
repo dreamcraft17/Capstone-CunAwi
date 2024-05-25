@@ -35,8 +35,8 @@ class DssController extends Controller
         $averageLead = $totalproduction != 0 ? $totalLead / $totalproduction : 0;
         // $averageCost = $totalcost != 0 ? $totalproduction / $totalcost : 0;
         // dd($averageCost);
-        $productionByMonth = Data::selectRaw('DATE_FORMAT(created_at, "%Y-%m") as month, COUNT(*) as total')
-            ->groupByRaw('DATE_FORMAT(created_at, "%Y-%m")')
+        $productionByMonth = Data::selectRaw('DATE_FORMAT(meeting, "%Y-%m") as month, COUNT(*) as total')
+            ->groupByRaw('DATE_FORMAT(meeting, "%Y-%m")')
             ->get();
 
         $finishCount = Data::where('status', 'Finished')->count();
