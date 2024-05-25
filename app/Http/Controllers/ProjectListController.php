@@ -415,22 +415,37 @@ class ProjectListController extends Controller
 
         $project = Data::find($id);
 
-
         if (!$project) {
             return redirect()->back()->with('error', 'Project not found.');
         }
 
-
         $project->status = 'DROP';
         $project->save();
-
 
         if ($project->status !== 'DROP') {
             return redirect()->back()->with('error', 'Failed to drop project.');
         }
 
-
         return redirect()->route('projectdetail', ['project' => $id])->with('success', 'Project dropped successfully.');
+    }
+
+    public function reinstateProject($id)
+    {
+
+        $project = Data::find($id);
+
+        if (!$project) {
+            return redirect()->back()->with('error', 'Project not found.');
+        }
+
+        $project->status = 'On going';
+        $project->save();
+
+        if ($project->status !== 'On going') {
+            return redirect()->back()->with('error', 'Failed to reinstate project.');
+        }
+
+        return redirect()->route('projectdetail', ['project' => $id])->with('success', 'Project re-instate successfully.');
     }
 
 

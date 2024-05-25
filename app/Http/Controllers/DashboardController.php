@@ -19,18 +19,18 @@ class DashboardController extends Controller
         ->groupByRaw('DATE_FORMAT(created_at, "%Y-%m")')
         ->get();
 
-    $finishCount = Data::where('status', 'Finished')->count();
-    $ongoingCount = Data::where('status', 'On Going')->count();
-    $dropCount = Data::where('status', 'Drop')->count();
+        $finishCount = Data::where('status', 'Finished')->count();
+        $ongoingCount = Data::where('status', 'On Going')->count();
+        $dropCount = Data::where('status', 'Drop')->count();
 
 
-    $statusData = [$finishCount, $ongoingCount, $dropCount];
-    $statusLabels = ['Finished', 'On Going', 'Drop'];
-    $statusColors = ['#36DC56', '#FFA600', '#FF2525'];
+        $statusData = [$finishCount, $ongoingCount, $dropCount];
+        $statusLabels = ['Finished', 'On Going', 'Drop'];
+        $statusColors = ['#36DC56', '#FFA600', '#FF2525'];
 
-    $totalfinish = ($projectCount != 0) ? (($finishCount / $projectCount) * 100) : 0;
-    $totalongoing = ($projectCount != 0) ? (($ongoingCount / $projectCount) * 100) : 0;
-    $totaldrop = ($projectCount != 0) ? (($dropCount / $projectCount) * 100) : 0;
+        $totalfinish = ($projectCount != 0) ? (($finishCount / $projectCount) * 100) : 0;
+        $totalongoing = ($projectCount != 0) ? (($ongoingCount / $projectCount) * 100) : 0;
+        $totaldrop = ($projectCount != 0) ? (($dropCount / $projectCount) * 100) : 0;
 
 
         return view("pages.dashboard", ['name' => $name, 'projectCount' => $projectCount], compact('taskCount', 'productionByMonth','statusData','statusLabels','statusColors','totalfinish','totalongoing','totaldrop','draftCount'));

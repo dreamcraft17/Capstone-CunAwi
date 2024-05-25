@@ -38,6 +38,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/dss', [DssController::class, 'index'])->name('dss');
     Route::get('/draft', [ProjectListController::class, 'draft'])->name('draft');
     Route::get('display-drop', [DropController::class, 'displaydrop'])->name('display.drop');
+    Route::get('display-draft', [DraftController::class, 'displaydraft'])->name('display.draft');
 
     // Functions
     Route::post('/dss', [DssController::class, 'evaluateProductionDecision'])->name('production.decision');
@@ -53,6 +54,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/projects/{date}', 'CalendarController@getProjectsByDate');
     Route::post('/projects/{id}', [ProjectListController::class, 'update'])->name('update.project');
     Route::post('/project/drop/{id}', [ProjectListController::class, 'dropProject'])->name('project.drop');
+    Route::post('/projectreinstate/{id}', [ProjectListController::class, 'reinstateProject'])->name('project.reinstate');
     Route::delete('/projects/{id}', [ProjectListController::class, 'delete']);
     Route::post('/dashboard', [DashboardController::class, 'store'])->name('dashboard.store');
     Route::delete('/users/{id}', [UserController::class, 'delete'])->name('delete_user');
