@@ -37,6 +37,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/calendar', [CalendarController::class, 'index'])->name('calendar');
     Route::get('/dss', [DssController::class, 'index'])->name('dss');
     Route::get('/draft', [ProjectListController::class, 'draft'])->name('draft');
+    Route::get('display-draft', [DraftController::class, 'displaydraft'])->name('display.draft');
     Route::get('display-drop', [DropController::class, 'displaydrop'])->name('display.drop');
 
     // Functions
