@@ -17,7 +17,14 @@
                     url: $(this).attr('action'),
                     data: $(this).serialize(),
                     success: function(response) {
-                        displayDecisionModal(response); // Display decision message
+                        console.log(response);
+                        if (response.decision) {
+                            displayDecisionModal(response
+                            .decision); // Pass the decision message to the modal
+                        } else {
+                            console.error('Invalid response:',
+                            response); // Log error if response is invalid
+                        } // Display decision message
                     }
                 });
             });
@@ -49,15 +56,19 @@
                                 <div class="col form-group">
                                     <label for="totalToys">Total Toys to Produce:</label>
                                     <input type="number" class="form-control" id="totalToys" name="totalToys" required>
+                                    <small id="toyLimitError" class="text-danger" style="display: none;">The maximum number
+                                        of toys to produce is 5000 per month.</small>
                                 </div>
                                 <div class="col form-group">
                                     <label for="months">Production Duration (Months):</label>
                                     <input type="number" class="form-control" id="months" name="months" required>
                                 </div>
                             </div>
-                            <CENTER class="mt-4 mb-1">
-                                <button type="submit" class="btn btn-primary">Evaluate Production Decision</button>
-                            </CENTER>
+                            <center class="mt-4 mb-1">
+                                <button type="submit" id="submitButton" class="btn btn-primary">Evaluate Production
+                                    Decision</button>
+                            </center>
+
                         </form>
                     </div>
                 </div>
@@ -74,7 +85,7 @@
                                 <div class="numbers">
                                     <p class="text-sm mb-0 text-uppercase font-weight-bold">Total Production</p>
                                     <h5 class="font-weight-bolder">
-                                        {{ $totalproduction }}
+                                        {{ $qty }}
                                     </h5>
                                 </div>
                             </div>
@@ -137,9 +148,10 @@
                                 <div class="numbers">
                                     <p class="text-sm mb-0 text-uppercase font-weight-bold">Cost</p>
                                     <h5 class="font-weight-bolder">
-                                        $ {{ number_format($averageCost, 2) }}
+                                        Rp {{ number_format($averageCost, 2, ',', '.') }}
                                     </h5>
                                 </div>
+
                             </div>
                             <div class="col-4 text-end">
                                 <div class="icon icon-shape bg-gradient-warning shadow-warning text-center rounded-circle">
@@ -340,6 +352,40 @@
             },
         });
     </script>
+
+    <script>
+        document.getElementById('totalToys').addEventListener('input', validateInput);
+        document.getElementById('months').addEventListener('input', validateInput);
+
+        function validateInput() {
+            const totalToysInput = document.getElementById('totalToys');
+            const monthsInput = document.getElementById('months');
+            const totalToys = parseInt(totalToysInput.value) || 0;
+            const months = parseInt(monthsInput.value) || 0;
+            const maxToysPerMonth = 5000;
+            const maxToysPerYear = 60000;
+            const errorElement = document.getElementById('toyLimitError');
+            const submitButton = document.getElementById('submitButton');
+
+            if (months === 0) {
+                // Prevent division by zero and invalid input
+                errorElement.style.display = 'block';
+                errorElement.textContent = 'Production duration must be at least 1 month.';
+                submitButton.disabled = true;
+                return;
+            }
+
+            if (totalToys > maxToysPerMonth * months || totalToys > maxToysPerYear) {
+                errorElement.style.display = 'block';
+                errorElement.textContent = `The maximum number of toys to produce is ${maxToysPerMonth} per month.`;
+                submitButton.disabled = true;
+            } else {
+                errorElement.style.display = 'none';
+                submitButton.disabled = false;
+            }
+        }
+    </script>
+
 
     {{-- Modal harus di luar div --}}
     <script>
